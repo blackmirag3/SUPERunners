@@ -4348,5 +4348,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: free cam
       objectReference: {fileID: 0}
+    - target: {fileID: 8866567774243160222, guid: f0912eb58732b3448b6def660aa2a60d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0912eb58732b3448b6def660aa2a60d, type: 3}

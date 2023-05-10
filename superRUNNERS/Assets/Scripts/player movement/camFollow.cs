@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camFollow : MonoBehaviour
+public class CamFollow : MonoBehaviour
 {
     public Transform cameraPosition;
 
