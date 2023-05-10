@@ -9,40 +9,43 @@ public class enemyBehaviour : MonoBehaviour
     public Transform player;
     public Animator anim;   
     bool idleState;
-    Vector3 deltaDistance;                                                                                                                                                                                      
+    bool reachedPlayerState;
+    bool isAggro = true; //Set to false after implementing aggro mechanics
+    //Vector3 deltaDistance;
+
+    //TODO
+    //bool checkAggro(){}
 
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        enemy.stoppingDistance = 1;
+        enemy.stoppingDistance = 3f;
         idleState = true;
-        //stoppingDistance = 1;
-        //aggroDistance = 2;
+        reachedPlayerState = false;
     }
-    /*
     void Update()
     {
-        deltaDistance = enemy.position - player.position;
-        if (deltaDistance < 1) //enemy aggro'd
+        if (idleState)
         {
+            //isAgro = checkAggro();
             idleState = false;
-            anim.SetBool(isIdle, idleState);
+            anim.SetBool("isIdle", idleState); //set animator state
         }
 
         if (!idleState)
         {
-            enemy.SetDestination(player.position);
-            if (deltaDistance < 1)
+            enemy.SetDestination(player.position); //chase player
+            /*if (deltaDistance < 1)
             {
                 enemy.SetDestination();
-                anim.SetBool(hasReachedPlayer, true);
+                anim.SetBool("hasReachedPlayer", true); //set animator state
                 //TODO attack
             }
             else
             {
-                anim.SetBool(hasReachedPlayer, false);
-            }
+                anim.SetBool("hasReachedPlayer", false); //set animator state
+            }*/
         }
-    }*/
+    }
 }

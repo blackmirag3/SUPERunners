@@ -6,64 +6,68 @@ using UnityEngine;
 
 /* Keys:
 wasd / arrows	- movement
-q/e 			- up/down (local space)
+q/e 	    	- up/down (local space)
 hold shift		- enable fast movement mode
-mouse			- free look / rotation
+mouse       	- free look / rotation
+l               - lock/unlock freecam transform (positional)
+r               - reset freecam
 */
 
 public class FreeCam : MonoBehaviour
 {
-    /// <summary>
-    /// Normal speed of camera movement.
-    /// </summary>
     public float movementSpeed = 10f;
-
-    /// <summary>
-    /// Speed of camera movement when shift is held down,
-    /// </summary>
     public float fastMovementSpeed = 100f;
-
-    /// <summary>
-    /// Sensitivity for free look.
-    /// </summary>
     public float freeLookSensitivity = 3f;
+    public bool isLocked = true; //set default to locked
+    private Vector3 initialPos;
+    private Quaternion initialRot;
 
-    /// <summary>
-    /// Amount to zoom the camera when using the mouse wheel.
-    /// </summary>
-    public float zoomSensitivity = 10f;
-
-    /// <summary>
-    /// Amount to zoom the camera when using the mouse wheel (fast mode).
-    /// </summary>
-    public float fastZoomSensitivity = 50f;
+    void Start()
+    {
+        initialPos = transform.position;
+        initialRot = transform.rotation;
+    }
 
     void Update()
     {
-        var fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        var movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.L))
         {
-            transform.position = transform.position + (-transform.right * movementSpeed * Time.deltaTime);
+            isLocked = !isLocked;
         }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (!isLocked)
         {
-            transform.position = transform.position + (transform.right * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                transform.position = initialPos;
+                transform.rotation = initialRot;
+            }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.position = transform.position + (transform.forward * movementSpeed * Time.deltaTime);
-        }
+            var fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            var movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.position = transform.position + (-transform.forward * movementSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position = transform.position + (-transform.right * movementSpeed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.position = transform.position + (transform.right * movementSpeed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position = transform.position + (transform.forward * movementSpeed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.position = transform.position + (-transform.forward * movementSpeed * Time.deltaTime);
+            }
+            float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * freeLookSensitivity;
+            float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * freeLookSensitivity;
+            transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
         }
-        float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * freeLookSensitivity;
-        float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * freeLookSensitivity;
-        transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
     }
 }
