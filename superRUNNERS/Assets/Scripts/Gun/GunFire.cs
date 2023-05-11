@@ -36,6 +36,8 @@ public class GunFire : MonoBehaviour
     // bug fixing
     public bool allowInvoke = true;
 
+    public AudioSource shootingSound;
+
     private void Awake()
     {
         shootForce = gunData.shootForce;
@@ -53,6 +55,7 @@ public class GunFire : MonoBehaviour
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         attackPoint = GameObject.Find(pointName).GetComponent<Transform>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
+        shootingSound = GetComponent<AudioSource>();
     }
 
     
@@ -85,6 +88,7 @@ public class GunFire : MonoBehaviour
  
     private void Shoot()
     {
+        shootingSound.Play();
         canShoot = false;
 
         // Find exact hit pos using a raycast
