@@ -10,7 +10,7 @@ public class BulletScript : MonoBehaviour
     [SerializeField]
     private string playerName = "PlayerBody";
     private readonly string[] tagArr = { "Gun", "Player" };
-    private Collider coll;
+    private Collider playerCol;
 
     [SerializeField]
     private float distFromPlayer;
@@ -18,9 +18,10 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coll = GetComponent<Collider>();
-        coll.isTrigger = true;
+        playerCol = GameObject.Find(playerName).GetComponent<Collider>();
         player = GameObject.Find(playerName).GetComponent<Transform>();
+        Physics.IgnoreCollision(playerCol, GetComponent<Collider>());
+        Invoke(nameof(EnablePlayerColl), 0.5f);
     }
 
     // Update is called once per frame
@@ -30,11 +31,25 @@ public class BulletScript : MonoBehaviour
         if (dist.magnitude > distFromPlayer)
             Destroy(gameObject);
     }
-       
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (!tagArr.Contains(other.gameObject.tag))
-            Destroy(gameObject);
+        if (!tagArr.Contains(collision.gameObject.tag))
+        {
+            DespawnBullet();
+        }
+        
+    }
+
+    private void EnablePlayerColl()
+    {
+        Physics.IgnoreCollision(playerCol, GetComponent<Collider>(), false);
+    }
+
+    private void DespawnBullet()
+    {
+        Destroy(gameObject);
     }
     
+
 }
