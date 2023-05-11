@@ -575,7 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2088722848}
   anim: {fileID: 449540970}
-  isDebugMode: 1
+  isDebugMode: 0
   debugCam: {fileID: 1370995219}
 --- !u!195 &449540973
 NavMeshAgent:
@@ -991,6 +991,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f4aeba33a39e349a098e66638e1216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 0
+  sprintSpeed: 0
+  groundDrag: 0
+  jumpMultiplier: 0
+  jumpCD: 0
+  airMultiplier: 0
+  crouchSpeed: 0
+  crouchYScale: 0
+  jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
+  playerHeight: 0
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  orientation: {fileID: 0}
+  state: 0
 --- !u!43 &588056809
 Mesh:
   m_ObjectHideFlags: 0
@@ -1998,6 +2015,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7132b847209e22f4a894cd4899ca4de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensX: 400
+  sensY: 400
+  orientation: {fileID: 1363543275}
 --- !u!1 &1146401160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,6 +2047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99330c6a1ba0474aab5fd10d1597032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraPosition: {fileID: 0}
 --- !u!4 &1146401162
 Transform:
   m_ObjectHideFlags: 0
@@ -4382,7 +4403,7 @@ PrefabInstance:
     - target: {fileID: 8866567774243160222, guid: f0912eb58732b3448b6def660aa2a60d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8866567774243160223, guid: f0912eb58732b3448b6def660aa2a60d,
         type: 3}

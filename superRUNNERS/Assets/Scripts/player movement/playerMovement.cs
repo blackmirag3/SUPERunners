@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private MoveSettings settings;
+
     [Header("Movement")]
     private float moveSpeed;
-    public float walkSpeed;
-    public float sprintSpeed;
-
-    public float groundDrag;
+    public float walkSpeed, sprintSpeed, groundDrag;
 
     [Header("Jump")]
-    public float jumpMultiplier;
-    public float jumpCD;
-    public float airMultiplier;
+    public float jumpMultiplier, jumpCD, airMultiplier;
     bool canJump;
 
     [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
+    public float crouchSpeed, crouchYScale;
     private float startYScale;
 
     [Header("Keybinds")]
@@ -33,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     public Transform orientation;
+    private string orientationName = "Orientation";
 
     float horizontalInput;
     float verticalInput;
@@ -50,10 +47,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public MoveState state;
 
-
-    // Start is called before the first frame update
     private void Start()
     {
+        InitializeSettings();
+
+        orientation = GameObject.Find(orientationName).GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -62,8 +60,27 @@ public class PlayerMovement : MonoBehaviour
         startYScale = transform.localScale.y;
     }
 
-    // Update is called once per frame
-    
+    private void InitializeSettings()
+    {
+        // Walk/Run
+        walkSpeed = settings.walkSpeed;
+        sprintSpeed = settings.sprintSpeed;
+        groundDrag = settings.groundDrag;
+        // Jump
+        jumpMultiplier = settings.jumpMulti;
+        jumpCD = settings.jumpCD;
+        airMultiplier = settings.airMulti;
+        // Crouch
+        crouchSpeed = settings.crouchSpeed;
+        crouchYScale = settings.yScale;
+        // Move keybinds
+        jumpKey = settings.jumpKey;
+        sprintKey = settings.sprintKey;
+        crouchKey = settings.crouchKey;
+        // Misc
+        playerHeight = settings.playerHeight;
+    }
+
     private void Update()
     {
         // Ground check
@@ -184,6 +201,5 @@ public class PlayerMovement : MonoBehaviour
     {
         canJump = true;
     }
-
 
 }

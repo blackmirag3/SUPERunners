@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dce3b9c392f370b4db83c8ee30cd1426, type: 3}
-  m_Name: Rifle
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  name: Rifle
+  name: Shotgun
   shootForce: 300
   damage: 1
   maxDist: 30
-  spread: 0
-  timeBetweenBullets: 1
-  bulletsPerShot: 1
-  magSize: 25
-  fireRate: 0.1
-  isAuto: 1
+  spread: 5
+  timeBetweenBullets: 0
+  bulletsPerShot: 5
+  magSize: 35
+  fireRate: 0.5
+  isAuto: 0

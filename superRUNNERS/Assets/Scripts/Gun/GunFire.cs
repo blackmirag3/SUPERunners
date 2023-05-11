@@ -24,13 +24,13 @@ public class GunFire : MonoBehaviour
 
     bool shooting, canShoot;
 
-    //[HideInInspector] 
+    [HideInInspector] 
     public Camera playerCam;
-    //[HideInInspector] 
+    [HideInInspector] 
     public Transform attackPoint;
-    //[HideInInspector] 
+    [HideInInspector] 
     public GameObject muzzleFlash;
-    //[HideInInspector] 
+    [HideInInspector] 
     public TextMeshProUGUI ammoDisplay;
 
     [SerializeField] private string camName = "PlayerCam";
@@ -93,6 +93,7 @@ public class GunFire : MonoBehaviour
  
     private void Shoot()
     {
+        
         shootingSound.Play();
         canShoot = false;
 
