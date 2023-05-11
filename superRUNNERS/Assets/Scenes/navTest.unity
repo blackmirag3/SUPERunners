@@ -30204,6 +30204,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f4aeba33a39e349a098e66638e1216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 7
+  sprintSpeed: 10
+  groundDrag: 5
+  jumpMultiplier: 11
+  jumpCD: 0.25
+  airMultiplier: 0.4
+  crouchSpeed: 3.5
+  crouchYScale: 0.4
+  jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
+  playerHeight: 2
+  ground:
+    serializedVersion: 2
+    m_Bits: 8
+  orientation: {fileID: 2371581503333375915}
+  state: 0
 --- !u!1 &2371581502509919775
 GameObject:
   m_ObjectHideFlags: 0
@@ -30461,6 +30478,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7132b847209e22f4a894cd4899ca4de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensX: 500
+  sensY: 500
+  orientation: {fileID: 2371581503333375915}
 --- !u!81 &8811967533736938972
 AudioListener:
   m_ObjectHideFlags: 0
@@ -30559,6 +30579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99330c6a1ba0474aab5fd10d1597032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraPosition: {fileID: 2371581502882052832}
 --- !u!1 &8811967533917174213
 GameObject:
   m_ObjectHideFlags: 0
