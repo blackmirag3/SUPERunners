@@ -20,5 +20,5 @@ MonoBehaviour:
   timeBetweenBullets: 1
   bulletsPerShot: 1
   magSize: 10
-  fireRate: 0.1
+  fireRate: 0.15
   isAuto: 0

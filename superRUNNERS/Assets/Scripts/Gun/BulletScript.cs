@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
 
     public Transform player;
-    string playerName = "PlayerBody";
-    string pTag = "Player";
+    [SerializeField]
+    private string playerName = "PlayerBody";
+    private readonly string[] tagArr = { "Gun", "Player" };
+    private Collider coll;
 
     [SerializeField]
     private float distFromPlayer;
@@ -15,6 +18,8 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        coll = GetComponent<Collider>();
+        coll.isTrigger = true;
         player = GameObject.Find(playerName).GetComponent<Transform>();
     }
 
@@ -25,11 +30,10 @@ public class BulletScript : MonoBehaviour
         if (dist.magnitude > distFromPlayer)
             Destroy(gameObject);
     }
-
-    
-    private void OnCollisionEnter(Collision collision)
+       
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag != pTag)
+        if (!tagArr.Contains(other.gameObject.tag))
             Destroy(gameObject);
     }
     
