@@ -9,7 +9,7 @@ wasd / arrows	- movement
 q/e 	    	- up/down (local space)
 hold shift		- enable fast movement mode
 mouse       	- free look / rotation
-l               - lock/unlock freecam transform (positional)
+right click     - lock/unlock freecam transform (positional)
 r               - reset freecam
 */
 
@@ -30,7 +30,7 @@ public class FreeCam : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetMouseButtonDown(1))
         {
             isLocked = !isLocked;
         }

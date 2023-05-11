@@ -8,44 +8,77 @@ public class enemyBehaviour : MonoBehaviour
     private NavMeshAgent enemy;
     public Transform player;
     public Animator anim;   
-    bool idleState;
-    bool reachedPlayerState;
-    bool isAggro = true; //Set to false after implementing aggro mechanics
-    //Vector3 deltaDistance;
+    bool isIdle;
+    bool hasReachedPlayer;
+    bool isDead;
+    public bool isDebugMode; //true to enable manual aggro via raycast from debug cam
+    public Camera debugCam;
+    //bool isAggro = true;
 
-    //TODO
+    //TODO check aggro function
     //bool checkAggro(){}
+
+    //TODO check dead function
+    //bool checkDead?
+
+    //TODO helper functions for check idle, has reached player etc
 
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = 3f;
-        idleState = true;
-        reachedPlayerState = false;
+        isIdle = true;
+        hasReachedPlayer = false;
+        isDead = false;
     }
     void Update()
     {
-        if (idleState)
+        if (isDead)
         {
-            //isAgro = checkAggro();
-            idleState = false;
-            anim.SetBool("isIdle", idleState); //set animator state
+            anim.SetBool("isDead", isDead);
+//Debug.Log("enemy is dead:" + isDead);
         }
 
-        if (!idleState)
+        if (isDebugMode)
         {
-            enemy.SetDestination(player.position); //chase player
-            /*if (deltaDistance < 1)
+            if (Input.GetMouseButtonDown(0))
             {
-                enemy.SetDestination();
-                anim.SetBool("hasReachedPlayer", true); //set animator state
-                //TODO attack
+                Ray ray = debugCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                Physics.Raycast(ray, out hit); //if raycast hit
+                {
+                    //move agent
+                    enemy.SetDestination(hit.point);
+                    //isAgro = true;
+                    isIdle = false;
+                    anim.SetBool("isIdle", isIdle);
+                }
             }
+            hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
+            anim.SetBool("hasReachedPlayer", hasReachedPlayer);
+        }
+
+        else
+        {
+            if (isIdle)
+            {
+                //isAgro = checkAggro();
+                isIdle = false;
+                anim.SetBool("isIdle", isIdle);
+//Debug.Log("enemy is idle:" + isIdle);
+            }
+
             else
             {
-                anim.SetBool("hasReachedPlayer", false); //set animator state
-            }*/
+                enemy.SetDestination(player.position); //chase player
+                hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
+                anim.SetBool("hasReachedPlayer", hasReachedPlayer);
+//Debug.Log("enemy has reached player:" + hasReachedPlayer);
+            }
         }
+        Debug.Log("enemy is idle:" + isIdle);
+        Debug.Log("enemy has reached player:" + hasReachedPlayer);
     }
 }
