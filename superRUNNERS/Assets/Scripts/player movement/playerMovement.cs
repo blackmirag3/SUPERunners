@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
         }
 
-        Debug.Log(rb.velocity.magnitude);
+        // Debug.Log(rb.velocity.magnitude);
     }
 
     private void FixedUpdate()

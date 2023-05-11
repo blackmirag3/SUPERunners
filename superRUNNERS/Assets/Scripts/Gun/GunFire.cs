@@ -46,12 +46,13 @@ public class GunFire : MonoBehaviour
         timeBetweenBullets = gunData.timeBetweenBullets;
         bulletsPerShot = gunData.bulletsPerShot;
         magSize = gunData.magSize;
-        ammoLeft = magSize;
+        
         canShoot = true;
     }
 
     void Start()
     {
+        ammoLeft = magSize;
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         attackPoint = GameObject.Find(pointName).GetComponent<Transform>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
@@ -144,5 +145,11 @@ public class GunFire : MonoBehaviour
         allowInvoke = true;
     }
 
-    
+    // Reset gun when picked up (for now)
+    private void OnDisable()
+    {
+        if (ammoDisplay != null)
+            ammoDisplay.SetText("\n");
+        ammoLeft = magSize;
+    }
 }
