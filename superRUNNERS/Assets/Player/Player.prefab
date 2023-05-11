@@ -64,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &403589597918014001
 Transform:
   m_ObjectHideFlags: 0
@@ -87,7 +87,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403589597918014002}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.4042439, g: 0.4745098, b: 0.19215688, a: 0}
@@ -278,8 +278,11 @@ MonoBehaviour:
   jumpMultiplier: 11
   jumpCD: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 0
+  crouchYScale: 0
   jumpKey: 32
   sprintKey: 304
+  crouchKey: 306
   playerHeight: 2
   ground:
     serializedVersion: 2
