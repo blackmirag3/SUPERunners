@@ -24,10 +24,14 @@ public class GunFire : MonoBehaviour
 
     bool shooting, canShoot;
 
-    [HideInInspector] public Camera playerCam;
-    [HideInInspector] public Transform attackPoint;
-    [HideInInspector] public GameObject muzzleFlash;
-    [HideInInspector] public TextMeshProUGUI ammoDisplay;
+    //[HideInInspector] 
+    public Camera playerCam;
+    //[HideInInspector] 
+    public Transform attackPoint;
+    //[HideInInspector] 
+    public GameObject muzzleFlash;
+    //[HideInInspector] 
+    public TextMeshProUGUI ammoDisplay;
 
     [SerializeField] private string camName = "PlayerCam";
     [SerializeField] private string pointName = "Muzzle";
