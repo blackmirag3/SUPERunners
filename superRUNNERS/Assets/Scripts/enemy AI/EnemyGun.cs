@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyGun : MonoBehaviour
 {
     public GameObject currBullet;
-    public Transform bulletPos;
+    public Transform bulletPos, playerPos;
     public Quaternion bulletRot;
     public float bulletVelocity = 20f; //TODO get gun velocity
     public AudioSource shootingSound;
@@ -26,12 +26,14 @@ public class EnemyGun : MonoBehaviour
     public void FireBullet()
     {
 
-        //GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
+        GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
         //PrefabUtility.InstantiatePrefab
-        GameObject newBullet = Instantiate(currBullet);
-        newBullet.transform.position = bulletPos.position;
-        newBullet.GetComponent<Rigidbody>().velocity = bulletPos.forward * bulletVelocity;
-        Destroy(newBullet, 5); //TODO bullet despawn   
+        Vector3 shootDir = (playerPos.position - bulletPos.position).normalized;
+        newBullet.transform.forward = shootDir;
+        newBullet.GetComponent<Rigidbody>().AddForce(shootDir * bulletVelocity, ForceMode.Impulse);
+
+        // newBullet.GetComponent<Rigidbody>().velocity = bulletPos.forward * bulletVelocity;
+        // Destroy(newBullet, 5); //TODO bullet despawn   
         shootingSound.Play(); //TODO improve shooting...? based on weapon type too?
     }
 }
