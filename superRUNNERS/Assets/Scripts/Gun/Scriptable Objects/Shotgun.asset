@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   name: Shotgun
-  shootForce: 300
+  shootForce: 100
   damage: 1
   maxDist: 30
   spread: 5

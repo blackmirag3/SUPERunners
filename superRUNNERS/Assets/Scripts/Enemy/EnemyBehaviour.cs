@@ -33,7 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             hasLOS = true;
         }
-        Debug.Log("enemy has LOS: " + hasLOS);
+        //Debug.Log("enemy has LOS: " + hasLOS);
         return hasLOS;
     }
 
@@ -63,7 +63,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (isDead) //dead state
         {
             anim.SetBool("isDead", isDead);
-            Debug.Log("enemy is dead:" + isDead);
+            //Debug.Log("enemy is dead:" + isDead);
         }
 
         else if (isIdle) //idle state
@@ -83,8 +83,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         }
 
-        Debug.Log("enemy is idle: " + isIdle);
-        Debug.Log("enemy has reached player: " + hasReachedPlayer);
+        //Debug.Log("enemy is idle: " + isIdle);
+        //Debug.Log("enemy has reached player: " + hasReachedPlayer);
     }
 }
         
