@@ -10,6 +10,8 @@ public class MoveSettings : ScriptableObject
     public float walkSpeed;
     public float sprintSpeed;
     public float groundDrag;
+    public float slideDrag;
+    public float wallDrag;
 
     [Header("Jumping")]
     public float jumpMulti;
@@ -22,7 +24,8 @@ public class MoveSettings : ScriptableObject
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode sprintToggleKey = KeyCode.LeftShift;
+    public KeyCode sprintHoldKey;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Misc")]
