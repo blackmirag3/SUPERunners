@@ -15,12 +15,15 @@ MonoBehaviour:
   walkSpeed: 7
   sprintSpeed: 10
   groundDrag: 5
-  jumpMulti: 11
+  slideDrag: 0
+  wallDrag: 0
+  jumpMulti: 12
   jumpCD: 0.25
   airMulti: 0.4
   crouchSpeed: 3.5
   yScale: 0.4
   jumpKey: 32
-  sprintKey: 304
+  sprintToggleKey: 308
+  sprintHoldKey: 304
   crouchKey: 306
   playerHeight: 2
