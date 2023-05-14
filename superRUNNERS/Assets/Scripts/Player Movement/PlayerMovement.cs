@@ -7,12 +7,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MoveSettings settings;
 
     [Header("Movement")]
-    private float moveSpeed;
-    public float walkSpeed, sprintSpeed, groundDrag;
+    [SerializeField] private float moveSpeed;
+    public float walkSpeed, sprintSpeed, wallRunSpeed, groundDrag;
 
     [Header("Jump")]
-    public float jumpForce, jumpCD, airMultiplier;
-    bool canJump;
+    public float jumpForce;
+    public float jumpCD, airMultiplier, wallJumpUpForce, wallJumpSideForce;
+    private bool canJump;
 
     [Header("Crouching")]
     public float crouchSpeed, crouchYScale;
@@ -32,8 +33,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding")]
     public float slideSpeedIncrease;
     public float slideSpeedDecrease;
-    private float timeSinceLastSlide;
-    public float slideBoostResetTime;
 
     public Transform orientation;
 
@@ -45,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    public bool isSprinting;
+    bool isSprinting = false;
     bool isCrouching;
     bool isSliding;
     public bool isWallRunning = false;
@@ -58,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         canJump = true;
-        timeSinceLastSlide = slideBoostResetTime;
 
         startYScale = transform.localScale.y;
     }
@@ -77,10 +75,8 @@ public class PlayerMovement : MonoBehaviour
         // Crouch
         crouchSpeed = settings.crouchSpeed;
         crouchYScale = settings.yScale;
-        //Slide
-        slideBoostResetTime = settings.slideBoostResetTime;
-    // Move keybinds
-    jumpKey = settings.jumpKey;
+        // Move keybinds
+        jumpKey = settings.jumpKey;
         sprintToggleKey = settings.sprintToggleKey;
         sprintHoldKey = settings.sprintHoldKey;
         crouchKey = settings.crouchKey;
@@ -95,8 +91,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        timeSinceLastSlide += Time.deltaTime;
 
         MyInput();
         ControlDrag();
@@ -117,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     private void ControlDrag()
     {
         // handle drag
-        if (grounded)
+        if (grounded || isWallRunning)
         {
             rb.drag = groundDrag;
         }
@@ -176,6 +170,10 @@ public class PlayerMovement : MonoBehaviour
             else if (grounded)
             {
                 moveSpeed = walkSpeed;
+            }        
+            else if (isWallRunning)
+            {
+                moveSpeed = wallRunSpeed;
             }
         }
         else if (isSliding)
@@ -184,10 +182,11 @@ public class PlayerMovement : MonoBehaviour
             if (currVelocity.magnitude <= walkSpeed)
                 isSliding = false;
         }
-        else
+        else if (grounded && isCrouching)
         {
             moveSpeed = crouchSpeed;
         }
+
     }
 
     private void MovePlayer()
@@ -200,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
-        else
+        else if (!isWallRunning)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -241,11 +240,7 @@ public class PlayerMovement : MonoBehaviour
         if (grounded && (currVelocity.magnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
-            if (timeSinceLastSlide >= slideBoostResetTime)
-            {
-                moveSpeed += slideSpeedIncrease;
-                timeSinceLastSlide = 0;
-            }
+            moveSpeed += slideSpeedIncrease;
             Debug.Log($"Sliding Called, moveSpeed: {moveSpeed}");
         }
     }
@@ -253,6 +248,7 @@ public class PlayerMovement : MonoBehaviour
     private void Uncrouch()
     {
         isCrouching = false;
+        isSliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
 
     }
