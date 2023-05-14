@@ -6,6 +6,16 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private MoveSettings settings;
 
+    public Transform orientation;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
+    //[Header("Keybinds")]
+    private KeyCode jumpKey = KeyCode.Space;
+    private KeyCode sprintHoldKey = KeyCode.LeftShift;
+    private KeyCode sprintToggleKey = KeyCode.LeftAlt;
+    private KeyCode crouchKey = KeyCode.LeftControl;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     public float walkSpeed, sprintSpeed, wallRunSpeed, groundDrag;
@@ -16,38 +26,28 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump;
 
     [Header("Crouching")]
-    public float crouchSpeed, crouchYScale;
+    public float crouchSpeed;
+    public float crouchYScale;
     private float startYScale;
-
-    [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode sprintHoldKey = KeyCode.LeftShift;
-    public KeyCode sprintToggleKey = KeyCode.LeftAlt;
-    public KeyCode crouchKey = KeyCode.LeftControl;
-
-    [Header("Ground Check")]
-    public Transform groundCheck;
-    public LayerMask groundMask;
-    bool grounded;
 
     [Header("Sliding")]
     public float slideSpeedIncrease;
     public float slideSpeedDecrease;
 
-    public Transform orientation;
+    [Header("Movement States")]
+    public Vector3 moveDirection;
+    private Vector3 currVelocity;
+    public float currVelocityMagnitude;
+    public bool grounded;
+    public bool isSprinting = false;
+    public bool isCrouching;
+    public bool isSliding;
+    public bool isWallRunning = false;
 
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
-    Vector3 currVelocity;
-
     Rigidbody rb;
-
-    bool isSprinting = false;
-    bool isCrouching;
-    bool isSliding;
-    public bool isWallRunning = false;
 
     private void Start()
     {
@@ -91,13 +91,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        currVelocityMagnitude = currVelocity.magnitude;
 
         MyInput();
         ControlDrag();
         SpeedLimit();
         SpeedControl();
-
-        //Debug.Log(currVelocity.magnitude);
     }
 
     private void FixedUpdate()
@@ -136,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCD);
         }
         // Crouching and sliding
-        if (Input.GetKeyDown(crouchKey))
+        if (Input.GetKeyDown(crouchKey) && !isWallRunning)
         {
             Crouch();
         }
@@ -179,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isSliding)
         {
 
-            if (currVelocity.magnitude <= walkSpeed)
+            if (currVelocityMagnitude <= walkSpeed)
                 isSliding = false;
         }
         else if (grounded && isCrouching)
@@ -191,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        // movement direction
+        // movement direction   
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
 
@@ -210,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         // Velocity limit
-        if (currVelocity.magnitude > moveSpeed)
+        if (currVelocityMagnitude > moveSpeed)
         {
             Vector3 limitVel = currVelocity.normalized * moveSpeed;
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
@@ -237,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         Debug.Log("Crouching");
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        if (grounded && (currVelocity.magnitude - 0.5f) > walkSpeed)
+        if (grounded && (currVelocityMagnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
             moveSpeed += slideSpeedIncrease;
