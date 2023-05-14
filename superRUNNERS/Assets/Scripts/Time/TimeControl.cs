@@ -16,6 +16,7 @@ public class TimeControl : MonoBehaviour
     private float playerVelocity;
 
     public bool isShifting;
+    public bool toggleShift = false;
 
     private void InitializeSettings()
     {
@@ -27,6 +28,7 @@ public class TimeControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitializeSettings();
         initialFixedDeltaTime = Time.fixedDeltaTime;
     }
 
@@ -34,11 +36,23 @@ public class TimeControl : MonoBehaviour
     void Update()
     {
         playerVelocity = player.currVelocityMagnitude;
-        InitializeSettings();
-        TimeShift();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            toggleShift ^= true;
+        }
+        
+        if (toggleShift)
+        {
+            ActiveTimeShift();
+        }
+        else
+        {
+            AutoTimeShift();
+        }
     }
 
-        void TimeShift() //player.isWASD
+    void AutoTimeShift() //player.isWASD
     {
         if (playerVelocity < velocityThreshold)
         {
@@ -52,5 +66,12 @@ public class TimeControl : MonoBehaviour
         {
             isShifting = false;
         }
+    }
+
+    void ActiveTimeShift()
+    {
+        Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
+        isShifting = true;
     }
 }
