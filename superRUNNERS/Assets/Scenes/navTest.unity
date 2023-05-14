@@ -19322,7 +19322,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh37064
+  m_Name: pb_Mesh22640
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19953,7 +19953,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-36628
+  m_Name: pb_Mesh31776
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39420,7 +39420,10 @@ MonoBehaviour:
     m_Bits: 8
   slideSpeedIncrease: 15
   slideSpeedDecrease: 0.4
+  slideBoostResetTime: 0
+  WallRunning: {fileID: 0}
   orientation: {fileID: 2371581503333375915}
+  isSprinting: 0
   isWallRunning: 0
 --- !u!136 &2371581502335142957
 CapsuleCollider:

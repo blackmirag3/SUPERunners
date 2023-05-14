@@ -919,7 +919,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1740
+  m_Name: pb_Mesh-1796
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2413,6 +2413,12 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
   m_PVRTiledBaking: 0
+--- !u!4 &1392389379 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 677973363739581634, guid: d1641f1f2eca9e64b86245a72d6384f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1669165289}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1596038568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2692,6 +2698,16 @@ PrefabInstance:
         type: 3}
       propertyPath: slideTimer
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 677973363739581636, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1392389379}
+    - target: {fileID: 677973363739581636, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 677973363739581637, guid: d1641f1f2eca9e64b86245a72d6384f4,
         type: 3}

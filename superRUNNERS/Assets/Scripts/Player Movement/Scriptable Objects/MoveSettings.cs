@@ -22,6 +22,9 @@ public class MoveSettings : ScriptableObject
     public float crouchSpeed;
     public float yScale;
 
+    [Header("Sliding")]
+    public float slideBoostResetTime;
+
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintToggleKey = KeyCode.LeftShift;

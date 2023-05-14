@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding")]
     public float slideSpeedIncrease;
     public float slideSpeedDecrease;
+    private float timeSinceLastSlide;
+    public float slideBoostResetTime;
 
     public Transform orientation;
 
@@ -43,8 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    bool isSprintToggled = false;
-    bool isSprinting;
+    public bool isSprinting;
     bool isCrouching;
     bool isSliding;
     public bool isWallRunning = false;
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         canJump = true;
+        timeSinceLastSlide = slideBoostResetTime;
 
         startYScale = transform.localScale.y;
     }
@@ -75,8 +77,10 @@ public class PlayerMovement : MonoBehaviour
         // Crouch
         crouchSpeed = settings.crouchSpeed;
         crouchYScale = settings.yScale;
-        // Move keybinds
-        jumpKey = settings.jumpKey;
+        //Slide
+        slideBoostResetTime = settings.slideBoostResetTime;
+    // Move keybinds
+    jumpKey = settings.jumpKey;
         sprintToggleKey = settings.sprintToggleKey;
         sprintHoldKey = settings.sprintHoldKey;
         crouchKey = settings.crouchKey;
@@ -91,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        timeSinceLastSlide += Time.deltaTime;
 
         MyInput();
         ControlDrag();
@@ -147,13 +153,13 @@ public class PlayerMovement : MonoBehaviour
         // Sprinting
         if (Input.GetKeyDown(sprintToggleKey))
         {
-            isSprintToggled ^= true;
+            isSprinting ^= true;
         }
-        if (Input.GetKeyDown(sprintHoldKey) || isSprintToggled)
+        if (Input.GetKeyDown(sprintHoldKey))
         {
             isSprinting = true;
         }
-        else if (Input.GetKeyUp(sprintHoldKey) || !isSprintToggled)
+        else if (Input.GetKeyUp(sprintHoldKey))
         {
             isSprinting = false;
         }
@@ -235,7 +241,11 @@ public class PlayerMovement : MonoBehaviour
         if (grounded && (currVelocity.magnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
-            moveSpeed += slideSpeedIncrease;
+            if (timeSinceLastSlide >= slideBoostResetTime)
+            {
+                moveSpeed += slideSpeedIncrease;
+                timeSinceLastSlide = 0;
+            }
             Debug.Log($"Sliding Called, moveSpeed: {moveSpeed}");
         }
     }

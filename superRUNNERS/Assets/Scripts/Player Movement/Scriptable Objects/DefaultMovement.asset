@@ -20,10 +20,11 @@ MonoBehaviour:
   jumpMulti: 12
   jumpCD: 0.25
   airMulti: 0.4
-  crouchSpeed: 3.5
+  crouchSpeed: 5
   yScale: 0.4
+  slideBoostResetTime: 1.5
   jumpKey: 32
-  sprintToggleKey: 308
-  sprintHoldKey: 304
+  sprintToggleKey: 304
+  sprintHoldKey: 308
   crouchKey: 306
   playerHeight: 2
