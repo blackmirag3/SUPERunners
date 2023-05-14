@@ -7,12 +7,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MoveSettings settings;
 
     [Header("Movement")]
-    private float moveSpeed;
-    public float walkSpeed, sprintSpeed, groundDrag;
+    [SerializeField] private float moveSpeed;
+    public float walkSpeed, sprintSpeed, wallRunSpeed, groundDrag;
 
     [Header("Jump")]
-    public float jumpForce, jumpCD, airMultiplier;
-    bool canJump;
+    public float jumpForce;
+    public float jumpCD, airMultiplier, wallJumpUpForce, wallJumpSideForce;
+    private bool canJump;
 
     [Header("Crouching")]
     public float crouchSpeed, crouchYScale;
@@ -43,8 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    bool isSprintToggled = false;
-    bool isSprinting;
+    bool isSprinting = false;
     bool isCrouching;
     bool isSliding;
     public bool isWallRunning = false;
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     private void ControlDrag()
     {
         // handle drag
-        if (grounded)
+        if (grounded || isWallRunning)
         {
             rb.drag = groundDrag;
         }
@@ -147,13 +147,13 @@ public class PlayerMovement : MonoBehaviour
         // Sprinting
         if (Input.GetKeyDown(sprintToggleKey))
         {
-            isSprintToggled ^= true;
+            isSprinting ^= true;
         }
-        if (Input.GetKeyDown(sprintHoldKey) || isSprintToggled)
+        if (Input.GetKeyDown(sprintHoldKey))
         {
             isSprinting = true;
         }
-        else if (Input.GetKeyUp(sprintHoldKey) || !isSprintToggled)
+        else if (Input.GetKeyUp(sprintHoldKey))
         {
             isSprinting = false;
         }
@@ -170,6 +170,10 @@ public class PlayerMovement : MonoBehaviour
             else if (grounded)
             {
                 moveSpeed = walkSpeed;
+            }        
+            else if (isWallRunning)
+            {
+                moveSpeed = wallRunSpeed;
             }
         }
         else if (isSliding)
@@ -178,10 +182,11 @@ public class PlayerMovement : MonoBehaviour
             if (currVelocity.magnitude <= walkSpeed)
                 isSliding = false;
         }
-        else
+        else if (grounded && isCrouching)
         {
             moveSpeed = crouchSpeed;
         }
+
     }
 
     private void MovePlayer()
@@ -194,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
-        else
+        else if (!isWallRunning)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -243,6 +248,7 @@ public class PlayerMovement : MonoBehaviour
     private void Uncrouch()
     {
         isCrouching = false;
+        isSliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
 
     }

@@ -16,37 +16,63 @@ public class WallRunning : MonoBehaviour
 
     RaycastHit wallRightHit, wallLeftHit;
     bool wallRight, wallLeft;
+    bool wallJumping = false;
+    Vector3 wallNormal;
 
+    public KeyCode jumpKey = KeyCode.Space;
     private Rigidbody rb;
+
+    float horizontalInput;
+    float verticalInput;
+
+    [Header("Camera")]
+    public Camera playerCam;
+    private float baseFov;
+    [SerializeField] private float wallRunfov;
+    [SerializeField] private float wallRunfovTime;
+    [SerializeField] private float camTilt;
+    [SerializeField] private float camTiltTime;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        baseFov = playerCam.fieldOfView;
     }
 
     void Update()
     {
         CheckWall();
+        MoveKeyInputs();
 
-        if (CanWallRun())
+        if ((wallLeft || wallRight) && CanWallRun() && verticalInput > 0 && !wallJumping)
         {
-            if (wallLeft)
+
+            EnableWallRun();
+            if (Input.GetKeyDown(jumpKey))
             {
-                Debug.Log("Wall run on left");
-                WallRun();
-            }
-            else if (wallRight)
-            {
-                Debug.Log("Wall run on right");
-                WallRun();
-            }
-            else
+                WallJump();
                 ExitWallRun();
+            }
         }
         else
         {
             ExitWallRun();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (playerMovement.isWallRunning && !wallJumping)
+        {
+            WallRun();
+        }
+    }
+
+    private void MoveKeyInputs()
+    {
+        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     bool CanWallRun()
@@ -60,8 +86,12 @@ public class WallRunning : MonoBehaviour
         wallRight = Physics.Raycast(transform.position, orientation.right, out wallRightHit, wallDist, wallMask);
     }
 
-    private void WallRun()
+    private void EnableWallRun()
     {
+        // reset y velocity on wall run start
+        if (!playerMovement.isWallRunning)
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        
         playerMovement.isWallRunning = true;
         rb.useGravity = false;
 
@@ -71,5 +101,45 @@ public class WallRunning : MonoBehaviour
     {
         playerMovement.isWallRunning = false;
         rb.useGravity = true;
+    }
+
+    private void CalcWallNormal()
+    {
+        if (wallLeft)
+        {
+            wallNormal = wallLeftHit.normal;
+        }
+        else if (wallRight)
+        {
+            wallNormal = wallRightHit.normal;
+        }
+    }
+
+    private void WallRun()
+    {
+        CalcWallNormal();
+        Vector3 runDir = Vector3.Cross(wallNormal, transform.up);
+        if (Vector3.Dot(runDir, orientation.forward) < 0)
+        {
+            runDir = -runDir;
+        }
+
+        rb.AddForce(10f * playerMovement.wallRunSpeed * runDir.normalized, ForceMode.Force);
+    }
+
+    private void WallJump()
+    {
+        wallJumping = true;
+        CalcWallNormal();
+        Vector3 wallJumpDirForce = wallNormal * playerMovement.wallJumpSideForce + transform.up * playerMovement.wallJumpUpForce;
+        
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(wallJumpDirForce, ForceMode.Impulse);
+        Invoke(nameof(ResetJump), 0.5f);
+    }
+
+    private void ResetJump()
+    {
+        wallJumping = false;
     }
 }
