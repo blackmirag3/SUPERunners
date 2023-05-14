@@ -39,10 +39,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currVelocity;
     public float currVelocityMagnitude;
     public bool grounded;
-    public bool isSprinting = false;
+    public bool isSprinting;// = false;
     public bool isCrouching;
     public bool isSliding;
-    public bool isWallRunning = false;
+    public bool isWallRunning;// = false;
+    public bool isWASD;
 
     float horizontalInput;
     float verticalInput;
@@ -125,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         // WASD inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        isWASD = (horizontalInput + verticalInput != 0);
 
         // Jump
         if (Input.GetKey(jumpKey) && canJump && grounded)

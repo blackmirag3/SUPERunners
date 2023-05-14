@@ -38,7 +38,7 @@ public class TimeControl : MonoBehaviour
         TimeShift();
     }
 
-        void TimeShift()
+        void TimeShift() //player.isWASD
     {
         if (playerVelocity < velocityThreshold)
         {

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Time Settings
   m_EditorClassIdentifier: 
   timeSens: 1
-  scaleLimit: 0.3
+  scaleLimit: 0.1
   velocityThreshold: 5
