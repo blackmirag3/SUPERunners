@@ -51925,8 +51925,8 @@ GameObject:
   - component: {fileID: 2371581502335142954}
   - component: {fileID: 2371581502335142955}
   - component: {fileID: 2371581502335142958}
-  - component: {fileID: 2371581502335142957}
   - component: {fileID: 2371581502335142959}
+  - component: {fileID: 2371581502335142957}
   m_Layer: 30
   m_Name: PlayerBody
   m_TagString: Player
@@ -52005,9 +52005,9 @@ MonoBehaviour:
   jumpKey: 32
   playerCam: {fileID: 8811967533736938975}
   wallRunfov: 110
-  wallRunfovTime: 0
-  camTilt: 0
-  camTiltTime: 0
+  wallRunfovTime: 20
+  camTilt: 20
+  camTiltTime: 20
 --- !u!114 &2371581502335142959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52412,6 +52412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7132b847209e22f4a894cd4899ca4de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallRunning: {fileID: 2371581502335142958}
   sensX: 500
   sensY: 500
   orientation: {fileID: 2371581503333375915}

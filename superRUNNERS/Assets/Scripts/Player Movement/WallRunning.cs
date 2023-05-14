@@ -33,6 +33,7 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private float camTilt;
     [SerializeField] private float camTiltTime;
 
+    public float tilt { get; private set; }
 
     void Start()
     {
@@ -95,12 +96,24 @@ public class WallRunning : MonoBehaviour
         playerMovement.isWallRunning = true;
         rb.useGravity = false;
 
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
+        if (wallLeft)
+        {
+            tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
+        }
+        else if (wallRight)
+        {
+            tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
+        }
     }
 
     private void ExitWallRun()
     {
         playerMovement.isWallRunning = false;
         rb.useGravity = true;
+
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
+        tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
     }
 
     private void CalcWallNormal()

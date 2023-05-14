@@ -25,20 +25,20 @@ public class TimeControl : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         initialFixedDeltaTime = Time.fixedDeltaTime;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         playerVelocity = player.currVelocityMagnitude;
         InitializeSettings();
         TimeShift();
     }
 
-        void TimeShift() //player.isWASD
+    private void TimeShift() //player.isWASD
     {
         if (playerVelocity < velocityThreshold)
         {

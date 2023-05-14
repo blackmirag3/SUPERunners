@@ -4,6 +4,8 @@ using UnityEngine;
 //
 public class PlayerCam : MonoBehaviour
 {
+    public WallRunning wallRunning;
+
     public float sensX;
     public float sensY;
 
@@ -29,7 +31,7 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRunning.tilt);
+        orientation.rotation = Quaternion.Euler(0, yRotation, wallRunning.tilt);
     }
 }
