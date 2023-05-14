@@ -20239,6 +20239,7 @@ MonoBehaviour:
   velocityThreshold: 0
   player: {fileID: 2371581502335142959}
   isShifting: 0
+  toggleShift: 0
 --- !u!4 &757119473
 Transform:
   m_ObjectHideFlags: 0
