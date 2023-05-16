@@ -6,13 +6,11 @@ public class PlayerCam : MonoBehaviour
 {
     public WallRunning wallRunning;
 
-    public float sensX;
-    public float sensY;
+    public float sensX, sensY, mouseY, mouseX;
 
     public Transform orientation;
-
-    float xRotation;
-    float yRotation;
+    public float xRotation;
+    public float yRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +22,8 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+        mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
         yRotation += mouseX;
         xRotation -= mouseY;
