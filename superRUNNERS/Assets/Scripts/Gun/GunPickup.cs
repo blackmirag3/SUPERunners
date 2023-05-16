@@ -22,8 +22,9 @@ public class GunPickup : MonoBehaviour
     [SerializeField] private string camName = "PlayerCam";
     [SerializeField] private string gunTag = "Gun";
 
-    [Header("Pickup Key")]
-    public KeyCode pickupKey = KeyCode.F;
+    [Header("Pickup/Throw Key")]
+    public KeyCode pickupKey = KeyCode.Mouse2;
+    public KeyCode throwKey = KeyCode.Mouse1;
 
     void Start()
     {
@@ -59,24 +60,22 @@ public class GunPickup : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(camPoint, out hit))
             {
-                //Debug.Log("Ray hit");
+                //Debug.Log("Gun pick up ray hit");
 
                 if (hit.transform.CompareTag(gunTag))
                 {
                     // Debug.Log("True");
                     Pickup();
                 }
-               
-                
             }
         }
 
-        if (equipped && gun.ammoLeft == 0 && Input.GetKeyDown(KeyCode.Mouse0))
+        if (equipped)
         {
-            
-
-            ThrowGun();
-            
+            if ((gun.ammoLeft == 0 && Input.GetKeyDown(KeyCode.Mouse0)) || Input.GetKeyDown(throwKey))
+            {
+                ThrowGun();
+            }
         }
     }
 
