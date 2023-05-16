@@ -17,9 +17,11 @@ public class WallRunning : MonoBehaviour
     RaycastHit wallRightHit, wallLeftHit;
     bool wallRight, wallLeft;
     bool wallJumping = false;
+    bool wallLatching = false;
     Vector3 wallNormal;
 
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode latchKey = KeyCode.LeftControl;
     private Rigidbody rb;
 
     float horizontalInput;
@@ -33,7 +35,7 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private float camTilt;
     [SerializeField] private float camTiltTime;
 
-    public float tilt { get; private set; }
+    public float Tilt { get; private set; }
 
     void Start()
     {
@@ -46,7 +48,7 @@ public class WallRunning : MonoBehaviour
         CheckWall();
         MoveKeyInputs();
 
-        if ((wallLeft || wallRight) && CanWallRun() && verticalInput > 0 && !wallJumping)
+        if ((wallLeft || wallRight) && CanWallRun() && verticalInput > 0 && !wallJumping && !wallLatching)
         {
 
             EnableWallRun();
@@ -54,6 +56,28 @@ public class WallRunning : MonoBehaviour
             {
                 WallJump();
                 ExitWallRun();
+            }
+
+            if (Input.GetKeyDown(latchKey))
+            {
+                WallLatch();
+            }
+
+        }
+        else if (wallLatching)
+        {
+            Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
+
+            if (Input.GetKeyDown(jumpKey))
+            {
+                WallLatchJump();
+                WallDetach();
+                ExitWallRun();
+            }
+
+            if (Input.GetKeyUp(latchKey))
+            {
+                WallDetach();
             }
         }
         else
@@ -64,7 +88,7 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerMovement.isWallRunning && !wallJumping)
+        if (playerMovement.isWallRunning && !wallJumping && !wallLatching)
         {
             WallRun();
         }
@@ -99,11 +123,11 @@ public class WallRunning : MonoBehaviour
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
         if (wallLeft)
         {
-            tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
+            Tilt = Mathf.Lerp(Tilt, -camTilt, camTiltTime * Time.deltaTime);
         }
         else if (wallRight)
         {
-            tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
+            Tilt = Mathf.Lerp(Tilt, camTilt, camTiltTime * Time.deltaTime);
         }
     }
 
@@ -113,7 +137,7 @@ public class WallRunning : MonoBehaviour
         rb.useGravity = true;
 
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
-        tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
+        Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
     }
 
     private void CalcWallNormal()
@@ -154,5 +178,25 @@ public class WallRunning : MonoBehaviour
     private void ResetJump()
     {
         wallJumping = false;
+    }
+
+    private void WallLatch()
+    {
+        wallLatching = true;
+    }
+
+    private void WallDetach()
+    {
+        wallLatching = false;
+    }
+
+    private void WallLatchJump()
+    {
+        wallJumping = true;
+        Vector3 wallJumpDirForce = orientation.forward * playerMovement.wallJumpSideForce + orientation.up * playerMovement.wallJumpUpForce;
+
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(wallJumpDirForce, ForceMode.Impulse);
+        Invoke(nameof(ResetJump), 0.5f);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCam : MonoBehaviour
 {
     public WallRunning wallRunning;
+    public PlayerMovement pMove;
 
     public float sensX, sensY, mouseY, mouseX;
 
@@ -12,11 +13,18 @@ public class PlayerCam : MonoBehaviour
     public float xRotation;
     public float yRotation;
 
+    private Camera cam;
+
+    private float baseFov;
+    [SerializeField] private float sprintFov;
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cam = GetComponent<Camera>();
+        baseFov = cam.fieldOfView;
     }
 
     // Update is called once per frame
@@ -29,7 +37,21 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRunning.tilt);
-        orientation.rotation = Quaternion.Euler(0, yRotation, wallRunning.tilt);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRunning.Tilt);
+        orientation.rotation = Quaternion.Euler(0, yRotation, wallRunning.Tilt);
+
+        fovUpdate();
+    }
+
+    private void fovUpdate()
+    {
+        if (pMove.isSprinting && !pMove.isWallRunning)
+        {
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, sprintFov, 20f * Time.deltaTime);
+        }
+        else if (!pMove.isSprinting && !pMove.isWallRunning)
+        {
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, baseFov, 20f * Time.deltaTime);
+        }
     }
 }
