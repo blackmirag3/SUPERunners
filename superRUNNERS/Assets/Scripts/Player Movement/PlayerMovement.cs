@@ -44,11 +44,14 @@ public class PlayerMovement : MonoBehaviour
     public bool isSliding;
     public bool isWallRunning;// = false;
     public bool isWASD;
+    public bool onSlope;
 
     float horizontalInput;
     float verticalInput;
 
     Rigidbody rb;
+
+    private RaycastHit slopeHit;
 
     private void Start()
     {
@@ -95,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
         currVelocityMagnitude = currVelocity.magnitude;
 
         MyInput();
+        CheckSlope();
         ControlDrag();
         SpeedLimit();
         SpeedControl();
@@ -126,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         // WASD inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        isWASD = (horizontalInput + verticalInput != 0);
+        isWASD = (horizontalInput != 0) || (verticalInput != 0);
 
         // Jump
         if (Input.GetKey(jumpKey) && canJump && grounded)
@@ -140,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(crouchKey) && !isWallRunning)
         {
             Crouch();
+            Debug.Log($"Slope state: {onSlope}");
         }
         if (Input.GetKeyUp(crouchKey))
         {
@@ -194,7 +199,10 @@ public class PlayerMovement : MonoBehaviour
     {
         // movement direction   
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
+        if (onSlope)
+        {
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+        }
 
         if (grounded)
         {
@@ -252,5 +260,19 @@ public class PlayerMovement : MonoBehaviour
         isSliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
 
+    }
+
+    private void CheckSlope()
+    {
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out slopeHit, 0.5f))
+        {
+            if (slopeHit.normal != Vector3.up)
+            {
+                onSlope = true;
+                return;
+            }
+        }
+
+        onSlope = false;
     }
 }

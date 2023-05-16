@@ -25,6 +25,6 @@ MonoBehaviour:
   slideBoostResetTime: 1.5
   jumpKey: 32
   sprintToggleKey: 304
-  sprintHoldKey: 0
+  sprintHoldKey: 308
   crouchKey: 306
   playerHeight: 2
