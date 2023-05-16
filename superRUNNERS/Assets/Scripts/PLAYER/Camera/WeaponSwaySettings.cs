@@ -6,6 +6,12 @@ public class WeaponSwaySettings : ScriptableObject
 {
 
     [Header("Sway Settings")]
-    [SerializeField] public float swaySmoothing;
-    [SerializeField] public float swayMultiplier;
+    public float swaySmoothing;
+    public float tiltMultiplier;
+    public float rotMultiplier;
+    public float maxRot;
+    public bool tiltX;
+    public bool tiltY;
+    public bool tiltZ;
+
 }

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Weapon Sway Settings
   m_EditorClassIdentifier: 
   swaySmoothing: 12
-  swayMultiplier: 8
+  tiltMultiplier: 6
+  rotMultiplier: 8
+  maxRot: 12
+  tiltX: 1
+  tiltY: 0
+  tiltZ: 1

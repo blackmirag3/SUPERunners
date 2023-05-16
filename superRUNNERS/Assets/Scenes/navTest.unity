@@ -22060,7 +22060,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20464
+  m_Name: pb_Mesh20468
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -22224,7 +22224,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20486
+  m_Name: pb_Mesh20490
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -32324,7 +32324,12 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 47b9079b522304c4f976803af17e5732, type: 2}
   playerCam: {fileID: 8811967533736938969}
   swaySmoothing: 0
-  swayMultiplier: 0
+  tiltMultiplier: 0
+  rotMultiplier: 0
+  maxRot: 0
+  tiltX: 0
+  tiltY: 0
+  tiltZ: 0
 --- !u!1 &1456530256
 GameObject:
   m_ObjectHideFlags: 0
