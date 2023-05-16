@@ -36,9 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement States")]
     public Vector3 moveDirection;
-    private Vector3 currVelocity;
-    public float currVelocityMagnitude;
-    public bool grounded;
+    public Vector3 currVelocity;
+    public bool isGrounded;
     public bool isSprinting;// = false;
     public bool isCrouching;
     public bool isSliding;
@@ -88,11 +87,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // Ground check
-        grounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
 
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        currVelocityMagnitude = currVelocity.magnitude;
 
         MyInput();
         ControlDrag();
@@ -111,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
     private void ControlDrag()
     {
         // handle drag
-        if (grounded || isWallRunning)
+        if (isGrounded || isWallRunning)
         {
             rb.drag = groundDrag;
         }
@@ -129,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         isWASD = (horizontalInput + verticalInput != 0);
 
         // Jump
-        if (Input.GetKey(jumpKey) && canJump && grounded)
+        if (Input.GetKey(jumpKey) && canJump && isGrounded)
         {
             canJump = false;
             Jump();
@@ -164,11 +162,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isCrouching)
         {
-            if (grounded && isSprinting)
+            if (isGrounded && isSprinting)
             {
                 moveSpeed = sprintSpeed;
             }
-            else if (grounded)
+            else if (isGrounded)
             {
                 moveSpeed = walkSpeed;
             }        
@@ -180,10 +178,10 @@ public class PlayerMovement : MonoBehaviour
         else if (isSliding)
         {
 
-            if (currVelocityMagnitude <= walkSpeed)
+            if (currVelocity.magnitude <= walkSpeed)
                 isSliding = false;
         }
-        else if (grounded && isCrouching)
+        else if (isGrounded && isCrouching)
         {
             moveSpeed = crouchSpeed;
         }
@@ -196,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
 
-        if (grounded)
+        if (isGrounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
@@ -211,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         // Velocity limit
-        if (currVelocityMagnitude > moveSpeed)
+        if (currVelocity.magnitude > moveSpeed)
         {
             Vector3 limitVel = currVelocity.normalized * moveSpeed;
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
@@ -238,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         Debug.Log("Crouching");
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        if (grounded && (currVelocityMagnitude - 0.5f) > walkSpeed)
+        if (isGrounded && (currVelocity.magnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
             moveSpeed += slideSpeedIncrease;

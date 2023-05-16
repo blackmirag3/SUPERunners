@@ -30,7 +30,7 @@ public class FreeCam : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             isLocked = !isLocked;
         }

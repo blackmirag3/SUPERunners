@@ -35,7 +35,7 @@ public class TimeControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        playerVelocity = player.currVelocityMagnitude;
+        playerVelocity = player.currVelocity.magnitude;
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
