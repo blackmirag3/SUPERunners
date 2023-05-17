@@ -8,13 +8,13 @@ public class RagdollControl : MonoBehaviour
     private Rigidbody[] rigidbodies;
     public EnemyBehaviour enemyBehaviour;
 
+
     private void Awake()
     {
         rigidbodies = GetComponentsInChildren<Rigidbody>();
         DisableRagdoll();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (enemyBehaviour.isDead)
@@ -27,6 +27,7 @@ public class RagdollControl : MonoBehaviour
         {
             rb.isKinematic = true;
         }
+
     }
 
     private void EnableRagdoll()
@@ -35,17 +36,7 @@ public class RagdollControl : MonoBehaviour
         {
             rb.isKinematic = false;
         }
+
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
-            enemyBehaviour.isDead = true;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("PlayerBullet"))
-            enemyBehaviour.isDead = true;
-    }
 }

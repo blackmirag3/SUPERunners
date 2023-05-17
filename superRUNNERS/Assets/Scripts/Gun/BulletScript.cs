@@ -23,7 +23,6 @@ public class BulletScript : MonoBehaviour
         // playerCol = GameObject.Find(playerName).GetComponent<Collider>();
         player = GameObject.Find(playerName).GetComponent<Transform>();
         // Physics.IgnoreCollision(playerCol, GetComponent<Collider>());
-        // Invoke(nameof(EnablePlayerColl), 0.5f);
     }
 
     // Update is called once per frame
@@ -40,7 +39,7 @@ public class BulletScript : MonoBehaviour
         {
             if (collision.gameObject.CompareTag(enemyTag))
             {
-                Debug.Log("Enemy hit");
+                // Debug.Log("Enemy hit");
             }
 
             DespawnBullet();
