@@ -10,21 +10,22 @@ public class EnemyBehaviour : MonoBehaviour
     public Animator anim;
     private bool isIdle;
     private bool hasReachedPlayer;
-    private bool isDead;
-    public float attackRangecurrentlydoesnothing;
+    public bool isDead;
+    public float attackRange;
+    public float enemySpeed;
     public EnemyGun enemyGun;
 
     //TODO check dead function
     //bool checkDead?
 
-    void enemyChase()
+    void EnemyChase()
     {
         enemy.SetDestination(player.position); //chase player
         hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
     }
 
-    bool hasLOS()
+    bool HasLOS()
     {
         bool hasLOS = false;
         NavMeshHit hit;
@@ -37,9 +38,9 @@ public class EnemyBehaviour : MonoBehaviour
         return hasLOS;
     }
 
-    void enemyShoot() //called by animation event
+    void EnemyShoot() //called by animation event
     {
-        if (hasLOS())
+        if (HasLOS())
         {
             float inaccuracy = 1f; ////TODO add inaccuracy based on gun type
             Vector3 target = player.position - Random.Range(0, inaccuracy) * Vector3.up;
@@ -53,16 +54,19 @@ public class EnemyBehaviour : MonoBehaviour
     {
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        enemy.stoppingDistance = 3f;
+        enemy.stoppingDistance = attackRange;
         isIdle = true;
         hasReachedPlayer = false;
         isDead = false;
+        enemy.speed = enemySpeed;
     }
+
     void Update()
     {
         if (isDead) //dead state
         {
-            anim.SetBool("isDead", isDead);
+            anim.enabled = false;
+            //anim.SetBool("isDead", isDead);
             //Debug.Log("enemy is dead:" + isDead);
         }
 
@@ -75,9 +79,9 @@ public class EnemyBehaviour : MonoBehaviour
 
         else //aggro state
         {
-            enemyChase();
+            EnemyChase();
             //TODO different chase states
-            if (hasLOS())
+            if (HasLOS())
             {
             }
 

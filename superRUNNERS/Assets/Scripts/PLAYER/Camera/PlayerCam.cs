@@ -10,15 +10,14 @@ public class PlayerCam : MonoBehaviour
     public float sensX, sensY, mouseY, mouseX;
 
     public Transform orientation;
-    public float xRotation;
-    public float yRotation;
+    [HideInInspector] public float xRotation;
+    [HideInInspector] public float yRotation;
 
     private Camera cam;
 
     private float baseFov;
     [SerializeField] private float sprintFov;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,7 +26,6 @@ public class PlayerCam : MonoBehaviour
         baseFov = cam.fieldOfView;
     }
 
-    // Update is called once per frame
     void Update()
     {
         mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;

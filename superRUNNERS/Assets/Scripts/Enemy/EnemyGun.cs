@@ -25,7 +25,7 @@ public class EnemyGun : MonoBehaviour
     //TODO fire different gun functions?
     public void FireBullet()
     {
-
+        
         GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
         //PrefabUtility.InstantiatePrefab
         Vector3 shootDir = (playerPos.position - bulletPos.position).normalized;

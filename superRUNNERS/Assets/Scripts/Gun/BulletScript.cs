@@ -39,20 +39,14 @@ public class BulletScript : MonoBehaviour
         if (!tagArr.Contains(collision.gameObject.tag))
         {
             if (collision.gameObject.CompareTag(enemyTag))
+            {
                 Debug.Log("Enemy hit");
+            }
 
             DespawnBullet();
         }
         
     }
-
-
-    /*
-    private void EnablePlayerColl()
-    {
-        Physics.IgnoreCollision(playerCol, GetComponent<Collider>(), false);
-    }
-    */
 
     private void DespawnBullet()
     {
