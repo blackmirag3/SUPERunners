@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class HeadBob : MonoBehaviour
 {
-    private bool enable;
-    private float amplitude;
-    private float frequency;
-    private float toggleSpeed;
+    private bool isBobEnabled;
+    private float baseAmplitude;
+    public float baseFrequency;
+    private float baseSpeed;
     private Vector3 startPos;
     private float stabAmount;
 
     public PlayerMovement player;
     public BobSettings settings;
     public Transform cam;
-    public Transform cameraHolder;
-
+    public Transform camHolder;
+    public Transform camPos;
+    //public float frequency;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -24,52 +26,46 @@ public class HeadBob : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if (enable)
+        if (isBobEnabled)
         {
-            CheckMotion();
+            PlayMotion();
             ResetPosition();
-            cam.LookAt(FocusTarget());
+            //cam.LookAt(FocusTarget());
         }
     }
 
-    private Vector3 FootStepMotion()
+    private void PlayMotion()
     {
-        Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Sin(Time.time * frequency) * amplitude;
-        pos.x += Mathf.Cos(Time.time * frequency / 2) * amplitude * 2;
-        return pos;
-    }
-
-    private void CheckMotion()
-    {
-        float speed = player.currVelocity.magnitude;
-        if (speed > toggleSpeed && player.isGrounded)
+        if (isBobEnabled && (player.isGrounded || player.isWallRunning) && player.isWASD)
         {
-            cam.localPosition += FootStepMotion();
+            cam.localPosition += cam.up * Mathf.Sin(Time.time * baseFrequency) * baseAmplitude;
+            cam.localPosition += cam.right * Mathf.Cos(Time.time * baseFrequency / 2) * baseAmplitude / 2;
         }
     }
 
     private void ResetPosition()
     {
-        if (cam.localPosition == startPos) return;
-        cam.localPosition = Vector3.Lerp(cam.localPosition, startPos, 1 * Time.deltaTime);
+        if (cam.localPosition != startPos)
+        {
+            cam.localPosition = Vector3.Lerp(cam.localPosition, startPos, 1 * Time.deltaTime);
+        }
     }
 
     private Vector3 FocusTarget()
     {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y + cameraHolder.localPosition.y, transform.position.z);
-        pos += cameraHolder.forward * stabAmount; //stabAmount => distance of focal point for camera. Higher = More stable
-        return pos;
+        Vector3 focusPos = new Vector3(transform.position.x, transform.position.y + camPos.localPosition.y, transform.position.z);
+        focusPos += camHolder.forward * stabAmount; //stabAmount => distance of focal point for camera. Higher = More stable
+        return focusPos;
     }
 
     private void InitialiseSettings()
     {
-        enable = settings.enable;
-        amplitude = settings.amplitude;
-        frequency = settings.frequency;
-        toggleSpeed = settings.toggleSpeed;
+        isBobEnabled = settings.isBobEnabled;
+        baseAmplitude = settings.baseAmplitude;
+        baseFrequency = settings.baseFrequency;
+        baseSpeed = settings.baseSpeed;
         stabAmount = settings.stabAmount;
     }
 }

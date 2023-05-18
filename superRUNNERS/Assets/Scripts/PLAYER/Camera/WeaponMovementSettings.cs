@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon Sway Settings")]
-public class WeaponSwaySettings : ScriptableObject
+[CreateAssetMenu(fileName = "Weapon Movement Settings")]
+public class WeaponMovementSettings : ScriptableObject
 {
 
     [Header("Sway Settings")]
+    public bool isSwayEnabled;
     public float swaySmoothing;
     public float tiltMultiplier;
     public float rotMultiplier;
@@ -14,4 +15,6 @@ public class WeaponSwaySettings : ScriptableObject
     public bool tiltY;
     public bool tiltZ;
 
+    [Header("Bob Settings")]
+    public bool isBobEnabled;
 }

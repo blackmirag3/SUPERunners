@@ -7,9 +7,9 @@ public class BobSettings : ScriptableObject
 {
 
     [Header("Bob Settings")]
-    public bool enable;
-    [Range(0, 0.1f)] public float amplitude;
-    [Range(0, 30)] public float frequency;
-    public float toggleSpeed;
+    public bool isBobEnabled;
+    [Range(0, 0.01f)] public float baseAmplitude;
+    [Range(0, 30)] public float baseFrequency;
+    public float baseSpeed;
     public float stabAmount;
 }

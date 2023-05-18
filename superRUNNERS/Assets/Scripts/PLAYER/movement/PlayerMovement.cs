@@ -45,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isWASD;
     public bool onSlope;
 
-    float horizontalInput;
-    float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
 
     Rigidbody rb;
 
