@@ -30,19 +30,18 @@ public class WeaponMovement : MonoBehaviour {
     private float speedCurve;
     private float curveSin { get => Mathf.Sin(speedCurve); }
     private float curveCos { get => Mathf.Cos(speedCurve); }
+    private Vector2 walkInput;
 
     private void Start()
     {
-        bobPosition += transform.localPosition;
         InitialiseSettings();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         MoveSway();
         TiltSway();
         //WeaponShift();
-     
         //BobOffset();
         CompositePositionRotation();
     }
@@ -59,45 +58,11 @@ public class WeaponMovement : MonoBehaviour {
         tiltZ = settings.tiltZ;
     }
 
-    void BobOffset()
-    {
-        speedCurve += Time.deltaTime * (player.isGrounded ? (player.horizontalInput + player.verticalInput) * 2 : 1f) + 0.01f;
-
-        //bobPosition.x = (curveCos * bobLimit.x * (player.isGrounded ? 1 : 0)) - (player.horizontalInput * travelLimit.x);
-       // bobPosition.y = (curveSin * bobLimit.y) - (player.verticalInput * travelLimit.y);
-        //bobPosition.z = -(player.verticalInput * travelLimit.z);
-    }
-
-    /*
-    void WeaponShift()
-    {
-        bobEulerRotation.x = (player.isWASD ? bobMultiplier.x * (Mathf.Sin(2 * speedCurve)) : bobMultiplier.x * (Mathf.Sin(2 * speedCurve) / 2));
-        bobEulerRotation.y = (player.isWASD ? bobMultiplier.y * curveCos : 0);
-        bobEulerRotation.z = (player.isWASD ? bobMultiplier.z * curveCos * player.horizontalInput : 0);
-    }
-
-    private void BobRotation()
-    {
-        if ((player.isGrounded || player.isWallRunning) && player.isWASD)
-        {
-            bobEulerRotation.x = bobMultiplier.x * (Mathf.Sin(2 * speedCurve));
-            bobEulerRotation.y = bobMultiplier.y * curveCos;
-            bobEulerRotation.z = bobMultiplier.z * curveCos * player.horizontalInput;
-        }
-        else
-        {
-            bobEulerRotation.x = bobMultiplier.x * (Mathf.Sin(2 * speedCurve)) / 2;
-            bobEulerRotation.y = 0;
-            bobEulerRotation.z = 0;
-        }
-    }*/
-
     private void MoveSway()
     {
         Quaternion rotationX = Quaternion.AngleAxis(playerCam.mouseY * tiltMultiplier, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(-playerCam.mouseX * tiltMultiplier, Vector3.up);
         swayAmount = rotationX * rotationY;
-        //transform.localRotation = Quaternion.Slerp(transform.localRotation, swayAmount, Time.deltaTime * swaySmoothing);
     }
 
     private void TiltSway()
@@ -109,13 +74,21 @@ public class WeaponMovement : MonoBehaviour {
             tiltY ? rotationY : 0,
             tiltZ ? rotationY : 0
             ));
-        //transform.localRotation = Quaternion.Slerp(transform.localRotation, tiltAmount, Time.deltaTime * swaySmoothing);
     }
 
     void CompositePositionRotation()
     {
-        //transform.localPosition = Vector3.Lerp(transform.localPosition,bobPosition, Time.deltaTime * swaySmoothing);
+       // transform.localPosition = Vector3.Lerp(transform.localPosition, bobPosition, Time.deltaTime * swaySmoothing);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, swayAmount * tiltAmount, Time.deltaTime * swaySmoothing);
     }
 
+    /*
+    void BobOffset()
+    {
+        speedCurve += Time.deltaTime * (player.isGrounded ? player.currVelocity.magnitude : 1f) + 0.01f;
+
+        bobPosition.x = (curveCos * bobLimit.x * (player.isGrounded ? 1f : 0)) - (player.horizontalInput * travelLimit.x);
+        bobPosition.y = (curveSin * bobLimit.y) - (player.verticalInput * travelLimit.y);
+        bobPosition.z = -(player.verticalInput * travelLimit.z);
+    }*/
 }

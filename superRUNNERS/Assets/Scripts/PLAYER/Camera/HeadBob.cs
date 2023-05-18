@@ -32,7 +32,7 @@ public class HeadBob : MonoBehaviour
         {
             PlayMotion();
             ResetPosition();
-            //cam.LookAt(FocusTarget());
+            cam.LookAt(FocusTarget());
         }
     }
 
@@ -55,8 +55,8 @@ public class HeadBob : MonoBehaviour
 
     private Vector3 FocusTarget()
     {
-        Vector3 focusPos = new Vector3(transform.position.x, transform.position.y + camPos.localPosition.y, transform.position.z);
-        focusPos += camHolder.forward * stabAmount; //stabAmount => distance of focal point for camera. Higher = More stable
+        Vector3 focusPos = new Vector3(camHolder.position.x, camHolder.position.y, camHolder.position.z);
+        focusPos += cam.forward * stabAmount; //stabAmount => distance of focal point for camera. Higher = More stable
         return focusPos;
     }
 
