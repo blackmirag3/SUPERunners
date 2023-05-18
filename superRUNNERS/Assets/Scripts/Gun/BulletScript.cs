@@ -11,6 +11,8 @@ public class BulletScript : MonoBehaviour
     private string playerName = "PlayerBody";
     private readonly string[] tagArr = { "Gun" };
     private Collider playerCol;
+    public float damage = 0;
+
 
     [SerializeField]
     private string enemyTag = "Enemy";

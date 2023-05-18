@@ -15,6 +15,7 @@ public class OnDeath : MonoBehaviour
 
         enemyHand.GetChild(0).gameObject.SetActive(false);
         Rigidbody gunRb = playerGun.GetComponent<Rigidbody>();
+        ColIgnore(playerGun.GetComponent<Collider>());
 
         Vector3 dir = enemy.player.position - playerGun.transform.position;
         float h = dir.y;
@@ -28,8 +29,17 @@ public class OnDeath : MonoBehaviour
         float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a));
 
         gunRb.velocity = velocity * dir.normalized;
-        float spin = Random.Range(-1f, 1f);
+        float spin = Random.Range(-10f, 10f);
         gunRb.AddTorque(new Vector3(spin, spin, spin));
+    }
+    
+    private void ColIgnore(Collider col)
+    {
+        Collider[] enemyColls = GetComponentsInChildren<Collider>();
+        foreach (Collider enemyCol in enemyColls)
+        {
+            Physics.IgnoreCollision(col, enemyCol);
+        }
     }
 
     private void OnEnable()

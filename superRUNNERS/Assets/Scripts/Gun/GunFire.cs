@@ -117,6 +117,7 @@ public class GunFire : MonoBehaviour
         // Instantiate bullet
         GameObject currBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
         currBullet.SetActive(true);
+        currBullet.GetComponent<BulletScript>().damage = gunData.damage;
 
         // Rotate bullet to shooting direction
         currBullet.transform.forward = dirSpread.normalized;

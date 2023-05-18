@@ -5,13 +5,26 @@ using UnityEngine;
 public class OnCollisionEnterDeath : MonoBehaviour
 {
     public EnemyBehaviour enemy;
+    [SerializeField] private string bulletTag = "PlayerBullet";
+    [SerializeField] private string gunTag = "Gun";
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
+        if (!enemy.recentHit)
         {
-            Debug.Log("Bullet hit detected");
-            enemy.isDead = true;
+            if (collision.gameObject.CompareTag(bulletTag))
+            {
+                enemy.recentHit = true;
+                float damage = collision.gameObject.GetComponent<BulletScript>().damage;
+                Debug.Log("Bullet hit detected");
+                enemy.Damage(damage);
+            }
+            else if (collision.gameObject.CompareTag(gunTag))
+            {
+                enemy.recentHit = true;
+                Debug.Log("Gun hit detected");
+                enemy.Damage(0.5f);
+            }
         }
     }
 }

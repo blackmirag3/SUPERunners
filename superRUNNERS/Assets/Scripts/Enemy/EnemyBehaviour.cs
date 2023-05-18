@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IDamageable
 {
     private NavMeshAgent enemy;
     public Transform player;
@@ -16,14 +16,39 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemyGun enemyGun;
     public OnDeath death;
 
+    private float enemyHealth;
+    public bool recentHit = false;
     //TODO check dead function
     //bool checkDead?
+
+    public void Damage(float damage)
+    {
+        enemyHealth -= damage;
+        Invoke(nameof(ResetHit), 0.25f);
+        if (enemyHealth <= 0)
+        {
+            isDead = true;
+        }
+    }
+
+    private void ResetHit()
+    {
+        recentHit = false;
+    }
 
     private void EnemyChase()
     {
         enemy.SetDestination(player.position); //chase player
         hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
+
+        if (hasReachedPlayer)
+        {
+            Vector3 dir = player.position - transform.position;
+            Quaternion enemyFaceRotation = Quaternion.LookRotation(dir);
+            float yRotation = enemyFaceRotation.eulerAngles.y;
+            transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+        }
     }
 
     private bool HasLOS()
@@ -54,6 +79,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void Start()
     {
         death.enabled = false;
+        enemyHealth = 1f;
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = attackRange;
@@ -93,6 +119,7 @@ public class EnemyBehaviour : MonoBehaviour
         //Debug.Log("enemy is idle: " + isIdle);
         //Debug.Log("enemy has reached player: " + hasReachedPlayer);
     }
+
 }
         
 
