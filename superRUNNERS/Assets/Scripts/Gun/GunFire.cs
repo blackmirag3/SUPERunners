@@ -26,7 +26,6 @@ public class GunFire : MonoBehaviour
 
     [HideInInspector] 
     public Camera playerCam;
-    [HideInInspector] 
     public Transform attackPoint;
     [HideInInspector] 
     public GameObject muzzleFlash;
@@ -34,7 +33,6 @@ public class GunFire : MonoBehaviour
     public TextMeshProUGUI ammoDisplay;
 
     [SerializeField] private string camName = "PlayerCam";
-    [SerializeField] private string pointName = "Muzzle";
     [SerializeField] private string guiTextname = "AmmoIndicator";
 
     // bug fixing
@@ -58,7 +56,6 @@ public class GunFire : MonoBehaviour
     {
         ammoLeft = magSize;
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
-        attackPoint = GameObject.Find(pointName).GetComponent<Transform>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
         shootingSound = GetComponent<AudioSource>();
     }

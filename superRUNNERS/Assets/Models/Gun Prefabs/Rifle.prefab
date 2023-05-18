@@ -193,6 +193,7 @@ MonoBehaviour:
   playerName: PlayerBody
   camName: PlayerCam
   pickupKey: 102
+  throwKey: 324
 --- !u!114 &8992282703537518641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: 61b39e33daade0a469b4d3e13eab2322, type: 2}
-  bullet: {fileID: 0}
+  bullet: {fileID: 176118750481033742, guid: a314f88652f85f641ad45c54baec937a, type: 3}
   shootForce: 0
   ammoLeft: 0
   bulletsShot: 0
@@ -216,11 +217,10 @@ MonoBehaviour:
   bulletsPerShot: 0
   magSize: 0
   playerCam: {fileID: 0}
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 8992282702713375229}
   muzzleFlash: {fileID: 0}
   ammoDisplay: {fileID: 0}
   camName: PlayerCam
-  pointName: RifleMuzzle
   guiTextname: AmmoIndicator
   allowInvoke: 1
   shootingSound: {fileID: 8992282703537518653}
@@ -234,7 +234,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c5d6f8134452f9046a7aeb27b5c78d6d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d2714b485853e9f4481f914e09b2f24a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

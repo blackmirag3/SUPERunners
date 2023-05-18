@@ -14,18 +14,19 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackRange;
     public float enemySpeed;
     public EnemyGun enemyGun;
+    public OnDeath death;
 
     //TODO check dead function
     //bool checkDead?
 
-    void EnemyChase()
+    private void EnemyChase()
     {
         enemy.SetDestination(player.position); //chase player
         hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
     }
 
-    bool HasLOS()
+    private bool HasLOS()
     {
         bool hasLOS = false;
         NavMeshHit hit;
@@ -38,7 +39,7 @@ public class EnemyBehaviour : MonoBehaviour
         return hasLOS;
     }
 
-    void EnemyShoot() //called by animation event
+    public void EnemyShoot() //called by animation event
     {
         if (HasLOS())
         {
@@ -50,8 +51,9 @@ public class EnemyBehaviour : MonoBehaviour
     }
     //TODO throw gun on death function
 
-    void Start()
+    private void Start()
     {
+        death.enabled = false;
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = attackRange;
@@ -61,11 +63,12 @@ public class EnemyBehaviour : MonoBehaviour
         enemy.speed = enemySpeed;
     }
 
-    void Update()
+    private void Update()
     {
         if (isDead) //dead state
         {
             anim.enabled = false;
+            death.enabled = true;
             //anim.SetBool("isDead", isDead);
             //Debug.Log("enemy is dead:" + isDead);
         }
