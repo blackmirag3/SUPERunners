@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6361a976a366e94f903e8210de36f9e, type: 3}
-  m_Name: BobSettings
+  m_Name: PlayerCamSettings
   m_EditorClassIdentifier: 
+  sensX: 500
+  sensY: 500
+  sprintFov: 105
   isBobEnabled: 1
-  baseAmplitude: 0.0015
-  baseFrequency: 16
-  baseSpeed: 3.6
-  stabAmount: 10
+  bobAmplitude: 0.0016
+  bobFrequency: 16
+  stabAmount: 0
