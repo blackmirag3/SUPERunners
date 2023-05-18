@@ -21,12 +21,14 @@ public class WeaponMovement : MonoBehaviour {
 
     [Header("Bob")]
     //private bool isBobEnabled = true;
-    private float bob;
-    private float bobFrequency;
+    private float bobFrequency = 16f;
+    private float bobAmplitudeY = 0.0003f;
+    private float bobAmplitudeX = 0.0001f;
+    private Vector3 startPos;
 
     private void Start()
     {
-        //startPos = transform.localPosition;
+        startPos = transform.localPosition;
         InitialiseSettings();
     }
 
@@ -34,8 +36,7 @@ public class WeaponMovement : MonoBehaviour {
     {
         MoveSway();
         TiltSway();
-        //WeaponShift();
-        //BobOffset();
+        WeaponBob();
         CompositePositionRotation();
     }
 
@@ -50,22 +51,20 @@ public class WeaponMovement : MonoBehaviour {
         tiltY = settings.tiltY;
         tiltZ = settings.tiltZ;
     }
-    /*
+
     private void WeaponBob()
     {
-        transform.localPosition += cam.up * Mathf.Sin(Time.time * baseFrequency) * bobAmplitude;
-        transform.localPosition += cam.right * Mathf.Cos(Time.time * baseFrequency / 2) * bobAmplitude / 2;
-
-        //if (transform.localPosition != startPos)
-    }
-
-    private void ResetPosition()
-    {
-        if (localPosition != startPos)
+        if ((player.isGrounded || player.isWallRunning) && player.isWASD)
         {
-            cam.localPosition = Vector3.Lerp(cam.localPosition, startPos, 1 * Time.deltaTime);
+            transform.localPosition += -transform.up * Mathf.Sin(Time.time * bobFrequency) * bobAmplitudeY;
+            transform.localPosition += transform.right * Mathf.Cos(Time.time * bobFrequency / 2) * bobAmplitudeX;
         }
-    }*/
+
+        if (transform.localPosition != startPos) //Reset pos
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, 3f * Time.deltaTime);
+        }
+    }
 
     private void MoveSway()
     {
@@ -87,17 +86,7 @@ public class WeaponMovement : MonoBehaviour {
 
     void CompositePositionRotation()
     {
-       // transform.localPosition = Vector3.Lerp(transform.localPosition, bobPosition, Time.deltaTime * swaySmoothing);
+        //transform.localPosition = Vector3.Lerp(transform.localPosition, bobPosition, Time.deltaTime * swaySmoothing); //Reset pos
         transform.localRotation = Quaternion.Slerp(transform.localRotation, swayAmount * tiltAmount, Time.deltaTime * swaySmoothing);
     }
-
-    /*
-    void BobOffset()
-    {
-        speedCurve += Time.deltaTime * (player.isGrounded ? player.currVelocity.magnitude : 1f) + 0.01f;
-
-        bobPosition.x = (curveCos * bobLimit.x * (player.isGrounded ? 1f : 0)) - (player.horizontalInput * travelLimit.x);
-        bobPosition.y = (curveSin * bobLimit.y) - (player.verticalInput * travelLimit.y);
-        bobPosition.z = -(player.verticalInput * travelLimit.z);
-    }*/
 }
