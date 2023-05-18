@@ -20,7 +20,6 @@ public class GunPickup : MonoBehaviour
     [SerializeField] private string handName = "Hand";
     [SerializeField] private string playerName = "PlayerBody";
     [SerializeField] private string camName = "PlayerCam";
-    [SerializeField] private string gunTag = "Gun";
 
     [Header("Pickup/Throw Key")]
     public KeyCode pickupKey = KeyCode.Mouse2;
@@ -62,7 +61,7 @@ public class GunPickup : MonoBehaviour
             {
                 //Debug.Log("Gun pick up ray hit");
 
-                if (hit.transform.CompareTag(gunTag))
+                if (hit.transform.position == transform.position)
                 {
                     // Debug.Log("True");
                     Pickup();
