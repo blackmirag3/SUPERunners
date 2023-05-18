@@ -6,7 +6,6 @@ public class WeaponMovement : MonoBehaviour {
     public WeaponMovementSettings settings;
     public PlayerCam playerCam;
     public PlayerMovement player;
-    public HeadBob headBob; //sync headbob to weapon bob. To improve sync in future?
 
     [Header("Sway")]
     //[SerializeField] private bool isSwayEnabled;
@@ -22,18 +21,12 @@ public class WeaponMovement : MonoBehaviour {
 
     [Header("Bob")]
     //private bool isBobEnabled = true;
-    private Vector3 bobMultiplier = Vector3.one * 2;
-    //private Vector3 bobEulerRotation;
-    public Vector3 travelLimit = Vector3.one * 0.025f;
-    public Vector3 bobLimit = Vector3.one * 0.01f;
-    private Vector3 bobPosition = Vector3.zero;
-    private float speedCurve;
-    private float curveSin { get => Mathf.Sin(speedCurve); }
-    private float curveCos { get => Mathf.Cos(speedCurve); }
-    private Vector2 walkInput;
+    private float bob;
+    private float bobFrequency;
 
     private void Start()
     {
+        //startPos = transform.localPosition;
         InitialiseSettings();
     }
 
@@ -57,6 +50,22 @@ public class WeaponMovement : MonoBehaviour {
         tiltY = settings.tiltY;
         tiltZ = settings.tiltZ;
     }
+    /*
+    private void WeaponBob()
+    {
+        transform.localPosition += cam.up * Mathf.Sin(Time.time * baseFrequency) * bobAmplitude;
+        transform.localPosition += cam.right * Mathf.Cos(Time.time * baseFrequency / 2) * bobAmplitude / 2;
+
+        //if (transform.localPosition != startPos)
+    }
+
+    private void ResetPosition()
+    {
+        if (localPosition != startPos)
+        {
+            cam.localPosition = Vector3.Lerp(cam.localPosition, startPos, 1 * Time.deltaTime);
+        }
+    }*/
 
     private void MoveSway()
     {
