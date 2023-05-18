@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6361a976a366e94f903e8210de36f9e, type: 3}
   m_Name: BobSettings
   m_EditorClassIdentifier: 
-  enable: 1
-  amplitude: 0.1
-  frequency: 10
-  toggleSpeed: 1
-  stabAmount: 0
+  isBobEnabled: 1
+  baseAmplitude: 0.0015
+  baseFrequency: 16
+  baseSpeed: 3.6
+  stabAmount: 10
