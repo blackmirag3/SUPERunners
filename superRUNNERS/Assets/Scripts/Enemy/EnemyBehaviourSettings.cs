@@ -12,5 +12,5 @@ public class EnemyBehaviourSettings : ScriptableObject
     public float enemyHealth;
     public float enemySpeed;
     public float stoppingDistance;
-    public float timePerShot;
+    //public float shootingDelay; //TODO change to aggression
 }

@@ -19729,7 +19729,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 625798716}
-  - component: {fileID: 625798717}
   m_Layer: 30
   m_Name: Player
   m_TagString: Player
@@ -19754,18 +19753,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &625798717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625798715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df708bfb9c176648a5a2bbaf9e9ada3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &645770587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19832,6 +19819,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989937496402867647, guid: b5324df83c6f2ab4295ae29d6d52bef2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5324df83c6f2ab4295ae29d6d52bef2, type: 3}
@@ -24033,6 +24025,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 185704312, guid: c790006baad16034891c4f5f68ae3fd3, type: 3}
+      propertyPath: gunData
+      value: 
+      objectReference: {fileID: 11400000, guid: 61b39e33daade0a469b4d3e13eab2322,
+        type: 2}
+    - target: {fileID: 185704312, guid: c790006baad16034891c4f5f68ae3fd3, type: 3}
       propertyPath: playerPos
       value: 
       objectReference: {fileID: 2371581502882052832}
@@ -24159,6 +24156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009800676310510505, guid: c790006baad16034891c4f5f68ae3fd3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5204455712883450335, guid: c790006baad16034891c4f5f68ae3fd3, type: 3}
@@ -33880,9 +33882,8 @@ MonoBehaviour:
   shootForce: 0
   ammoLeft: 0
   bulletsShot: 0
-  rpm: 0
+  fireRate: 0
   spread: 0
-  timeBetweenBullets: 0
   bulletsPerShot: 0
   magSize: 0
   playerCam: {fileID: 0}
@@ -34727,14 +34728,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195fd2f0fe878454dab093aba223661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
+  gunData: {fileID: 0}
   currBullet: {fileID: 6404851984394500890, guid: fe6d88918992682449c2dc38b3e7a7a7,
     type: 3}
   shootingSound: {fileID: 394616478}
   bulletPos: {fileID: 908984300}
   playerPos: {fileID: 2371581502882052832}
-  bulletVelocity: 100
-  inaccuracy: 1
+  shotDelay: 0
+  burstSize: 0
+  fireRate: 0
+  bulletsPerShot: 0
 --- !u!1 &1671412354
 GameObject:
   m_ObjectHideFlags: 0
@@ -34789,9 +34792,8 @@ MonoBehaviour:
   shootForce: 0
   ammoLeft: 0
   bulletsShot: 0
-  rpm: 0
+  fireRate: 0
   spread: 0
-  timeBetweenBullets: 0
   bulletsPerShot: 0
   magSize: 0
   playerCam: {fileID: 0}
@@ -52268,9 +52270,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2371581502882052832}
   anim: {fileID: 8198895665744704151}
-  settings: {fileID: 0}
   enemyGun: {fileID: 1665359309}
   death: {fileID: 0}
+  settings: {fileID: 0}
   isDead: 0
   recentHit: 0
 --- !u!1 &1960319851 stripped
@@ -52573,9 +52575,8 @@ MonoBehaviour:
   shootForce: 0
   ammoLeft: 0
   bulletsShot: 0
-  rpm: 0
+  fireRate: 0
   spread: 0
-  timeBetweenBullets: 0
   bulletsPerShot: 0
   magSize: 0
   playerCam: {fileID: 0}
@@ -54679,14 +54680,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195fd2f0fe878454dab093aba223661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
+  gunData: {fileID: 11400000, guid: 1fe8a300b815add40a7439978b88d363, type: 2}
   currBullet: {fileID: 6404851984394500890, guid: fe6d88918992682449c2dc38b3e7a7a7,
     type: 3}
   shootingSound: {fileID: 7813933702830471641}
   bulletPos: {fileID: 313371596734066007}
   playerPos: {fileID: 2371581502882052832}
-  bulletVelocity: 100
-  inaccuracy: 1
+  shotDelay: 0
+  burstSize: 0
+  fireRate: 0
+  bulletsPerShot: 0
 --- !u!114 &2106872482059015909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54701,9 +54704,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2371581502882052832}
   anim: {fileID: 7851262302744876456}
-  settings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c, type: 2}
   enemyGun: {fileID: 2106872481820621554}
   death: {fileID: 7851262302744876458}
+  settings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c, type: 2}
   isDead: 0
   recentHit: 0
 --- !u!195 &2106872482059015911

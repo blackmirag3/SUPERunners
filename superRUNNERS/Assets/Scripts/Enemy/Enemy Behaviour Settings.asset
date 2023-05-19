@@ -18,4 +18,3 @@ MonoBehaviour:
   enemyHealth: 1
   enemySpeed: 5
   stoppingDistance: 6
-  timePerShot: 1
