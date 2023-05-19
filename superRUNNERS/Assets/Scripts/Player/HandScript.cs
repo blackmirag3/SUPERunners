@@ -22,6 +22,7 @@ public class HandScript : MonoBehaviour
     {
         handHitbox = GetComponentInChildren<Collider>();
         handHitbox.enabled = false;
+        handHitbox.isTrigger = true;
     }
 
     // Update is called once per frame
@@ -93,19 +94,21 @@ public class HandScript : MonoBehaviour
 
     private void MeleeAttack()
     {
-        GetCamRay();
-        canPunch = false;
-        // Animate melee punch
-        /*
-        Animator handAnim = GetComponent<Animator>();
-        handAnim.SetTrigger("Punch");
-        Invoke(nameof(ResetMelee), punchCD);
-        */
-    }
+        canPunch = false;       
+        handHitbox.enabled = true;
 
+        // Animate melee punch
+        Animator handAnim = GetComponentInChildren<Animator>();
+        handAnim.SetTrigger("Punch");
+        
+        Invoke(nameof(ResetMelee), punchCD);
+    }
+    
     private void ResetMelee()
     {
+        handHitbox.enabled = false;
         canPunch = true;
     }
+    
 
 }

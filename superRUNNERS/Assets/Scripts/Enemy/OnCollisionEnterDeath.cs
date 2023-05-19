@@ -27,4 +27,17 @@ public class OnCollisionEnterDeath : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!enemy.recentHit)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                enemy.recentHit = true;
+                Debug.Log("Melee hit detected");
+                enemy.Damage(0.5f);
+            }
+        }
+    }
 }
