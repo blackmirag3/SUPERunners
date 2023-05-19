@@ -77,7 +77,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             enemyGun.FireBullet();
             anim.Play("Upper Body.Pistol Shoot", -1, 0);
             currentShotTimer = 0;
-            Debug.Log(currentShotTimer);
         }
 
         currentShotTimer += Time.deltaTime;

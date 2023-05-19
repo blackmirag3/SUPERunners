@@ -10,7 +10,6 @@ public class BulletScript : MonoBehaviour
     [SerializeField]
     private string playerName = "PlayerBody";
     private readonly string[] tagArr = { "Gun" };
-    private Collider playerCol;
     public float damage = 0;
 
 

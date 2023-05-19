@@ -2,38 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunPickup : MonoBehaviour
+public class GunPickup : MonoBehaviour, IHoldable
 {
 
-    public Transform player, hand;
-    public Camera playerCam;
     public GunFire gun;
     public Rigidbody rb;
     public BoxCollider col;
     
-    public float pickupRange;
     public float throwForwardForce, throwUpForce;
 
     public bool equipped;
-    public static bool handFull;
+    public bool outOfAmmo = false;
 
-    [SerializeField] private string handName = "Hand";
-    [SerializeField] private string playerName = "PlayerBody";
-    [SerializeField] private string camName = "PlayerCam";
-
-    [Header("Pickup/Throw Key")]
-    public KeyCode pickupKey = KeyCode.Mouse2;
-    public KeyCode throwKey = KeyCode.Mouse1;
 
     void Start()
     {
         gun = GetComponent<GunFire>();
         rb = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
-        hand = GameObject.Find(handName).GetComponent<Transform>();
-        player = GameObject.Find(playerName).GetComponent<Transform>();
-        playerCam = GameObject.Find(camName).GetComponent<Camera>();
-        
+
+        outOfAmmo = false;
+
         if (equipped)
         {
             gun.enabled = true;
@@ -52,36 +41,17 @@ public class GunPickup : MonoBehaviour
     private void Update()
     {
         // Player in range
-        Vector3 distToPlayer = player.position - transform.position;
-        if (!handFull && !equipped && distToPlayer.magnitude <= pickupRange && Input.GetKeyDown(pickupKey))
-        {
-            Ray camPoint = playerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); ;
-            RaycastHit hit;
-            if (Physics.Raycast(camPoint, out hit))
-            {
-                //Debug.Log("Gun pick up ray hit");
+        
 
-                if (hit.transform.position == transform.position)
-                {
-                    // Debug.Log("True");
-                    Pickup();
-                }
-            }
-        }
-
-        if (equipped)
+        if (equipped && gun.ammoLeft == 0)
         {
-            if ((gun.ammoLeft == 0 && Input.GetKeyDown(KeyCode.Mouse0)) || Input.GetKeyDown(throwKey))
-            {
-                ThrowGun();
-            }
+            outOfAmmo = true;
         }
     }
 
-    private void Pickup()
+    public void Pickup(Transform hand)
     {
         equipped = true;
-        handFull = true;
 
         // Disable forces acting on gun and BoxCollider a trigger
         rb.isKinematic = true;
@@ -97,10 +67,9 @@ public class GunPickup : MonoBehaviour
         gun.enabled = true;
     }
 
-    private void ThrowGun()
+    public void Throw(Vector3 dir, Vector3 velocity)
     {
         equipped = false;
-        handFull = false;
 
         transform.SetParent(null);
         
@@ -109,13 +78,18 @@ public class GunPickup : MonoBehaviour
         col.isTrigger = false;
 
         // Throw gun
-        rb.velocity = player.GetComponent<Rigidbody>().velocity;
-        rb.AddForce(playerCam.GetComponent<Transform>().forward * throwForwardForce, ForceMode.Impulse);
-        rb.AddForce(playerCam.GetComponent<Transform>().up * throwUpForce, ForceMode.Impulse);
+        rb.velocity = velocity;
+        rb.AddForce(dir.normalized * throwForwardForce, ForceMode.Impulse);
+        rb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);
 
         float random = Random.Range(-1f, 1f);
         rb.AddTorque(new Vector3(random, random, random));
 
         gun.enabled = false;
+    }
+
+    public bool MustThrow()
+    {
+        return outOfAmmo;
     }
 }
