@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy Behaviour Settings")]
 public class EnemyBehaviourSettings : ScriptableObject
 {
-    [Header("Header")]
+    [Header("Settings")]
     public bool isIdle;
     public bool isDead;
     public bool hasReachedPlayer;

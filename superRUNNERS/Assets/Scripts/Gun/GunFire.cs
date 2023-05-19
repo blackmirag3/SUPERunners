@@ -23,6 +23,7 @@ public class GunFire : MonoBehaviour
     public int magSize;
 
     bool shooting, canShoot;
+    private Vector3 shotDir;
 
     [HideInInspector] 
     public Camera playerCam;
@@ -47,8 +48,7 @@ public class GunFire : MonoBehaviour
         spread = gunData.spread;
         timeBetweenBullets = gunData.timeBetweenBullets;
         bulletsPerShot = gunData.bulletsPerShot;
-        magSize = gunData.magSize;
-        
+        magSize = gunData.magSize;        
         canShoot = true;
     }
 
@@ -81,7 +81,6 @@ public class GunFire : MonoBehaviour
         if (canShoot && shooting && ammoLeft > 0)
         {
             bulletsShot = 0;
-
             Shoot();
         }
 
@@ -106,13 +105,18 @@ public class GunFire : MonoBehaviour
             targetPoint = ray.GetPoint(75);
 
         // Calculate direction from attackPoint to targetPoint
-        Vector3 dir = targetPoint - attackPoint.position;
+        shotDir = targetPoint - attackPoint.position;
 
+        ShootOneBullet();
+    }
+
+    private void ShootOneBullet()
+    {
         // Calculate new dir with spread
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
         float z = Random.Range(-spread, spread);
-        Vector3 dirSpread = dir + new Vector3(x, y, z);
+        Vector3 dirSpread = shotDir + new Vector3(x, y, z);
 
         // Instantiate bullet
         GameObject currBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
@@ -127,9 +131,11 @@ public class GunFire : MonoBehaviour
 
         if (muzzleFlash != null)
             Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-
+        
         ammoLeft--;
         bulletsShot++;
+
+        Debug.Log("player shot 1 bullet");
 
         if (allowInvoke)
         {
@@ -139,7 +145,7 @@ public class GunFire : MonoBehaviour
 
         // More than one bullet per tap
         if (bulletsShot < bulletsPerShot && ammoLeft > 0)
-            Invoke("Shoot", timeBetweenBullets);
+            Invoke("ShootOneBullet", timeBetweenBullets);
     }
 
     private void ResetShot()

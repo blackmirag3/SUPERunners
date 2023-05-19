@@ -34727,13 +34727,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195fd2f0fe878454dab093aba223661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 0}
   currBullet: {fileID: 6404851984394500890, guid: fe6d88918992682449c2dc38b3e7a7a7,
     type: 3}
+  shootingSound: {fileID: 394616478}
   bulletPos: {fileID: 908984300}
   playerPos: {fileID: 2371581502882052832}
-  bulletRot: {x: 0, y: 0, z: 0, w: 0}
   bulletVelocity: 100
-  shootingSound: {fileID: 394616478}
   inaccuracy: 1
 --- !u!1 &1671412354
 GameObject:
@@ -54679,13 +54679,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195fd2f0fe878454dab093aba223661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 0}
   currBullet: {fileID: 6404851984394500890, guid: fe6d88918992682449c2dc38b3e7a7a7,
     type: 3}
+  shootingSound: {fileID: 7813933702830471641}
   bulletPos: {fileID: 313371596734066007}
   playerPos: {fileID: 2371581502882052832}
-  bulletRot: {x: 0, y: 0, z: 0, w: 0}
   bulletVelocity: 100
-  shootingSound: {fileID: 7813933702830471641}
   inaccuracy: 1
 --- !u!114 &2106872482059015909
 MonoBehaviour:
@@ -59666,7 +59666,6 @@ Transform:
   - {fileID: 1715631046268240903}
   - {fileID: 980358502129585380}
   - {fileID: 7393221463672476710}
-  - {fileID: 7851262302621780656}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59854,37 +59853,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &7851262302621780656
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7851262302621780657}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7746173810660381849}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7851262302621780657
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7851262302621780656}
-  m_Layer: 0
-  m_Name: State
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!95 &7851262302744876456
 Animator:
   serializedVersion: 5

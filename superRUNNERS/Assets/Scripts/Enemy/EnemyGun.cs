@@ -6,24 +6,28 @@ using UnityEngine;
 
 public class EnemyGun : MonoBehaviour
 {
+    public EnemyGunData gunData;
     public GameObject currBullet;
-    public Transform bulletPos, playerPos;
-    public Quaternion bulletRot;
-    public float bulletVelocity = 20f; //TODO get gun velocity
     public AudioSource shootingSound;
-    public float inaccuracy = 1f; //TODO get gun inaccuracy
+    public Transform bulletPos, playerPos;
+
+    public float bulletVelocity = 20f;
+    public float inaccuracy = 1f;
+
+    //TODO fire different gun functions + stats, based on player gun script or 
 
     // Start is called before the first frame update
     void Start()
     {
+        InitialiseGunData();
     }
 
     // Update is called once per frame
     void Update()
     {
-            
+            //InitialiseSettings
     }
-    //TODO fire different gun functions?
+
     public void FireBullet()
     {
         
@@ -37,4 +41,10 @@ public class EnemyGun : MonoBehaviour
         // Destroy(newBullet, 5); //TODO bullet despawn   
         shootingSound.Play(); //TODO improve shooting...? based on weapon type too?
     }
+
+    private void InitialiseGunData()
+    {
+
+    }
+
 }
