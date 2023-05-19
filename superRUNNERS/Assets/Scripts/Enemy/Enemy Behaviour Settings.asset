@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2814f44196943c94ab1d1c81062590ce, type: 3}
+  m_Name: Enemy Behaviour Settings
+  m_EditorClassIdentifier: 
+  isIdle: 1
+  isDead: 0
+  hasReachedPlayer: 0
+  enemyHealth: 1
+  enemySpeed: 5
+  stoppingDistance: 6
+  timePerShot: 1

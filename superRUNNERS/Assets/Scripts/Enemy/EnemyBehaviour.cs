@@ -8,19 +8,21 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private NavMeshAgent enemy;
     public Transform player;
     public Animator anim;
-    private bool isIdle;
-    private bool hasReachedPlayer;
-    public bool isDead;
-    public float stoppingDistance = 6f;
-    public float enemySpeed;
+
+    public EnemyBehaviourSettings settings;
+
+    private float stoppingDistance;
+    private float enemySpeed;
     public EnemyGun enemyGun;
     public OnDeath death;
 
+    public bool isDead;
+    private bool isIdle;
+    private bool hasReachedPlayer;
     private float enemyHealth;
     public bool recentHit = false;
-
     private float currentShotTimer;
-    public float shotTimer;
+    private float timePerShot;
 
     //TODO
     //check aggro function
@@ -70,7 +72,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     public void EnemyShoot()
     {
-        if (currentShotTimer > shotTimer && HasLOS())
+        if (currentShotTimer > timePerShot && HasLOS())
         {
             enemyGun.FireBullet();
             anim.Play("Upper Body.Pistol Shoot", -1, 0);
@@ -81,18 +83,25 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         currentShotTimer += Time.deltaTime;
     }
 
+    private void InitialiseSettings()
+    {
+        isIdle = settings.isIdle;
+        isDead = settings.isDead;
+        hasReachedPlayer = settings.hasReachedPlayer;
+        enemyHealth = settings.enemyHealth;
+        enemySpeed = settings.enemySpeed;
+        stoppingDistance = settings.stoppingDistance;
+        timePerShot = settings.timePerShot;
+    }
+
     private void Start()
     {
-        death.enabled = false;
-        enemyHealth = 1f;
+        InitialiseSettings();
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = stoppingDistance;
-        isIdle = true;
-        hasReachedPlayer = false;
-        isDead = false;
+        death.enabled = false;
         enemy.speed = enemySpeed;
-        shotTimer = 3f;
     }
 
     private void Update()
