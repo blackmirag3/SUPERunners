@@ -14,7 +14,7 @@ public class GunData : ScriptableObject
     public float shootForce;
     public float damage;
     public float maxDist;
-    public float spread, timeBetweenBullets;
+    public float spread; //timeBetweenBullets;
 
     [Header("Ammo")]
     public int bulletsPerShot;

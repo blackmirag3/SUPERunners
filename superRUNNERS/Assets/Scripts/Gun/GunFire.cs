@@ -18,7 +18,7 @@ public class GunFire : MonoBehaviour
     public int ammoLeft, bulletsShot;
     public float rpm;
     public float spread;
-    public float timeBetweenBullets;
+    //public float timeBetweenBullets;
     public int bulletsPerShot;
     public int magSize;
 
@@ -46,7 +46,7 @@ public class GunFire : MonoBehaviour
         shootForce = gunData.shootForce;
         rpm = gunData.fireRate;
         spread = gunData.spread;
-        timeBetweenBullets = gunData.timeBetweenBullets;
+        //timeBetweenBullets = gunData.timeBetweenBullets;
         bulletsPerShot = gunData.bulletsPerShot;
         magSize = gunData.magSize;        
         canShoot = true;
@@ -135,8 +135,6 @@ public class GunFire : MonoBehaviour
         ammoLeft--;
         bulletsShot++;
 
-        Debug.Log("player shot 1 bullet");
-
         if (allowInvoke)
         {
             Invoke("ResetShot", rpm);
@@ -145,7 +143,8 @@ public class GunFire : MonoBehaviour
 
         // More than one bullet per tap
         if (bulletsShot < bulletsPerShot && ammoLeft > 0)
-            Invoke("ShootOneBullet", timeBetweenBullets);
+            ShootOneBullet();
+            //Invoke("ShootOneBullet", timeBetweenBullets);
     }
 
     private void ResetShot()
