@@ -16,13 +16,14 @@ public class GunFire : MonoBehaviour
 
     // Gun stats
     public int ammoLeft, bulletsShot;
-    public float fireRate;
+    public float rpm;
     public float spread;
     //public float timeBetweenBullets;
     public int bulletsPerShot;
     public int magSize;
 
     bool shooting, canShoot;
+    private Vector3 shotDir;
 
     [HideInInspector] 
     public Camera playerCam;
@@ -43,7 +44,7 @@ public class GunFire : MonoBehaviour
     private void Awake()
     {
         shootForce = gunData.shootForce;
-        fireRate = gunData.fireRate;
+        rpm = gunData.fireRate;
         spread = gunData.spread;
         //timeBetweenBullets = gunData.timeBetweenBullets;
         bulletsPerShot = gunData.bulletsPerShot;
@@ -104,12 +105,12 @@ public class GunFire : MonoBehaviour
             targetPoint = ray.GetPoint(75);
 
         // Calculate direction from attackPoint to targetPoint
-        Vector3 shotDir = targetPoint - attackPoint.position;
+        shotDir = targetPoint - attackPoint.position;
 
-        ShootOneBullet(shotDir);
+        ShootOneBullet();
     }
 
-    private void ShootOneBullet(Vector3 shotDir)
+    private void ShootOneBullet()
     {
         // Calculate new dir with spread
         float x = Random.Range(-spread, spread);
@@ -136,13 +137,13 @@ public class GunFire : MonoBehaviour
 
         if (allowInvoke)
         {
-            Invoke("ResetShot", fireRate);
+            Invoke(nameof(ResetShot), rpm);
             allowInvoke = false; // Invoke once only
         }
 
         // More than one bullet per tap
         if (bulletsShot < bulletsPerShot && ammoLeft > 0)
-            ShootOneBullet(shotDir);
+            ShootOneBullet();
             //Invoke("ShootOneBullet", timeBetweenBullets);
     }
 
