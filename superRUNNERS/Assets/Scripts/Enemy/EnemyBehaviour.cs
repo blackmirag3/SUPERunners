@@ -8,23 +8,30 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private NavMeshAgent enemy;
     public Transform player;
     public Animator anim;
+    public EnemyGun enemyGun;
+    public OnDeath death;
 
     public EnemyBehaviourSettings settings;
 
     private float stoppingDistance;
     private float enemySpeed;
-    public EnemyGun enemyGun;
-    public OnDeath death;
-
     public bool isDead;
     private bool isIdle;
     private bool hasReachedPlayer;
     private float enemyHealth;
     public bool recentHit = false;
+
+    //shooting
     private float currentShotTimer;
-    private float timePerShot;
+    private float shotDelay;
+    private float burstSize;
+    private float bulletsShot;
+    private float fireRate;
+    //private float bulletsPerShot;
+
 
     //TODO
+    //variation in firing
     //check aggro function
     //Enemy attack distance
 
@@ -72,15 +79,28 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     public void EnemyShoot()
     {
-        if (currentShotTimer > timePerShot && HasLOS())
+        if (currentShotTimer > shotDelay && HasLOS())
         {
-            enemyGun.FireBullet();
-            anim.Play("Upper Body.Pistol Shoot", -1, 0);
+            ShootBurst();
             currentShotTimer = 0;
-            Debug.Log(currentShotTimer);
-        }
 
+            //currentShotTimer = Random.Range(0, shotDelay/);
+            // Random.Range(0, currentBurstCounter);
+        }
         currentShotTimer += Time.deltaTime;
+    }
+
+    private void ShootBurst()
+    {
+        enemyGun.Shoot();
+        anim.Play("Upper Body.Pistol Shoot", -1, 0);
+        bulletsShot += 1f;
+
+        if (bulletsShot < burstSize)
+        {
+            Invoke("ShootBurst", fireRate);
+        }
+        else bulletsShot = 0;
     }
 
     private void InitialiseSettings()
@@ -91,7 +111,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemyHealth = settings.enemyHealth;
         enemySpeed = settings.enemySpeed;
         stoppingDistance = settings.stoppingDistance;
-        timePerShot = settings.timePerShot;
     }
 
     private void Start()
@@ -102,6 +121,12 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemy.stoppingDistance = stoppingDistance;
         death.enabled = false;
         enemy.speed = enemySpeed;
+
+        //from enemyGun.gunData (optimise potential)
+        shotDelay = enemyGun.shotDelay;
+        fireRate = enemyGun.fireRate;
+        burstSize = enemyGun.burstSize;
+        //bulletsPerShot = enemyGun.bulletsPerShot;
     }
 
     private void Update()

@@ -6,18 +6,25 @@ using UnityEngine;
 
 public class EnemyGun : MonoBehaviour
 {
-    public EnemyGunData gunData;
+    public GunData gunData;
     public GameObject currBullet;
     public AudioSource shootingSound;
     public Transform bulletPos, playerPos;
 
-    public float bulletVelocity = 20f;
-    public float inaccuracy = 1f;
+    private float inaccuracy;
+    public float shotDelay;
+    public float burstSize;
+    private float bulletVelocity;
+    public float fireRate;
+
+    private float bulletsShot;
+    public float bulletsPerShot;
+
 
     //TODO fire different gun functions + stats, based on player gun script or 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         InitialiseGunData();
     }
@@ -25,26 +32,37 @@ public class EnemyGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            //InitialiseSettings
     }
 
-    public void FireBullet()
+    public void Shoot()
     {
-        
-        GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
-        //PrefabUtility.InstantiatePrefab
-        Vector3 shootDir = (playerPos.position - bulletPos.position + Random.Range(-inaccuracy,inaccuracy) * Vector3.up).normalized;
-        newBullet.transform.forward = shootDir;
-        newBullet.GetComponent<Rigidbody>().AddForce(shootDir * bulletVelocity, ForceMode.Impulse);
+        SpawnOneBullet();
+        shootingSound.Play();
+        bulletsShot = 0;
+    }
 
-        // newBullet.GetComponent<Rigidbody>().velocity = bulletPos.forward * bulletVelocity;
-        // Destroy(newBullet, 5); //TODO bullet despawn   
-        shootingSound.Play(); //TODO improve shooting...? based on weapon type too?
+    public void SpawnOneBullet()
+    {
+        float x = Random.Range(-inaccuracy, inaccuracy);
+        float y = Random.Range(-inaccuracy, inaccuracy);
+        float z = Random.Range(-inaccuracy, inaccuracy);
+        Vector3 shotDir = playerPos.position - bulletPos.position + new Vector3(x, y, z);
+        GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
+        newBullet.transform.forward = shotDir.normalized;
+        newBullet.GetComponent<Rigidbody>().AddForce(shotDir * bulletVelocity, ForceMode.Impulse);
+        bulletsShot += 1f;
+        if (bulletsShot < bulletsPerShot)
+            SpawnOneBullet();
     }
 
     private void InitialiseGunData()
     {
-
+        inaccuracy = gunData.enemyInaccuracy;
+        bulletVelocity = gunData.bulletVelocity;
+        //for enemy behaviour
+        shotDelay = gunData.enemyShotDelay;
+        burstSize = gunData.enemyBurstSize;
+        fireRate = gunData.fireRate;
+        bulletsPerShot = gunData.bulletsPerShot;
     }
-
 }
