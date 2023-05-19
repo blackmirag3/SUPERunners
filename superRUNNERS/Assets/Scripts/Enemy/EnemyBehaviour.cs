@@ -11,15 +11,20 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private bool isIdle;
     private bool hasReachedPlayer;
     public bool isDead;
-    public float attackRange;
+    public float stoppingDistance = 6f;
     public float enemySpeed;
     public EnemyGun enemyGun;
     public OnDeath death;
 
     private float enemyHealth;
     public bool recentHit = false;
-    //TODO check dead function
-    //bool checkDead?
+
+    private float currentShotTimer;
+    public float shotTimer;
+
+    //TODO
+    //check aggro function
+    //Enemy attack distance
 
     public void Damage(float damage)
     {
@@ -60,21 +65,21 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         {
             hasLOS = true;
         }
-        //Debug.Log("enemy has LOS: " + hasLOS);
         return hasLOS;
     }
 
-    public void EnemyShoot() //called by animation event
+    public void EnemyShoot()
     {
-        if (HasLOS())
+        if (currentShotTimer > shotTimer && HasLOS())
         {
-            float inaccuracy = 1f; ////TODO add inaccuracy based on gun type
-            Vector3 target = player.position - Random.Range(0, inaccuracy) * Vector3.up;
-            enemyGun.FireBullet(); //requires enemyGun script on enemy gun
+            enemyGun.FireBullet();
+            anim.Play("Upper Body.Pistol Shoot", -1, 0);
+            currentShotTimer = 0;
+            Debug.Log(currentShotTimer);
         }
 
+        currentShotTimer += Time.deltaTime;
     }
-    //TODO throw gun on death function
 
     private void Start()
     {
@@ -82,42 +87,34 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemyHealth = 1f;
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        enemy.stoppingDistance = attackRange;
+        enemy.stoppingDistance = stoppingDistance;
         isIdle = true;
         hasReachedPlayer = false;
         isDead = false;
         enemy.speed = enemySpeed;
+        shotTimer = 3f;
     }
 
     private void Update()
     {
-        if (isDead) //dead state
+        if (isDead)
         {
             anim.enabled = false;
             death.enabled = true;
             //anim.SetBool("isDead", isDead);
-            //Debug.Log("enemy is dead:" + isDead);
         }
 
-        else if (isIdle) //idle state
+        else if (isIdle)
         {
-            //TODO check aggro function (idle -> aggro)
-            isIdle = false; //assumed aggro
+            isIdle = false;
             anim.SetBool("isIdle", isIdle);
         }
 
-        else //aggro state
+        else
         {
             EnemyChase();
-            //TODO different chase states
-            if (HasLOS())
-            {
-            }
-
+            EnemyShoot();
         }
-
-        //Debug.Log("enemy is idle: " + isIdle);
-        //Debug.Log("enemy has reached player: " + hasReachedPlayer);
     }
 
 }

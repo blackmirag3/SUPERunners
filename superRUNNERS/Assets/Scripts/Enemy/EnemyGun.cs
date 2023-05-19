@@ -11,6 +11,7 @@ public class EnemyGun : MonoBehaviour
     public Quaternion bulletRot;
     public float bulletVelocity = 20f; //TODO get gun velocity
     public AudioSource shootingSound;
+    public float inaccuracy = 1f; //TODO get gun inaccuracy
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,7 @@ public class EnemyGun : MonoBehaviour
         
         GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
         //PrefabUtility.InstantiatePrefab
-        Vector3 shootDir = (playerPos.position - bulletPos.position).normalized;
+        Vector3 shootDir = (playerPos.position - bulletPos.position + Random.Range(-inaccuracy,inaccuracy) * Vector3.up).normalized;
         newBullet.transform.forward = shootDir;
         newBullet.GetComponent<Rigidbody>().AddForce(shootDir * bulletVelocity, ForceMode.Impulse);
 

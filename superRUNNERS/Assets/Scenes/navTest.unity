@@ -19766,12 +19766,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df708bfb9c176648a5a2bbaf9e9ada3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFrequency: 0
-  player: {fileID: 2371581502335142959}
-  settings: {fileID: 11400000, guid: 429362cfc2584cb49b7389b7cb060282, type: 2}
-  cam: {fileID: 8811967533736938974}
-  camHolder: {fileID: 8811967533917174215}
-  camPos: {fileID: 2371581502882052832}
 --- !u!1001 &645770587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33144,15 +33138,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433528472}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecbcd0ac598f7854b950144bd6dba099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: b8c7f9a737d47cf4a98d1b197e4e2811, type: 2}
   playerCam: {fileID: 8811967533736938969}
-  player: {fileID: 0}
-  headBob: {fileID: 0}
+  player: {fileID: 2371581502335142959}
   swaySmoothing: 0
   tiltMultiplier: 0
   rotMultiplier: 0
@@ -33160,8 +33153,6 @@ MonoBehaviour:
   tiltX: 0
   tiltY: 0
   tiltZ: 0
-  travelLimit: {x: 0.025, y: 0.025, z: 0.025}
-  bobLimit: {x: 0.01, y: 0.01, z: 0.01}
 --- !u!1 &1456530256
 GameObject:
   m_ObjectHideFlags: 0
@@ -60586,6 +60577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52d54f5bcc1e45448896f85b3dc7238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 163167bf02b40904ba908362223d0e84, type: 2}
   wallRunning: {fileID: 2371581502335142958}
   pMove: {fileID: 2371581502335142959}
   sensX: 500
@@ -60596,6 +60588,9 @@ MonoBehaviour:
   xRotation: 0
   yRotation: 0
   sprintFov: 105
+  bobFrequency: 0
+  player: {fileID: 2371581502335142959}
+  camHolder: {fileID: 8811967533917174215}
 --- !u!81 &8811967533736938972
 AudioListener:
   m_ObjectHideFlags: 0
