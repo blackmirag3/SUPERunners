@@ -8,6 +8,11 @@ public class OnCollisionEnterDeath : MonoBehaviour
     [SerializeField] private string bulletTag = "PlayerBullet";
     [SerializeField] private string gunTag = "Gun";
 
+    private void Awake()
+    {
+        enemy = GetComponentInParent<EnemyBehaviour>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!enemy.recentHit)
