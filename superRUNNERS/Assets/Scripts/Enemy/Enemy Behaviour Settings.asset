@@ -16,5 +16,5 @@ MonoBehaviour:
   isDead: 0
   hasReachedPlayer: 0
   enemyHealth: 1
-  enemySpeed: 5
+  enemySpeed: 9
   stoppingDistance: 6

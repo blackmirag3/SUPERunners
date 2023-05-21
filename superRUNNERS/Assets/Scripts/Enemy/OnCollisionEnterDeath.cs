@@ -5,12 +5,16 @@ using UnityEngine;
 public class OnCollisionEnterDeath : MonoBehaviour
 {
     public EnemyBehaviour enemy;
+    public Animator anim;
     [SerializeField] private string bulletTag = "PlayerBullet";
     [SerializeField] private string gunTag = "Gun";
+    public Rigidbody rb;
+
 
     private void Awake()
     {
         enemy = GetComponentInParent<EnemyBehaviour>();
+        anim = GetComponentInParent<Animator>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -19,6 +23,7 @@ public class OnCollisionEnterDeath : MonoBehaviour
         {
             if (collision.gameObject.CompareTag(bulletTag))
             {
+                anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
                 float damage = collision.gameObject.GetComponent<BulletScript>().damage;
                 Debug.Log("Bullet hit detected");
@@ -26,6 +31,7 @@ public class OnCollisionEnterDeath : MonoBehaviour
             }
             else if (collision.gameObject.CompareTag(gunTag))
             {
+                anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
                 Debug.Log("Gun hit detected");
                 enemy.Damage(0.5f);
@@ -39,10 +45,12 @@ public class OnCollisionEnterDeath : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
                 Debug.Log("Melee hit detected");
                 enemy.Damage(0.5f);
             }
         }
     }
+
 }

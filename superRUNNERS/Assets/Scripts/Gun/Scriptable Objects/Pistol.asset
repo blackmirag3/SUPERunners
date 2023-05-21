@@ -24,4 +24,4 @@ MonoBehaviour:
   enemyInaccuracy: 1
   enemyShotDelay: 1.5
   enemyBurstSize: 1
-  bulletVelocity: 6
+  bulletVelocity: 25

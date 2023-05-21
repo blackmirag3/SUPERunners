@@ -92,4 +92,18 @@ public class GunPickup : MonoBehaviour, IHoldable
     {
         return outOfAmmo;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            StartCoroutine(DespawnGun());
+        }
+    }
+
+    IEnumerator DespawnGun()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
 }

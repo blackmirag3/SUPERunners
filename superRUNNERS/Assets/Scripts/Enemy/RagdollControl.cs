@@ -36,7 +36,6 @@ public class RagdollControl : MonoBehaviour
         {
             rb.isKinematic = false;
         }
-
     }
 
 }

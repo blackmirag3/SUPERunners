@@ -49,4 +49,5 @@ public class OnDeath : MonoBehaviour
             DropGun();
         }
     }
+
 }

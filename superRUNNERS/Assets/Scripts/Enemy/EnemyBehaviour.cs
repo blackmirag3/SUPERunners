@@ -38,7 +38,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     public void Damage(float damage)
     {
         enemyHealth -= damage;
-        Invoke(nameof(ResetHit), 0.25f);
+        Invoke(nameof(ResetHit), 0.5f);
         if (enemyHealth <= 0)
         {
             isDead = true;
@@ -144,7 +144,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             anim.SetBool("isIdle", isIdle);
         }
 
-        else
+        else if (!recentHit)
         {
             EnemyChase();
             EnemyShoot();

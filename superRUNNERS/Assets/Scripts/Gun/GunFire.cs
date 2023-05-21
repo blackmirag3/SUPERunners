@@ -50,11 +50,12 @@ public class GunFire : MonoBehaviour
         bulletsPerShot = gunData.bulletsPerShot;
         magSize = gunData.magSize;        
         canShoot = true;
+        ammoLeft = magSize;
     }
 
     void Start()
     {
-        ammoLeft = magSize;
+        
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
         shootingSound = GetComponent<AudioSource>();
@@ -158,6 +159,5 @@ public class GunFire : MonoBehaviour
     {
         if (ammoDisplay != null)
             ammoDisplay.SetText("\n");
-        ammoLeft = magSize;
     }
 }
