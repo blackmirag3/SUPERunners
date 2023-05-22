@@ -6,11 +6,12 @@ using UnityEngine;
 public class EnemyBehaviourSettings : ScriptableObject
 {
     [Header("Settings")]
-    public bool isIdle;
+    public bool isAggro;
     public bool isDead;
     public bool hasReachedPlayer;
     public float enemyHealth;
     public float enemySpeed;
     public float stoppingDistance;
+    public float aggroDistance;
     //public float shootingDelay; //TODO change to aggression
 }

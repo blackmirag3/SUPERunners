@@ -16,10 +16,11 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float stoppingDistance;
     private float enemySpeed;
     public bool isDead;
-    private bool isIdle;
+    private bool isAggro;
     private bool hasReachedPlayer;
     private float enemyHealth;
     public bool recentHit = false;
+    private float aggroDistance;
 
     //shooting
     private float currentShotTimer;
@@ -65,23 +66,17 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         }
     }
 
-    private bool HasLOS()
+    private bool CheckLOS()
     {
-        bool hasLOS = false;
         NavMeshHit hit;
-
-        if (!enemy.Raycast(player.position, out hit)) //if no obstacle between enemy LOS and player
-        {
-            hasLOS = true;
-        }
-        return hasLOS;
+        return (!enemy.Raycast(player.position, out hit)); //if no obstacle between enemy LOS and player
     }
 
     public void EnemyShoot()
     {
-        if (currentShotTimer > shotDelay && HasLOS())
+        if (currentShotTimer > shotDelay && CheckLOS())
         {
-            ShootBurst();
+            ShootOneBurst();
             currentShotTimer = 0;
 
             //currentShotTimer = Random.Range(0, shotDelay/);
@@ -90,7 +85,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         currentShotTimer += Time.deltaTime;
     }
 
-    private void ShootBurst()
+    private void ShootOneBurst()
     {
         enemyGun.Shoot();
         anim.Play("Upper Body.Pistol Shoot", -1, 0);
@@ -98,19 +93,28 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
         if (bulletsShot < burstSize)
         {
-            Invoke("ShootBurst", fireRate);
+            Invoke("ShootOneBurst", fireRate);
         }
         else bulletsShot = 0;
     }
 
+    private bool CheckAggro()
+    {
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log(distance);
+        return ((distance <= aggroDistance) && CheckLOS());
+    }
+
     private void InitialiseSettings()
     {
-        isIdle = settings.isIdle;
+        isAggro = settings.isAggro;
         isDead = settings.isDead;
         hasReachedPlayer = settings.hasReachedPlayer;
         enemyHealth = settings.enemyHealth;
         enemySpeed = settings.enemySpeed;
         stoppingDistance = settings.stoppingDistance;
+        aggroDistance = settings.aggroDistance;
     }
 
     private void Start()
@@ -127,25 +131,35 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         fireRate = enemyGun.fireRate;
         burstSize = enemyGun.burstSize;
         //bulletsPerShot = enemyGun.bulletsPerShot;
+
+        anim.SetBool("isAggro", isAggro);
+        anim.SetBool("hasReachedPlayer", hasReachedPlayer);
     }
 
     private void Update()
     {
         if (isDead)
+
         {
+            Debug.Log("enemy dead");
             anim.enabled = false;
             death.enabled = true;
             //anim.SetBool("isDead", isDead);
         }
 
-        else if (isIdle)
+        else if (!isAggro)
         {
-            isIdle = false;
-            anim.SetBool("isIdle", isIdle);
+            if (!isAggro)
+            {
+                Debug.Log("check aggro");
+                isAggro = CheckAggro();
+                anim.SetBool("isAggro", isAggro);
+            }
         }
 
         else if (!recentHit)
         {
+            Debug.Log("enemy chase");
             EnemyChase();
             EnemyShoot();
         }
