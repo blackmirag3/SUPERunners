@@ -40,6 +40,7 @@ public class GunFire : MonoBehaviour
     public bool allowInvoke = true;
 
     public AudioSource shootingSound;
+    public AudioSource emptySound;
 
     private void Awake()
     {
@@ -55,7 +56,6 @@ public class GunFire : MonoBehaviour
 
     void Start()
     {
-        
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
         shootingSound = GetComponent<AudioSource>();
@@ -79,12 +79,16 @@ public class GunFire : MonoBehaviour
             shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         // Shoot
-        if (canShoot && shooting && ammoLeft > 0)
+        if (shooting && canShoot )
         {
-            bulletsShot = 0;
-            Shoot();
+            if (ammoLeft > 0)
+            {
+                bulletsShot = 0;
+                Shoot();
+            }
+            else
+                emptySound.Play();
         }
-
     }
 
  
@@ -136,7 +140,7 @@ public class GunFire : MonoBehaviour
         ammoLeft--;
         bulletsShot++;
 
-        if (allowInvoke)
+        if (allowInvoke && ammoLeft > 0)
         {
             Invoke(nameof(ResetShot), rpm);
             allowInvoke = false; // Invoke once only
