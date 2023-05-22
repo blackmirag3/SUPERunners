@@ -13,7 +13,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public bool equipped;
     public bool outOfAmmo = false;
-
+    private float despawnTime = 2f;
 
     void Start()
     {
@@ -103,7 +103,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     IEnumerator DespawnGun()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(despawnTime);
         Destroy(gameObject);
     }
 }

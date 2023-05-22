@@ -36,7 +36,7 @@ public class HandScript : MonoBehaviour
         {
             MeleeAttack();
         }
-        else if (!handEmpty)
+        else if (!handEmpty && Input.GetKeyDown(pickupKey))
         {
             ThrowItem();
         }
@@ -66,29 +66,27 @@ public class HandScript : MonoBehaviour
     private void ThrowItem()
     {
         IHoldable throwable = GetComponentInChildren<IHoldable>();
-        bool mustThrow = throwable.MustThrow();
-        if ((mustThrow && Input.GetKeyDown(throwKey)) || Input.GetKeyDown(pickupKey))
+       
+        Ray ray = GetCamRay();
+
+        Vector3 targetPoint;
+        // Check if ray hits
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Ray ray = GetCamRay();
-
-            Vector3 targetPoint;
-            // Check if ray hits
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                targetPoint = hit.point;
-            }
-            else
-            {
-                targetPoint = ray.GetPoint(75);
-            }
-
-            Vector3 throwDir = targetPoint - transform.position;
-            Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-            Vector3 throwVelocity = new Vector3(playerVelocity.x, 0, playerVelocity.z);
-
-            throwable.Throw(throwDir, throwVelocity);
-            handEmpty = true;
+            targetPoint = hit.point;
         }
+        else
+        {
+            targetPoint = ray.GetPoint(75);
+        }
+
+        Vector3 throwDir = targetPoint - transform.position;
+        Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
+        Vector3 throwVelocity = new Vector3(playerVelocity.x, 0, playerVelocity.z);
+
+        throwable.Throw(throwDir, throwVelocity);
+        handEmpty = true;
+
 
     }
 
