@@ -102,7 +102,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     {
 
         float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log(distance);
         return ((distance <= aggroDistance) && CheckLOS());
     }
 
@@ -141,7 +140,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         if (isDead)
 
         {
-            Debug.Log("enemy dead");
             anim.enabled = false;
             death.enabled = true;
             //anim.SetBool("isDead", isDead);
@@ -151,7 +149,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         {
             if (!isAggro)
             {
-                Debug.Log("check aggro");
                 isAggro = CheckAggro();
                 anim.SetBool("isAggro", isAggro);
             }
@@ -159,7 +156,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
         else if (!recentHit)
         {
-            Debug.Log("enemy chase");
             EnemyChase();
             EnemyShoot();
         }

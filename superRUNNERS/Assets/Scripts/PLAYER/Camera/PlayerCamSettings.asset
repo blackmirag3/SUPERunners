@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 500
   sensY: 500
-  sprintFov: 105
+  sprintFov: 110
   isBobEnabled: 1
   bobAmplitude: 0.0016
   bobFrequency: 16

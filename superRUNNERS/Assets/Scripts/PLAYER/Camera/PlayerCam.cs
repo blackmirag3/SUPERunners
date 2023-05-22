@@ -7,7 +7,9 @@ public class PlayerCam : MonoBehaviour
     [SerializeField] private PlayerCamSettings settings;
 
     public WallRunning wallRunning;
-    public PlayerMovement pMove;
+    public PlayerMovement playerMovement
+        ;
+    public PlayerSound playerSound;
 
     public float sensX, sensY, mouseY, mouseX;
 
@@ -17,8 +19,9 @@ public class PlayerCam : MonoBehaviour
 
     private Camera cam;
 
-    private float baseFov;
-    [SerializeField] private float sprintFov;
+    private float baseFOV;
+    [SerializeField] private float sprintFOV;
+    private float targetFOV;
 
     private bool isBobEnabled;
     private float bobAmplitude;
@@ -29,9 +32,13 @@ public class PlayerCam : MonoBehaviour
     public PlayerMovement player;
     public Transform camHolder;
 
+    private bool canFootstep;
+
+    private float velocity = 10000f;
+
     private void InitialiseSettings()
     {
-        sprintFov = settings.sprintFov;
+        sprintFOV = settings.sprintFov;
         sensX = settings.sensX;
         sensY = settings.sensY;
         isBobEnabled = settings.isBobEnabled;
@@ -47,7 +54,8 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cam = GetComponent<Camera>();
-        baseFov = cam.fieldOfView;
+        baseFOV = cam.fieldOfView;
+        targetFOV = baseFOV;
     }
 
     void Update()
@@ -74,21 +82,28 @@ public class PlayerCam : MonoBehaviour
 
     private void fovUpdate()
     {
-        if (pMove.isSprinting && !pMove.isWallRunning)
+        if (playerMovement.isSliding)
         {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, sprintFov, 20f * Time.deltaTime);
+            targetFOV = sprintFOV + 10f;
         }
-        else if (!pMove.isSprinting && !pMove.isWallRunning)
+        else if (playerMovement.isSprinting && !playerMovement.isWallRunning && !playerMovement.isCrouching && player.isWASD)
         {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, baseFov, 20f * Time.deltaTime);
+            targetFOV = sprintFOV;
         }
+        else if ((!playerMovement.isSprinting || !playerMovement.isWASD || !playerMovement.isSliding) && !playerMovement.isWallRunning)
+        {
+            targetFOV = baseFOV;
+        }
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, 20f * Time.deltaTime);
     }
 
     private void PlayMotion()
     {
-        if (isBobEnabled && (player.isGrounded || player.isWallRunning) && player.isWASD)
+        if (isBobEnabled && (player.isGrounded || player.isWallRunning) && player.isWASD && !player.isSliding)
         {
-            transform.localPosition += transform.up * Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
+            float sine = Mathf.Sin(Time.time * bobFrequency);
+            playerSound.HandleFootstep(sine);
+            transform.localPosition += transform.up * sine * bobAmplitude;
             transform.localPosition += transform.right * Mathf.Cos(Time.time * bobFrequency / 2) * bobAmplitude / 2;
         }
     }
