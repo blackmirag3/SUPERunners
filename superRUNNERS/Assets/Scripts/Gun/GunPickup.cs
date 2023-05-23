@@ -8,12 +8,15 @@ public class GunPickup : MonoBehaviour, IHoldable
     public GunFire gun;
     public Rigidbody rb;
     public BoxCollider col;
-    
+    public Collider damageCol;
+    public Rigidbody damageRb;
+
     public float throwForwardForce, throwUpForce;
 
     public bool equipped;
     public bool outOfAmmo = false;
     private float despawnTime = 2f;
+    private bool enableDespawn = false;
 
     void Start()
     {
@@ -22,6 +25,9 @@ public class GunPickup : MonoBehaviour, IHoldable
         col = GetComponent<BoxCollider>();
 
         outOfAmmo = false;
+        enableDespawn = false;
+        damageCol.enabled = false;
+        damageRb.isKinematic = true;
 
         if (equipped)
         {
@@ -40,9 +46,6 @@ public class GunPickup : MonoBehaviour, IHoldable
     // Update is called once per frame
     private void Update()
     {
-        // Player in range
-        
-
         if (equipped && gun.ammoLeft == 0)
         {
             outOfAmmo = true;
@@ -73,29 +76,34 @@ public class GunPickup : MonoBehaviour, IHoldable
 
         transform.SetParent(null);
         
-        // Enable forces on gun
-        rb.isKinematic = false;
-        col.isTrigger = false;
+        // Enable damage hitboxes
+        damageRb.isKinematic = false;
+        damageCol.enabled = true;
 
         // Throw gun
-        rb.velocity = velocity;
-        rb.AddForce(dir.normalized * throwForwardForce, ForceMode.Impulse);
-        rb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);
+        damageRb.velocity = velocity;
+        damageRb.AddForce(dir.normalized * throwForwardForce, ForceMode.Impulse);
+        damageRb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);
 
         float random = Random.Range(-1f, 1f);
-        rb.AddTorque(new Vector3(random, random, random));
+        damageRb.AddTorque(new Vector3(random, random, random));
 
         gun.enabled = false;
-    }
 
-    public bool MustThrow()
-    {
-        return outOfAmmo;
+        enableDespawn = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (enableDespawn)
+        {
+            StartCoroutine(DespawnGun());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (enableDespawn)
         {
             StartCoroutine(DespawnGun());
         }

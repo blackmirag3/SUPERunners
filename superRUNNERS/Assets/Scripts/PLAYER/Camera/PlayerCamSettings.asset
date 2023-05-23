@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6361a976a366e94f903e8210de36f9e, type: 3}
   m_Name: PlayerCamSettings
   m_EditorClassIdentifier: 
-  sensX: 500
-  sensY: 500
+  sensX: 1.2
+  sensY: 1.2
   sprintFov: 110
   isBobEnabled: 1
   bobAmplitude: 0.0016

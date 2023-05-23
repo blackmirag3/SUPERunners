@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 794744460805240573}
   - component: {fileID: 3234579219825656375}
   - component: {fileID: 7962146781435246173}
+  - component: {fileID: 1818923575}
   m_Layer: 30
   m_Name: PistolModel
-  m_TagString: Gun
+  m_TagString: Damageable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,13 +93,29 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4027190969391522786}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 601ea31947e6ac342b03405888aeb0c1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3727299226792910341, guid: e6efe674338ad4a49866fd7e5c2ba6b4, type: 3}
+--- !u!54 &1818923575
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4027190969391522786}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7146796321954800241
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +175,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7146796322865417155}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -179,21 +196,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26bbdadc8ec0b4849a1b43394253c317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  hand: {fileID: 0}
-  playerCam: {fileID: 0}
   gun: {fileID: 0}
   rb: {fileID: 0}
   col: {fileID: 0}
-  pickupRange: 5
+  damageCol: {fileID: 7962146781435246173}
+  damageRb: {fileID: 1818923575}
   throwForwardForce: 12
   throwUpForce: 4.5
   equipped: 0
-  handName: Hand
-  playerName: PlayerBody
-  camName: PlayerCam
-  pickupKey: 102
-  throwKey: 324
+  outOfAmmo: 0
 --- !u!114 &7146796322865417165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +224,6 @@ MonoBehaviour:
   bulletsShot: 0
   rpm: 0
   spread: 0
-  timeBetweenBullets: 0
   bulletsPerShot: 0
   magSize: 0
   playerCam: {fileID: 0}
@@ -224,6 +234,7 @@ MonoBehaviour:
   guiTextname: AmmoIndicator
   allowInvoke: 1
   shootingSound: {fileID: 7146796322865417166}
+  emptySound: {fileID: 0}
 --- !u!82 &7146796322865417166
 AudioSource:
   m_ObjectHideFlags: 0

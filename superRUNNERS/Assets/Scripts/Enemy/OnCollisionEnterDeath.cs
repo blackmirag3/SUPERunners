@@ -7,7 +7,7 @@ public class OnCollisionEnterDeath : MonoBehaviour
     public EnemyBehaviour enemy;
     public Animator anim;
     [SerializeField] private string bulletTag = "PlayerBullet";
-    [SerializeField] private string gunTag = "Gun";
+    [SerializeField] private string gunTag = "Damageable";
     public Rigidbody rb;
 
 
