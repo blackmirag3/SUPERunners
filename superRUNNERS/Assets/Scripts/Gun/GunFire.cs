@@ -58,7 +58,6 @@ public class GunFire : MonoBehaviour
     {
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
-        shootingSound = GetComponent<AudioSource>();
     }
 
     
@@ -79,22 +78,23 @@ public class GunFire : MonoBehaviour
             shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         // Shoot
-        if (shooting && canShoot )
+        if (shooting)
         {
-            if (ammoLeft > 0)
+            if (canShoot) //false if: ammo <= 0 or yet to reset shot
             {
                 bulletsShot = 0;
                 Shoot();
             }
-            else
-                emptySound.Play();
+            else if (ammoLeft <= 0)
+            {
+                NoAmmo();
+            }
         }
     }
 
  
     private void Shoot()
-    {
-        
+    { 
         shootingSound.Play();
         canShoot = false;
 
@@ -163,5 +163,11 @@ public class GunFire : MonoBehaviour
     {
         if (ammoDisplay != null)
             ammoDisplay.SetText("\n");
+    }
+
+    private void NoAmmo()
+    {
+       if (Input.GetKeyDown(KeyCode.Mouse0))
+            emptySound.Play();
     }
 }
