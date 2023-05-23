@@ -24,6 +24,7 @@ public class PlayerSound : MonoBehaviour
     void Update()
     {
         HandleSlide();
+        HandleJump();
     }
 
     public void HandleFootstep(float sine) //used in player cam script, head bobbing function
@@ -50,25 +51,22 @@ public class PlayerSound : MonoBehaviour
             hasPlayedSlide = false;
         }
     }
-    /*
+    
     //TODO: Fix player movement states
     public void HandleJump()
     {
-        if (!playerMovement.isCrouching)
+        if (Input.GetKey(playerMovement.jumpKey))
         {
-            if (!playerMovement.isGrounded)
-            {
-                if (!hasJumped)
-                    jump.Play();
+            if (!hasJumped)
+                jump.Play();
 
-                hasJumped = true;
-            }
-            else if (hasJumped && (playerMovement.isGrounded || playerMovement.isWallRunning))
-            {
-                land.Play();
-                hasJumped = false;
-            }
+            hasJumped = true;
+        }
+        else if (hasJumped && (playerMovement.isGrounded || playerMovement.isWallRunning))
+        {
+            land.Play();
+            hasJumped = false;
         }
     }
-    */
+    
 }

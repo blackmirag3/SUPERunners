@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
 
     //[Header("Keybinds")]
-    private KeyCode jumpKey = KeyCode.Space;
+    [HideInInspector] public KeyCode jumpKey = KeyCode.Space;
     private KeyCode sprintHoldKey = KeyCode.LeftShift;
     private KeyCode sprintToggleKey = KeyCode.LeftAlt;
     private KeyCode crouchKey = KeyCode.LeftControl;

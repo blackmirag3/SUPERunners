@@ -46,6 +46,51 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         }
     }
 
+    private void Start()
+    {
+        InitialiseSettings();
+        enemy = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+        enemy.stoppingDistance = stoppingDistance;
+        death.enabled = false;
+        enemy.speed = enemySpeed;
+
+        //from enemyGun.gunData (optimise potential)
+        shotDelay = enemyGun.shotDelay;
+        fireRate = enemyGun.fireRate;
+        burstSize = enemyGun.burstSize;
+        //bulletsPerShot = enemyGun.bulletsPerShot;
+
+        anim.SetBool("isAggro", isAggro);
+        anim.SetBool("hasReachedPlayer", hasReachedPlayer);
+    }
+
+    private void Update()
+    {
+        if (isDead)
+
+        {
+            anim.enabled = false;
+            death.enabled = true;
+            //anim.SetBool("isDead", isDead);
+        }
+
+        else if (!isAggro)
+        {
+            if (!isAggro)
+            {
+                isAggro = CheckAggro();
+                anim.SetBool("isAggro", isAggro);
+            }
+        }
+
+        else if (!recentHit)
+        {
+            EnemyChase();
+            EnemyShoot();
+        }
+    }
+
     private void ResetHit()
     {
         recentHit = false;
@@ -116,50 +161,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         aggroDistance = settings.aggroDistance;
     }
 
-    private void Start()
-    {
-        InitialiseSettings();
-        enemy = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
-        enemy.stoppingDistance = stoppingDistance;
-        death.enabled = false;
-        enemy.speed = enemySpeed;
 
-        //from enemyGun.gunData (optimise potential)
-        shotDelay = enemyGun.shotDelay;
-        fireRate = enemyGun.fireRate;
-        burstSize = enemyGun.burstSize;
-        //bulletsPerShot = enemyGun.bulletsPerShot;
-
-        anim.SetBool("isAggro", isAggro);
-        anim.SetBool("hasReachedPlayer", hasReachedPlayer);
-    }
-
-    private void Update()
-    {
-        if (isDead)
-
-        {
-            anim.enabled = false;
-            death.enabled = true;
-            //anim.SetBool("isDead", isDead);
-        }
-
-        else if (!isAggro)
-        {
-            if (!isAggro)
-            {
-                isAggro = CheckAggro();
-                anim.SetBool("isAggro", isAggro);
-            }
-        }
-
-        else if (!recentHit)
-        {
-            EnemyChase();
-            EnemyShoot();
-        }
-    }
 
 }
         
