@@ -8,6 +8,9 @@ public class OnDeath : MonoBehaviour
     public EnemyBehaviour enemy;
     public GameObject gunType;
     public Transform enemyHand;
+    public float despawnTime;
+
+    public KillCounter killCounter;
 
     private void DropGun()
     {
@@ -48,6 +51,9 @@ public class OnDeath : MonoBehaviour
         {
             DropGun();
         }
+        Destroy(transform.parent.gameObject, despawnTime);
+
+        killCounter.leftToKill--;
     }
 
 }

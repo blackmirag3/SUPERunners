@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     // For testing
     public bool enableSpawn = true;
+    public KillCounter kill;
 
     public Transform player;
     public GameObject enemy;
@@ -25,6 +26,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        enableSpawn = !kill.LevelWon;
         if (enableSpawn)
         {
             if (!canSpawn)

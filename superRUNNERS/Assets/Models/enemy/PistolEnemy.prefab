@@ -160,7 +160,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 295375038417987171}
 --- !u!1 &371314991239490442
 GameObject:
@@ -471,7 +471,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 796172735802015278}
 --- !u!1 &1001254125239892622
 GameObject:
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 2629498786026762110}
 --- !u!1 &2632464075825161208
 GameObject:
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 2744113419598776408}
 --- !u!1 &3039616986228676676
 GameObject:
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 3840398548758089636}
 --- !u!1 &4172191523731378264
 GameObject:
@@ -1950,7 +1950,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 4397375760403737779}
 --- !u!1 &4484419761953817148
 GameObject:
@@ -2010,7 +2010,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4525724657128622924}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 3, z: 25.27}
   m_LocalScale: {x: 1.35, y: 1.1, z: 1.35}
   m_ConstrainProportionsScale: 0
@@ -2562,7 +2562,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 2493810684822262765}
 --- !u!1 &5663766247947591074
 GameObject:
@@ -2748,6 +2748,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   gunType: {fileID: 7146796322865417155, guid: ef649a28b0da6874b809290e738409ef, type: 3}
   enemyHand: {fileID: 1402383867961555509}
+  despawnTime: 5.5
 --- !u!1 &6036220103866367475
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,7 +3433,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 3944522167166877049}
 --- !u!1 &7539575415142898812
 GameObject:
@@ -3809,7 +3810,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 167159076503969456}
 --- !u!1 &7802498722262943700
 GameObject:
@@ -4000,7 +4001,7 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 2453048705723142225}
 --- !u!1 &8324753845310561369
 GameObject:
@@ -4287,5 +4288,5 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   anim: {fileID: 0}
   bulletTag: PlayerBullet
-  gunTag: Gun
+  gunTag: Damageable
   rb: {fileID: 979664545337450505}

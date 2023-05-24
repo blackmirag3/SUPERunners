@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Sliding")]
     public float slideSpeedIncrease;
+    public float slideSlopeIncrease;
     public float slideSpeedDecrease;
 
     [Header("Movement States")]
@@ -97,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         CheckSlope();
+        GravityControl();
         ControlDrag();
         SpeedLimit();
         SpeedControl();
@@ -107,7 +109,16 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         // Decrease move speed if sliding
         if (isSliding)
-            moveSpeed -= slideSpeedDecrease;
+        {
+            if (onSlope && rb.velocity.y < 0)
+            {
+                moveSpeed += slideSlopeIncrease;
+            }
+            else
+            {
+                moveSpeed -= slideSpeedDecrease;
+            }
+        }
     }
 
     private void ControlDrag()
@@ -183,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isSliding)
         {
 
-            if (currVelocity.magnitude <= walkSpeed)
+            if (currVelocity.magnitude <= crouchSpeed)
                 isSliding = false;
         }
         else if (isGrounded && isCrouching)
@@ -272,5 +283,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         onSlope = false;
+    }
+
+    private void GravityControl()
+    {
+        if (onSlope && !isWASD)
+        {
+            rb.useGravity = false;
+        }
+        else if (!isWallRunning)
+        {
+            rb.useGravity = true;
+        }
     }
 }
