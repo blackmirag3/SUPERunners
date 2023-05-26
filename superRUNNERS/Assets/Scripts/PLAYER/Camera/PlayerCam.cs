@@ -7,8 +7,7 @@ public class PlayerCam : MonoBehaviour
     [SerializeField] private PlayerCamSettings settings;
 
     public WallRunning wallRunning;
-    public PlayerMovement playerMovement
-        ;
+    public PlayerMovement playerMovement;
     public PlayerSound playerSound;
 
     public float sensX, sensY, mouseY, mouseX;
@@ -34,7 +33,7 @@ public class PlayerCam : MonoBehaviour
 
     private bool canFootstep;
 
-    private float velocity = 10000f;
+    //private float velocity = 10000f;
 
     private void InitialiseSettings()
     {

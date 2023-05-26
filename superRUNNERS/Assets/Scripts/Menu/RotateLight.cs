@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotateLight : MonoBehaviour
 {
-    public Transform transform;
+    //public Transform camTransform;
     private Quaternion targetRotation;
 
     // Start is called before the first frame update

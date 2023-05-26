@@ -5,6 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject currentMenu;
+    public GameObject settingsMenu;
+
+    private KeyCode escapeKey = KeyCode.Escape;
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(escapeKey))
+        {
+            CloseSettings();
+        }
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene("Level0");
@@ -12,5 +25,17 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        currentMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        currentMenu.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 }
