@@ -12,21 +12,16 @@ public class EnemySpawner : MonoBehaviour
 
     // For testing
     public bool enableSpawn = true;
-    public KillCounter kill;
+    public GameControl game;
 
     public Transform player;
     public GameObject enemy;
     private float currDistFromPlayer;
     private bool canSpawn = true;
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
-        enableSpawn = !kill.LevelWon;
+        enableSpawn = game.GameStart;
         if (enableSpawn)
         {
             if (!canSpawn)

@@ -20,6 +20,7 @@ public class HandScript : MonoBehaviour
 
     void Start()
     {
+        CheckHandOnStart();
         handHitbox = GetComponentInChildren<Collider>();
         handHitbox.enabled = false;
         handHitbox.isTrigger = true;
@@ -108,5 +109,16 @@ public class HandScript : MonoBehaviour
         canPunch = true;
     }
     
-
+    private void CheckHandOnStart()
+    {
+        IHoldable item = GetComponentInChildren<IHoldable>();
+        if (item == null)
+        {
+            handEmpty = true;
+        }
+        else
+        {
+            handEmpty = false;
+        }
+    }
 }
