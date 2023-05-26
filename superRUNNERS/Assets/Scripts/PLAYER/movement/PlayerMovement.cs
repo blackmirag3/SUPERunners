@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // Ground check
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask, QueryTriggerInteraction.Ignore);
 
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
