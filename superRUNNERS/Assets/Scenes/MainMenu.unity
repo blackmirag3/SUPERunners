@@ -17907,6 +17907,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMenu: {fileID: 1100247962}
   settingsMenu: {fileID: 1210714098}
+  gameIsPaused: 0
+  isMainMenu: 1
 --- !u!1 &1333846167
 GameObject:
   m_ObjectHideFlags: 0

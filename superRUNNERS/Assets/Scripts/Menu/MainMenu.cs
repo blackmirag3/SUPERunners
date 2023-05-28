@@ -7,21 +7,45 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject currentMenu;
     public GameObject settingsMenu;
+    public bool gameIsPaused;
 
     private KeyCode escapeKey = KeyCode.Escape;
-    
+    [SerializeField] private bool isMainMenu = false;
+    private bool isOtherMenu;
+
+    private void Start()
+    {
+        gameIsPaused = false;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(escapeKey))
         {
-            CloseSettings();
+            if (isOtherMenu)
+                CloseSettings();
+
+            else if (!isMainMenu )
+            {
+                if (!gameIsPaused)
+                    PauseGame();
+
+                else
+                    ResumeGame();
+            }
         }
+        
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene("Level0");
     }
+    public void RestartGane()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -29,13 +53,33 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
+        isOtherMenu = true;
         currentMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 
     public void CloseSettings()
     {
+        isOtherMenu = false;
         currentMenu.SetActive(true);
         settingsMenu.SetActive(false);
+    }
+
+    public void PauseGame()
+    {
+        currentMenu.SetActive(true);
+        Time.timeScale = 0f;
+        gameIsPaused = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+    public void ResumeGame()
+    {
+        currentMenu.SetActive(false);
+        Time.timeScale = 1f;
+        gameIsPaused = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
     }
 }
