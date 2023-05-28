@@ -42,6 +42,8 @@ public class GunFire : MonoBehaviour
     public AudioSource shootingSound;
     public AudioSource emptySound;
 
+    public PauseMenu pauseMenu;
+
     private void Awake()
     {
         shootForce = gunData.shootForce;
@@ -63,10 +65,13 @@ public class GunFire : MonoBehaviour
     
     private void Update()
     {
-        MyInput();
+        if (!pauseMenu.gameIsPaused)
+        {
+            MyInput();
 
-        if (ammoDisplay != null)
-            ammoDisplay.SetText(ammoLeft.ToString());
+            if (ammoDisplay != null)
+                ammoDisplay.SetText(ammoLeft.ToString());
+        }
     }
 
     private void MyInput()

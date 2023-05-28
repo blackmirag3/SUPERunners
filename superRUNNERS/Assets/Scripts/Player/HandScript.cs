@@ -8,6 +8,7 @@ public class HandScript : MonoBehaviour
     public Camera playerCam;
     public Transform player;
     public Collider handHitbox;
+    public PauseMenu pauseMenu;
 
     public float meleeReach;
     private bool canPunch = true;
@@ -29,17 +30,20 @@ public class HandScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (handEmpty && Input.GetKeyDown(pickupKey))
+        if (!pauseMenu.gameIsPaused)
         {
-            PickupItem();
-        }
-        else if (handEmpty && Input.GetKeyDown(throwKey) && canPunch)
-        {
-            MeleeAttack();
-        }
-        else if (!handEmpty && Input.GetKeyDown(pickupKey))
-        {
-            ThrowItem();
+            if (handEmpty && Input.GetKeyDown(pickupKey))
+            {
+                PickupItem();
+            }
+            else if (handEmpty && Input.GetKeyDown(throwKey) && canPunch)
+            {
+                MeleeAttack();
+            }
+            else if (!handEmpty && Input.GetKeyDown(pickupKey))
+            {
+                ThrowItem();
+            }
         }
     }
 

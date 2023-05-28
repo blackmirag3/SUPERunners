@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCam : MonoBehaviour
 {
     [SerializeField] private PlayerCamSettings settings;
+    public PauseMenu pauseMenu; 
 
     public WallRunning wallRunning;
     public PlayerMovement playerMovement;
@@ -59,25 +60,26 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
-        mouseX = Input.GetAxisRaw("Mouse X") * sensX;
-        mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
+        if (!pauseMenu.gameIsPaused)
+        {
+            mouseX = Input.GetAxisRaw("Mouse X") * sensX;
+            mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            yRotation += mouseX;
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRunning.Tilt);
-        orientation.rotation = Quaternion.Euler(0, yRotation, wallRunning.Tilt);
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRunning.Tilt);
+            orientation.rotation = Quaternion.Euler(0, yRotation, wallRunning.Tilt);
 
-        fovUpdate();
+            fovUpdate();
+            PlayMotion();
+            ResetPosition();
+            //cam.LookAt(FocusTarget());
+        }
     }
 
-    void LateUpdate()
-    {
-        PlayMotion();
-        ResetPosition();
-        //cam.LookAt(FocusTarget());
-    }
+
 
     private void fovUpdate()
     {
@@ -102,8 +104,8 @@ public class PlayerCam : MonoBehaviour
         {
             float sine = Mathf.Sin(Time.time * bobFrequency);
             playerSound.HandleFootstep(sine);
-            transform.localPosition += transform.up * sine * bobAmplitude;
-            transform.localPosition += transform.right * Mathf.Cos(Time.time * bobFrequency / 2) * bobAmplitude / 2;
+            transform.localPosition += transform.up * sine * 0.0008f;
+            transform.localPosition += transform.right * Mathf.Cos(Time.time * bobFrequency / 2) * 0.0008f / 2f;
         }
     }
 
