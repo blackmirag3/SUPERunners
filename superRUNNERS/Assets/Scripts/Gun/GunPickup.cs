@@ -6,6 +6,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 {
 
     public GunFire gun;
+    public GunBreak gunBreak;
     public Rigidbody rb;
     public BoxCollider col;
     public Collider damageCol;
@@ -15,7 +16,6 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public bool equipped;
     private float despawnTime = 2f;
-    private bool isThrown = false;
 
     void Start()
     {
@@ -23,9 +23,9 @@ public class GunPickup : MonoBehaviour, IHoldable
         rb = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
 
-        isThrown = false;
         damageCol.enabled = false;
         damageRb.isKinematic = true;
+        gunBreak.enabled = false;
 
         if (equipped)
         {
@@ -78,32 +78,8 @@ public class GunPickup : MonoBehaviour, IHoldable
         damageRb.AddTorque(new Vector3(random, random, random));
 
         gun.enabled = false;
-
-        isThrown = true;
+        gunBreak.enabled = true;
+       
         Destroy(gameObject, despawnTime);
-    }
- 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isThrown && other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Disabling collider");
-            DisableCol();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isThrown && collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Disabling collider with collision");
-            DisableCol();
-        }   
-    }
-
-    // Prevent multiple collision hits on enemy but its not working
-    private void DisableCol()
-    {
-        damageCol.enabled = false;
     }
 }

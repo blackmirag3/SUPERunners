@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3234579219825656375}
   - component: {fileID: 7962146781435246173}
   - component: {fileID: 1818923575}
+  - component: {fileID: 1889171169}
   m_Layer: 30
   m_Name: PistolModel
   m_TagString: Damageable
@@ -116,6 +117,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1889171169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4027190969391522786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4059817725ecd9e4893dbb431a55418e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col: {fileID: 7962146781435246173}
 --- !u!1 &7146796321954800241
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  gunBreak: {fileID: 1889171169}
   rb: {fileID: 0}
   col: {fileID: 0}
   damageCol: {fileID: 7962146781435246173}
@@ -205,7 +220,6 @@ MonoBehaviour:
   throwForwardForce: 20
   throwUpForce: 4.5
   equipped: 0
-  outOfAmmo: 0
 --- !u!114 &7146796322865417165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +250,6 @@ MonoBehaviour:
   allowInvoke: 1
   shootingSound: {fileID: 7146796322865417166}
   emptySound: {fileID: 5817005911573830339}
-  pauseMenu: {fileID: 0}
 --- !u!65 &7146796322865417161
 BoxCollider:
   m_ObjectHideFlags: 0

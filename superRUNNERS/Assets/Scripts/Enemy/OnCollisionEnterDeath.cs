@@ -9,7 +9,7 @@ public class OnCollisionEnterDeath : MonoBehaviour
     [SerializeField] private string bulletTag = "PlayerBullet";
     [SerializeField] private string gunTag = "Damageable";
     public Rigidbody rb;
-
+    private int times = 0;
 
     private void Awake()
     {
@@ -26,14 +26,14 @@ public class OnCollisionEnterDeath : MonoBehaviour
                 anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
                 float damage = collision.gameObject.GetComponent<BulletScript>().damage;
-                Debug.Log("Bullet hit detected");
+                Debug.Log($"Bullet hit detected {times++}");
                 enemy.Damage(damage);
             }
             else if (collision.gameObject.CompareTag(gunTag))
             {
                 anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
-                Debug.Log("Gun hit detected");
+                Debug.Log($"Gun hit detected {times++}");
                 enemy.Damage(0.5f);
             }
         }

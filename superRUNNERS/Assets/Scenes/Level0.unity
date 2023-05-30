@@ -68761,11 +68761,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7146796322865417165, guid: ef649a28b0da6874b809290e738409ef,
-        type: 3}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 1673917945}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef649a28b0da6874b809290e738409ef, type: 3}
 --- !u!1 &1673917942
@@ -71168,6 +71163,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pistol (Spawn)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146796322865417155, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7146796322865417164, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
