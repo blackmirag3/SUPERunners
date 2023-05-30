@@ -30,7 +30,6 @@ public class TimeControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(isShifting);
         if (!pauseMenu.gameIsPaused)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
