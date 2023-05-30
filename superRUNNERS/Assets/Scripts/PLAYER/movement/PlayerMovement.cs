@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement States")]
     public Vector3 moveDirection;
     public Vector3 currVelocity;
+    public float currVelocityMagnitude;
     public bool isGrounded;
     public bool isSprinting;// = false;
     public bool isCrouching;
@@ -91,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        currVelocityMagnitude = currVelocity.magnitude;
         // Ground check
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundMask, QueryTriggerInteraction.Ignore);
 
@@ -256,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         Debug.Log("Crouching");
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        if (isGrounded && (currVelocity.magnitude - 0.5f) > walkSpeed)
+        if (isGrounded && currVelocity.magnitude > crouchSpeed) //(currVelocity.magnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
             moveSpeed += slideSpeedIncrease;
