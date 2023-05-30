@@ -27,5 +27,5 @@ public class GunData : ScriptableObject
     public float enemyInaccuracy;
     public float enemyShotDelay;
     public float enemyBurstSize;
-    public float bulletVelocity; 
+    public float enemyBulletVelocity;
 }

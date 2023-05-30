@@ -113,11 +113,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (onSlope && rb.velocity.y < 0)
             {
-                moveSpeed += slideSlopeIncrease;
+                moveSpeed += slideSlopeIncrease * Time.timeScale;
             }
             else
             {
-                moveSpeed -= slideSpeedDecrease;
+                moveSpeed -= slideSpeedDecrease * Time.timeScale;
             }
         }
     }

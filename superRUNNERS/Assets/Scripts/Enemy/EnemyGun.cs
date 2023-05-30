@@ -58,7 +58,7 @@ public class EnemyGun : MonoBehaviour
     private void InitialiseGunData()
     {
         inaccuracy = gunData.enemyInaccuracy;
-        bulletVelocity = gunData.bulletVelocity;
+        bulletVelocity = gunData.enemyBulletVelocity;
         //for enemy behaviour
         shotDelay = gunData.enemyShotDelay;
         burstSize = gunData.enemyBurstSize;
