@@ -87588,6 +87588,11 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1673917945}
+    - target: {fileID: 3726381203992480164, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: field of view
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 3726381203992480165, guid: d1641f1f2eca9e64b86245a72d6384f4,
         type: 3}
       propertyPath: pauseMenu
