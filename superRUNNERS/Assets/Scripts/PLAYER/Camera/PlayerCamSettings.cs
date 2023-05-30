@@ -8,7 +8,7 @@ public class PlayerCamSettings : ScriptableObject
     [Header("Cam Settings")]
     public float sensX;
     public float sensY;
-    public float sprintFov;
+    //public float sprintFov;
 
     [Header("Bob Settings")]
     public bool isBobEnabled;

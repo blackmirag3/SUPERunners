@@ -20,7 +20,7 @@ public class PlayerCam : MonoBehaviour
     private Camera cam;
 
     private float baseFOV;
-    [SerializeField] private float sprintFOV;
+    //[SerializeField] private float sprintFOV;
     private float targetFOV;
 
     private bool isBobEnabled;
@@ -38,7 +38,7 @@ public class PlayerCam : MonoBehaviour
 
     private void InitialiseSettings()
     {
-        sprintFOV = settings.sprintFov;
+        //sprintFOV = settings.sprintFov;
         sensX = settings.sensX;
         sensY = settings.sensY;
         isBobEnabled = settings.isBobEnabled;
@@ -85,17 +85,17 @@ public class PlayerCam : MonoBehaviour
     {
         if (playerMovement.isSliding)
         {
-            targetFOV = sprintFOV + 10f;
+            targetFOV = baseFOV + 20f;
         }
         else if (playerMovement.isSprinting && !playerMovement.isWallRunning && !playerMovement.isCrouching && player.isWASD)
         {
-            targetFOV = sprintFOV;
+            targetFOV = baseFOV + 10f;
         }
         else if ((!playerMovement.isSprinting || !playerMovement.isWASD || !playerMovement.isSliding) && !playerMovement.isWallRunning)
         {
             targetFOV = baseFOV;
         }
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, 20f * Time.deltaTime);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, 10f * Time.deltaTime);
     }
 
     private void PlayMotion()

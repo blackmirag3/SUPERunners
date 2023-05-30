@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         canJump = true;
 
         startYScale = transform.localScale.y;
+        isSprinting = true;
     }
 
     private void InitializeSettings()

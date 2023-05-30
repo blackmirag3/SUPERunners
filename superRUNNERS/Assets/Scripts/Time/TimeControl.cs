@@ -4,74 +4,44 @@ using UnityEngine;
 
 public class TimeControl : MonoBehaviour
 {
-    [SerializeField] private TimeSettings settings;
-
-    public float timeSens; //sensitivity of time shift
-    public float scaleLimit; //0.05f
-    public float velocityThreshold; //time decreases from this value and lower
-
-    public PlayerMovement player;
-
+    [SerializeField] private PauseMenu pauseMenu;
     private float initialFixedDeltaTime;
     private float playerVelocity;
 
-    public bool isShifting;
-    public bool toggleShift = false;
-
-    private void InitializeSettings()
-    {
-        timeSens = settings.timeSens;
-        scaleLimit = settings.scaleLimit;
-        velocityThreshold = settings.velocityThreshold;
-    }
+    public bool isShifting = false;
+    public float timeShiftRatio = 0.5f;
+    public float normalTime = 1f;
 
     // Start is called before the first frame update
     private void Start()
     {
-        InitializeSettings();
         initialFixedDeltaTime = Time.fixedDeltaTime;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        playerVelocity = player.currVelocity.magnitude;
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (!pauseMenu.gameIsPaused)
         {
-            toggleShift ^= true;
-        }
-        
-        if (toggleShift)
-        {
-            ActiveTimeShift();
-        }
-        else
-        {
-            AutoTimeShift();
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isShifting ^= true;
+                TimeShift();
+            }
         }
     }
 
-    void AutoTimeShift() //player.isWASD
+    void TimeShift()
     {
-        if (playerVelocity < velocityThreshold)
+        if (isShifting)
         {
-            //float relativeVelocity = Mathf.Pow(playerVelocity / velocityThreshold, timeSens);
-            float relativeVelocity = playerVelocity / velocityThreshold;
-            Time.timeScale = Mathf.Clamp(relativeVelocity * timeSens, scaleLimit, 1f);
+            Time.timeScale = timeShiftRatio;
             Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
-            isShifting = true;
         }
         else
         {
-            isShifting = false;
+            Time.timeScale = normalTime;
+            Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         }
-    }
-
-    void ActiveTimeShift()
-    {
-        Time.timeScale = 0.5f;
-        Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
-        isShifting = true;
     }
 }
