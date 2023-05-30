@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   name: Pistol
-  shootForce: 100
+  shootForce: 50
   damage: 1
   maxDist: 10
   spread: 0
   bulletsPerShot: 1
-  magSize: 10
+  magSize: 8
   fireRate: 0.15
   isAuto: 0
   enemyInaccuracy: 1
   enemyShotDelay: 1.5
   enemyBurstSize: 1
-  enemyBulletVelocity: 5
+  enemyBulletVelocity: 20

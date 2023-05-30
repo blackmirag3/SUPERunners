@@ -59494,7 +59494,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: ba0adb92e2c981845b70e2b6a9cd14fd, type: 2}
   isShifting: 0
   timeShiftRatio: 0.3
-  normalTime: 1
+  normalTimeRatio: 1
 --- !u!1 &1341752312
 GameObject:
   m_ObjectHideFlags: 0
