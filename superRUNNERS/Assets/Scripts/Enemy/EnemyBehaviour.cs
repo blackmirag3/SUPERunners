@@ -9,18 +9,26 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     public Transform player;
     public Animator anim;
     public EnemyGun enemyGun;
-    public OnDeath death;
+    public GunDrop gunDrop;
 
     public EnemyBehaviourSettings settings;
 
     private float stoppingDistance;
     private float enemySpeed;
     public bool isDead;
+    public float despawnTime;
+    public KillCounter killCounter;
+
     private bool isAggro;
     private bool hasReachedPlayer;
     private float enemyHealth;
     public bool recentHit = false;
     private float aggroDistance;
+
+
+    public float meleeSpeed;
+    public float meleeDist;
+    private bool isArmed;
 
     //shooting
     private float currentShotTimer;
@@ -38,21 +46,34 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     public void Damage(float damage)
     {
+        enemy.isStopped = true;
         enemyHealth -= damage;
-        Invoke(nameof(ResetHit), 0.5f);
-        if (enemyHealth <= 0)
+        if (isArmed)
+        {
+            gunDrop.enabled = true;
+            isArmed = false;
+        }
+        Invoke(nameof(ResetHit), 0.5f); 
+        if (enemyHealth <= 0 && !isDead)
         {
             isDead = true;
+            killCounter.leftToKill--;
+            Destroy(gameObject, despawnTime);
+        }
+        else if (!isDead)
+        {
+            EnableEnemyMelee();
         }
     }
 
     private void Start()
     {
+        CheckedArmed();
         InitialiseSettings();
         enemy = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = stoppingDistance;
-        death.enabled = false;
+        gunDrop.enabled = false;
         enemy.speed = enemySpeed;
 
         //from enemyGun.gunData (optimise potential)
@@ -71,7 +92,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
         {
             anim.enabled = false;
-            death.enabled = true;
             //anim.SetBool("isDead", isDead);
         }
 
@@ -87,13 +107,17 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         else if (!recentHit)
         {
             EnemyChase();
-            EnemyShoot();
+            if (isArmed)
+            {
+                EnemyShoot();
+            }
         }
     }
 
     private void ResetHit()
     {
         recentHit = false;
+        enemy.isStopped = false;
     }
 
     private void EnemyChase()
@@ -161,7 +185,21 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         aggroDistance = settings.aggroDistance;
     }
 
+    private void CheckedArmed()
+    {
+        if (enemyGun == null)
+        {
+            isArmed = false;
+            return;
+        }
+        isArmed = true;
+    }
 
+    private void EnableEnemyMelee()
+    {
+        enemy.speed = meleeSpeed;
+        enemy.stoppingDistance = meleeDist;
+    }
 
 }
         

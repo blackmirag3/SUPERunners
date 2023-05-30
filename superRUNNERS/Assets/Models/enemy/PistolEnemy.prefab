@@ -2036,10 +2036,14 @@ MonoBehaviour:
   player: {fileID: 0}
   anim: {fileID: 0}
   enemyGun: {fileID: 4884056361479880605}
-  death: {fileID: 3607369322219835589}
+  gunDrop: {fileID: 3607369322219835589}
   settings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c, type: 2}
   isDead: 0
+  despawnTime: 2.5
+  killCounter: {fileID: 0}
   recentHit: 0
+  meleeSpeed: 9.5
+  meleeDist: 1
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2748,7 +2752,6 @@ MonoBehaviour:
   enemy: {fileID: 3856570245020946931}
   gunType: {fileID: 7146796322865417155, guid: ef649a28b0da6874b809290e738409ef, type: 3}
   enemyHand: {fileID: 1402383867961555509}
-  despawnTime: 5.5
 --- !u!1 &6036220103866367475
 GameObject:
   m_ObjectHideFlags: 0

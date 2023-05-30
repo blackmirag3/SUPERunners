@@ -42,8 +42,6 @@ public class GunFire : MonoBehaviour
     public AudioSource shootingSound;
     public AudioSource emptySound;
 
-    public PauseMenu pauseMenu;
-
     private void Awake()
     {
         shootForce = gunData.shootForce;
@@ -65,7 +63,7 @@ public class GunFire : MonoBehaviour
     
     private void Update()
     {
-        if (!pauseMenu.gameIsPaused)
+        if (Time.timeScale != 0)
         {
             MyInput();
 

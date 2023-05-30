@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnDeath : MonoBehaviour
+public class GunDrop : MonoBehaviour
 {
-
     public EnemyBehaviour enemy;
     public GameObject gunType;
     public Transform enemyHand;
-    public float despawnTime;
-
-    public KillCounter killCounter;
 
     private void DropGun()
     {
         GameObject playerGun = Instantiate(gunType, enemyHand.position, Quaternion.identity);
 
-        enemyHand.GetChild(0).gameObject.SetActive(false);
+        Destroy(enemyHand.GetChild(0).gameObject);
         Rigidbody gunRb = playerGun.GetComponent<Rigidbody>();
         ColIgnore(playerGun.GetComponent<Collider>());
 
@@ -51,9 +47,6 @@ public class OnDeath : MonoBehaviour
         {
             DropGun();
         }
-        Destroy(transform.parent.gameObject, despawnTime);
-
-        killCounter.leftToKill--;
     }
 
 }

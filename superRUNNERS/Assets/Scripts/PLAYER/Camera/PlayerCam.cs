@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerCam : MonoBehaviour
 {
     [SerializeField] private PlayerCamSettings settings;
-    public PauseMenu pauseMenu; 
 
     public WallRunning wallRunning;
     public PlayerMovement playerMovement;
@@ -60,7 +59,7 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
-        if (!pauseMenu.gameIsPaused)
+        if (Time.timeScale != 0)
         {
             mouseX = Input.GetAxisRaw("Mouse X") * sensX;
             mouseY = Input.GetAxisRaw("Mouse Y") * sensY;

@@ -14,9 +14,8 @@ public class GunPickup : MonoBehaviour, IHoldable
     public float throwForwardForce, throwUpForce;
 
     public bool equipped;
-    public bool outOfAmmo = false;
     private float despawnTime = 2f;
-    private bool enableDespawn = false;
+    private bool isThrown = false;
 
     void Start()
     {
@@ -24,8 +23,7 @@ public class GunPickup : MonoBehaviour, IHoldable
         rb = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
 
-        outOfAmmo = false;
-        enableDespawn = false;
+        isThrown = false;
         damageCol.enabled = false;
         damageRb.isKinematic = true;
 
@@ -40,15 +38,6 @@ public class GunPickup : MonoBehaviour, IHoldable
             gun.enabled = false;
             rb.isKinematic = false;
             col.isTrigger = false;
-        }
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (equipped && gun.ammoLeft == 0)
-        {
-            outOfAmmo = true;
         }
     }
 
@@ -90,28 +79,31 @@ public class GunPickup : MonoBehaviour, IHoldable
 
         gun.enabled = false;
 
-        enableDespawn = true;
+        isThrown = true;
+        Destroy(gameObject, despawnTime);
+    }
+ 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isThrown && other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Disabling collider");
+            DisableCol();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (enableDespawn)
+        if (isThrown && collision.gameObject.CompareTag("Enemy"))
         {
-            StartCoroutine(DespawnGun());
-        }
+            Debug.Log("Disabling collider with collision");
+            DisableCol();
+        }   
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Prevent multiple collision hits on enemy but its not working
+    private void DisableCol()
     {
-        if (enableDespawn)
-        {
-            StartCoroutine(DespawnGun());
-        }
-    }
-
-    IEnumerator DespawnGun()
-    {
-        yield return new WaitForSeconds(despawnTime);
-        Destroy(gameObject);
+        damageCol.enabled = false;
     }
 }
