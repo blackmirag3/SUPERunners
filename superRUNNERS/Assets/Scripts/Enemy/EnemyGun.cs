@@ -48,9 +48,8 @@ public class EnemyGun : MonoBehaviour
         float z = Random.Range(-inaccuracy, inaccuracy);
         Vector3 shotDir = playerPos.position - bulletPos.position + new Vector3(x, y, z);
         GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
-        shotDir = shotDir.normalized;
-        newBullet.transform.forward = shotDir;
-        newBullet.GetComponent<Rigidbody>().AddForce(shotDir * bulletVelocity, ForceMode.Impulse);
+        newBullet.transform.forward = shotDir.normalized;
+        newBullet.GetComponent<Rigidbody>().AddForce(shotDir.normalized * bulletVelocity, ForceMode.Impulse);
         bulletsShot += 1f;
         if (bulletsShot < bulletsPerShot)
             SpawnOneBullet();
