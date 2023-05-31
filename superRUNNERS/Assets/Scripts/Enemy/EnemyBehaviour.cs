@@ -52,6 +52,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         {
             gunDrop.enabled = true;
             isArmed = false;
+            anim.SetBool("isArmed", isArmed);
         }
         Invoke(nameof(ResetHit), 0.5f); 
         if (enemyHealth <= 0 && !isDead)
@@ -187,12 +188,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void CheckedArmed()
     {
-        if (enemyGun == null)
-        {
-            isArmed = false;
-            return;
-        }
-        isArmed = true;
+        isArmed = (enemyGun == null) ? false : true;
+        anim.SetBool("isArmed", isArmed);
     }
 
     private void EnableEnemyMelee()
