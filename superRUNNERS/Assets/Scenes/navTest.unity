@@ -22665,7 +22665,7 @@ PrefabInstance:
     - target: {fileID: 7989937496402867647, guid: b5324df83c6f2ab4295ae29d6d52bef2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5324df83c6f2ab4295ae29d6d52bef2, type: 3}
@@ -29145,7 +29145,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-162450
+  m_Name: pb_Mesh25250
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39043,7 +39043,6 @@ MonoBehaviour:
   allowInvoke: 1
   shootingSound: {fileID: 1500525094}
   emptySound: {fileID: 1500525095}
-  pauseMenu: {fileID: 0}
 --- !u!114 &1500525090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39057,11 +39056,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  gunBreak: {fileID: 8152447892337254330}
   rb: {fileID: 0}
   col: {fileID: 0}
   damageCol: {fileID: 8152447892337254328}
   damageRb: {fileID: 8152447892337254329}
-  throwForwardForce: 10
+  throwForwardForce: 20
   throwUpForce: 4
   equipped: 0
 --- !u!65 &1500525092
@@ -39957,7 +39957,6 @@ MonoBehaviour:
   allowInvoke: 1
   shootingSound: {fileID: 1671412360}
   emptySound: {fileID: 1671412361}
-  pauseMenu: {fileID: 0}
 --- !u!114 &1671412357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39971,11 +39970,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  gunBreak: {fileID: 3666606794499177384}
   rb: {fileID: 0}
   col: {fileID: 0}
   damageCol: {fileID: 707042993360092983}
   damageRb: {fileID: 3666606794499177383}
-  throwForwardForce: 10
+  throwForwardForce: 20
   throwUpForce: 4
   equipped: 0
 --- !u!54 &1671412358
@@ -45464,6 +45464,7 @@ GameObject:
   - component: {fileID: 1515056903828852588}
   - component: {fileID: 707042993360092983}
   - component: {fileID: 3666606794499177383}
+  - component: {fileID: 3666606794499177384}
   m_Layer: 0
   m_Name: RifleModel
   m_TagString: Damageable
@@ -45835,9 +45836,23 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!114 &3666606794499177384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010614232038207161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4059817725ecd9e4893dbb431a55418e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col: {fileID: 707042993360092983}
+  gunShattered: {fileID: 0}
 --- !u!23 &5200289944770698978
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45887,6 +45902,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4027190969391522786, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7146796322865417155, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
       propertyPath: m_Name
@@ -45910,7 +45930,7 @@ PrefabInstance:
     - target: {fileID: 7146796322865417164, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.712
+      value: 15.533
       objectReference: {fileID: 0}
     - target: {fileID: 7146796322865417164, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
@@ -45962,6 +45982,7 @@ GameObject:
   - component: {fileID: 5200289944770698978}
   - component: {fileID: 8152447892337254328}
   - component: {fileID: 8152447892337254329}
+  - component: {fileID: 8152447892337254330}
   m_Layer: 0
   m_Name: ShotgunModel
   m_TagString: Damageable
@@ -46062,6 +46083,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PistolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4525724657128622924, guid: d4d30d5ac96d7b44890966f8bb47c165,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4884056361479880605, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: playerPos
@@ -46106,7 +46132,21 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!114 &8152447892337254330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5993121598154506039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4059817725ecd9e4893dbb431a55418e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col: {fileID: 8152447892337254328}
+  gunShattered: {fileID: 0}
 --- !u!114 &8811967533736938969
 MonoBehaviour:
   m_ObjectHideFlags: 0

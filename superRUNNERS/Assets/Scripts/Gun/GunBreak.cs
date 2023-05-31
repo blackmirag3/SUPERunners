@@ -6,6 +6,7 @@ public class GunBreak : MonoBehaviour
 {
     public Collider col;
     private bool hasHit;
+    public GameObject gunShattered;
 
     private void OnEnable()
     {
@@ -17,9 +18,9 @@ public class GunBreak : MonoBehaviour
         if (!hasHit)
         {
             col.enabled = false;
-            GetComponentInParent<Rigidbody>().isKinematic = false;
-            GetComponentInParent<Collider>().isTrigger = false;
             hasHit = true;
+            Instantiate(gunShattered, transform.position, transform.rotation, transform.parent);
+            Destroy(gameObject);
         }   
     }
 }

@@ -116,7 +116,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1889171169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 7962146781435246173}
+  gunShattered: {fileID: 4687807815716950563, guid: 9f46f6cfa154bf242bec67f89e90bd27,
+    type: 3}
 --- !u!1 &7146796321954800241
 GameObject:
   m_ObjectHideFlags: 0
