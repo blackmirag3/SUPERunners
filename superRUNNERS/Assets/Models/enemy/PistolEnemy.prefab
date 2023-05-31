@@ -2035,10 +2035,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  anim: {fileID: 0}
+  anim: {fileID: 3856570245020946933}
   enemyGun: {fileID: 4884056361479880605}
   gunDrop: {fileID: 3607369322219835589}
-  enemyHitSound: {fileID: 0}
+  enemyHitSound: {fileID: 3960840944200279127}
   settings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c, type: 2}
   isDead: 0
   despawnTime: 2.5
@@ -2078,7 +2078,7 @@ Animator:
   m_GameObject: {fileID: 4525724657128622924}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 19e9a4338f0387a49b83484ebb8e9e4c, type: 3}
-  m_Controller: {fileID: 9100000, guid: b3029049f06acfb499fc377838d27569, type: 2}
+  m_Controller: {fileID: 9100000, guid: fb0753a6b1e0c474d83454090c5723f6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
