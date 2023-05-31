@@ -10,6 +10,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     public Animator anim;
     public EnemyGun enemyGun;
     public GunDrop gunDrop;
+    public AudioSource enemyHitSound;
 
     public EnemyBehaviourSettings settings;
 
@@ -46,6 +47,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     public void Damage(float damage)
     {
+        enemyHitSound.Play();
         enemy.isStopped = true;
         enemyHealth -= damage;
         if (isArmed)
