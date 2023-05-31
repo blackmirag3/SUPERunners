@@ -2646,7 +2646,7 @@ PrefabInstance:
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: MaxDistance
-      value: 100
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
@@ -2666,8 +2666,14 @@ PrefabInstance:
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: DopplerLevel
-      value: 1.61
+      value: 1.99
       objectReference: {fileID: 0}
+    - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+        type: 2}
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].time
@@ -2676,7 +2682,7 @@ PrefabInstance:
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.28055555
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3641742435352165558, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
@@ -22572,6 +22578,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 1181320586}
   playerTag: Player
+--- !u!82 &1019507273 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 910333653745268898, guid: ef649a28b0da6874b809290e738409ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1624821443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1021455191
 Mesh:
   m_ObjectHideFlags: 0
@@ -69083,6 +69095,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1889171169, guid: ef649a28b0da6874b809290e738409ef, type: 3}
+      propertyPath: gunBreak
+      value: 
+      objectReference: {fileID: 1019507273}
+    - target: {fileID: 910333653745268898, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940064181751813119, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: m_Name
+      value: PistolBreakSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202960032445035177, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.808
+      objectReference: {fileID: 0}
     - target: {fileID: 7146796322865417155, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
       propertyPath: m_Name

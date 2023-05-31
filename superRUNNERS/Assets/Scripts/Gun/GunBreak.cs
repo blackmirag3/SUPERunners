@@ -7,6 +7,7 @@ public class GunBreak : MonoBehaviour
     public Collider col;
     private bool hasHit;
     public GameObject gunShattered;
+    public AudioSource gunBreak;
 
     private void OnEnable()
     {
@@ -19,6 +20,7 @@ public class GunBreak : MonoBehaviour
         {
             col.enabled = false;
             hasHit = true;
+            gunBreak.Play();
             Instantiate(gunShattered, transform.position, transform.rotation, transform.parent);
             Destroy(gameObject);
         }   
