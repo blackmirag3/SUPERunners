@@ -69101,6 +69101,16 @@ PrefabInstance:
       objectReference: {fileID: 1019507273}
     - target: {fileID: 910333653745268898, guid: ef649a28b0da6874b809290e738409ef,
         type: 3}
+      propertyPath: m_Volume
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 910333653745268898, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 910333653745268898, guid: ef649a28b0da6874b809290e738409ef,
+        type: 3}
       propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
