@@ -26,7 +26,7 @@ public class GunDrop : MonoBehaviour
 
         // calculate velocity
         float velocity = Mathf.Sqrt(Mathf.Abs(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a)));
-        gunRb.velocity = dir.normalized;
+        gunRb.velocity = dir.normalized * velocity;
         float spin = Random.Range(-10f, 10f);
         gunRb.AddTorque(new Vector3(spin, spin, spin));
     }

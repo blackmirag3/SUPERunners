@@ -162,7 +162,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     {
         if (enemyGun != null)
             enemyGun.Shoot();
-        anim.SetTrigger("enemyShoot");  
+        anim.Play("Additive Layer.enemyShoot", -1, 0);  
         bulletsShot += 1f;
 
         if (bulletsShot < currentBurstSize)
