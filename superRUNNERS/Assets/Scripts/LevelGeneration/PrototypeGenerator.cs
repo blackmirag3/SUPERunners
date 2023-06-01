@@ -9,10 +9,10 @@ public class PrototypeGenerator : MonoBehaviour
     public List<Prototype> protoypePrefabs;
     public List<Prototype> prototypes;
     public string path = "Assets/Data/Prototypes";
-    Socket posXHolder;
-    Socket negXHolder;
-    Socket posZHolder;
-    Socket negZHolder;
+    FaceData posXHolder;
+    FaceData negXHolder;
+    FaceData posZHolder;
+    FaceData negZHolder;
     List<GameObject> prototypeHolder = new List<GameObject>();
 
     [SerializeField] private GameObject prototypeHolderPrefab;
@@ -39,7 +39,7 @@ public class PrototypeGenerator : MonoBehaviour
         }
         UpdatePrototypes();
 
-        // prototypeHolderPrefab.GetComponent<Cell>().possiblePrototypes = prototypes;
+        prototypeHolderPrefab.GetComponent<Cell>().possiblePrototypes = prototypes;
     }
 
     public void UpdatePrototypes()
@@ -104,16 +104,36 @@ public class PrototypeGenerator : MonoBehaviour
         NeighbourList neighbourList = new NeighbourList();
         foreach (Prototype p in prototypes)
         {
-            if (proto.posX == p.negX)
+            if (CheckSockets(proto.posX, p.negX))
                 neighbourList.posX.Add(p);
-            if (proto.negX == p.posX)
+            if (CheckSockets(proto.negX, p.posX))
                 neighbourList.negX.Add(p);
-            if (proto.posZ == p.negZ)
+            if (CheckSockets(proto.posZ, p.negZ))
                 neighbourList.posZ.Add(p);
-            if (proto.negZ == p.posZ)
+            if (CheckSockets(proto.negZ, p.posZ))
                 neighbourList.negZ.Add(p);
         }
         return neighbourList;
+    }
+
+    private bool CheckSockets(FaceData socket, FaceData socketToCheck)
+    {
+        switch (socket.isSymmetric)
+        {
+            case true:
+                if (socket.socket == socketToCheck.socket)
+                {
+                    return true;
+                }
+                break;
+            case false:
+                if (socket.socket == socketToCheck.socket && socket.flipped != socketToCheck.flipped)
+                {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
     public void DisplayPrototypes()
