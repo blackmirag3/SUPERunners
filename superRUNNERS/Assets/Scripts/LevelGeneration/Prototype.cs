@@ -7,10 +7,11 @@ public class Prototype : ScriptableObject
 {
     public int meshRotation;
     public GameObject prefab;
-    public Socket posX;
-    public Socket negX;
-    public Socket posZ;
-    public Socket negZ;
+    public FaceData posX;
+    public FaceData negX;
+    public FaceData posZ;
+    public FaceData negZ;
+    public int weight;
     public NeighbourList validNeighbours;
 }
 
@@ -21,6 +22,14 @@ public enum Socket
     a,
     b,
     air,
+}
+
+[System.Serializable]
+public struct FaceData
+{
+    public bool isSymmetric;
+    public Socket socket;
+    public bool flipped;
 }
 
 [System.Serializable]

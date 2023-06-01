@@ -65,10 +65,15 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     private void TestActivateCell()
     {
+        Cell firstCell = remainingCells[Random.Range(0, remainingCells.Count)];
+        CollapseAt(firstCell);
+        PropogateCells(firstCell);
+
         while (!AllCollapsed())
         {
-            Cell cellToCollapse = remainingCells[Random.Range(0, remainingCells.Count)];
+            Cell cellToCollapse = GetLowestCellEntropy();
             CollapseAt(cellToCollapse);
+            PropogateCells(cellToCollapse);
         }
     }
 
@@ -99,5 +104,200 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             remainingCells.Remove(cell);
         }
+    }
+
+    private Cell GetLowestCellEntropy()
+    {
+        List<Cell> possibleCells = new List<Cell>();
+        int minSoFar = int.MaxValue;
+
+        /* needs to be rewritten
+        foreach (Cell cell in remainingCells)
+        {
+            float weightSum = 0;
+            foreach (Prototype prototype in cell.possiblePrototypes)
+            {
+                weightSum += prototype.weight;
+            }
+
+            if (weightSum < minSoFar)
+            {
+                possibleCells.Clear();
+                possibleCells.Add(cell);
+            }
+            else if (weightSum == minSoFar)
+            {
+                possibleCells.Add(cell);
+            }
+        }
+        */
+
+        // for now
+        foreach (Cell cell in remainingCells)
+        {
+            if (cell.possiblePrototypes.Count < minSoFar)
+            {
+                possibleCells.Clear();
+                possibleCells.Add(cell);
+                minSoFar = cell.possiblePrototypes.Count;
+            }
+            else if (cell.possiblePrototypes.Count == minSoFar)
+            {
+                possibleCells.Add(cell);
+            }
+        }
+
+        return possibleCells[Random.Range(0, possibleCells.Count)];
+    }
+
+    private void PropogateCells(Cell cell)
+    {
+        cellsToPropagate.Add(cell);
+
+        while (cellsToPropagate.Count > 0)
+        {
+            Cell currCell = cellsToPropagate[0];
+            cellsToPropagate.Remove(currCell);
+
+            Cell neighborCell = currCell.posXNeighbor;
+            List<FaceData> socketsAccepted = new List<FaceData>();
+            socketsAccepted.Clear();
+            // positive x neighbor
+            if (neighborCell != null)
+            {
+                bool cellAdjusted = false;
+                foreach (Prototype proto in currCell.possiblePrototypes)
+                {
+                    if (!socketsAccepted.Contains(proto.posX))
+                    {
+                        socketsAccepted.Add(proto.posX);
+                    }
+                }
+                for (int i = 0; i < neighborCell.possiblePrototypes.Count; i++)
+                {
+                    if (!CheckForMatch(neighborCell.possiblePrototypes[i].negX, socketsAccepted))
+                    {
+                        neighborCell.possiblePrototypes.RemoveAt(i);
+                        i--;
+                        cellAdjusted = true;
+                    }
+                }
+
+                if (cellAdjusted)
+                {
+                    cellsToPropagate.Add(neighborCell);
+                }
+            }
+
+            // negative x neighbor
+            socketsAccepted.Clear();
+            neighborCell = currCell.negXNeighbor;
+            if (neighborCell != null)
+            {
+                bool cellAdjusted = false;
+                foreach (Prototype proto in currCell.possiblePrototypes)
+                {
+                    if (!socketsAccepted.Contains(proto.negX))
+                    {
+                        socketsAccepted.Add(proto.negX);
+                    }
+                }
+                for (int i = 0; i < neighborCell.possiblePrototypes.Count; i++)
+                {
+                    if (!CheckForMatch(neighborCell.possiblePrototypes[i].posX, socketsAccepted))
+                    {
+                        neighborCell.possiblePrototypes.RemoveAt(i);
+                        i--;
+                        cellAdjusted = true;
+                    }
+                }
+
+                if (cellAdjusted)
+                {
+                    cellsToPropagate.Add(neighborCell);
+                }
+            }
+
+            // positive z neighbor
+            socketsAccepted.Clear();
+            neighborCell = currCell.posZNeighbor;
+            if (neighborCell != null)
+            {
+                bool cellAdjusted = false;
+                foreach (Prototype proto in currCell.possiblePrototypes)
+                {
+                    if (!socketsAccepted.Contains(proto.posZ))
+                    {
+                        socketsAccepted.Add(proto.posZ);
+                    }
+                }
+                for (int i = 0; i < neighborCell.possiblePrototypes.Count; i++)
+                {
+                    if (!CheckForMatch(neighborCell.possiblePrototypes[i].negZ, socketsAccepted))
+                    {
+                        neighborCell.possiblePrototypes.RemoveAt(i);
+                        i--;
+                        cellAdjusted = true;
+                    }
+                }
+
+                if (cellAdjusted)
+                {
+                    cellsToPropagate.Add(neighborCell);
+                }
+            }
+
+            // negative z neighbor
+            socketsAccepted.Clear();
+            neighborCell = currCell.negZNeighbor;
+            if (neighborCell != null)
+            {
+                bool cellAdjusted = false;
+                foreach (Prototype proto in currCell.possiblePrototypes)
+                {
+                    if (!socketsAccepted.Contains(proto.negZ))
+                    {
+                        socketsAccepted.Add(proto.negZ);
+                    }
+                }
+                for (int i = 0; i < neighborCell.possiblePrototypes.Count; i++)
+                {
+                    if (!CheckForMatch(neighborCell.possiblePrototypes[i].posZ, socketsAccepted))
+                    {
+                        neighborCell.possiblePrototypes.RemoveAt(i);
+                        i--;
+                        cellAdjusted = true;
+                    }
+                }
+
+                if (cellAdjusted)
+                {
+                    cellsToPropagate.Add(neighborCell);
+                }
+            }
+        }
+    }
+
+    private bool CheckForMatch(FaceData socket, List<FaceData> socketsToCheck)
+    {
+        foreach (FaceData face in socketsToCheck)
+        {
+            switch (socket.isSymmetric)
+            {
+                case true:
+                    if (socket.socket == face.socket)
+                    {
+                        return true;
+                    }
+                    break;
+                case false:
+                    if (socket.socket == face.socket && socket.flipped != face.flipped)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return false;
     }
 }
