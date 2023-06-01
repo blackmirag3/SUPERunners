@@ -25,7 +25,8 @@ public class GunData : ScriptableObject
     [Header("Enemy Stats")]
     //TODO add max and min values and randomiser to shooting functions (EnemyGun)
     public float enemyInaccuracy;
-    public float enemyShotDelay;
-    public float enemyBurstSize;
+    public float enemyMaxShotDelay;
+    public float enemyMinShotDelay;
+    public float enemyMaxBurstSize;
     public float enemyBulletVelocity;
 }

@@ -22,6 +22,7 @@ MonoBehaviour:
   fireRate: 0.15
   isAuto: 0
   enemyInaccuracy: 1
-  enemyShotDelay: 1.5
-  enemyBurstSize: 1
+  enemyMaxShotDelay: 1.7
+  enemyMinShotDelay: 0.7
+  enemyMaxBurstSize: 1.1
   enemyBulletVelocity: 20

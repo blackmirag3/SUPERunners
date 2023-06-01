@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7597371495190899124}
   - component: {fileID: 910333653745268898}
   m_Layer: 30
-  m_Name: PistolSmash
+  m_Name: PistolSmashSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +608,7 @@ MonoBehaviour:
   col: {fileID: 0}
   damageCol: {fileID: 7962146781435246173}
   damageRb: {fileID: 1818923575}
-  throwForwardForce: 20
+  throwForwardForce: 40
   throwUpForce: 4.5
   equipped: 0
 --- !u!114 &7146796322865417165

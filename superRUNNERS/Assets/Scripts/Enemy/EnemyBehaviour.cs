@@ -32,11 +32,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private bool isArmed;
 
     //shooting
-    private float currentShotTimer;
-    private float shotDelay;
-    private float burstSize;
+    private float currentShotTimer = 0;
+    private float maxShotDelay;
+    private float minShotDelay;
+    private float maxBurstSize;
     private float bulletsShot;
     private float fireRate;
+    private float currentBurstSize;
     //private float bulletsPerShot;
 
 
@@ -79,10 +81,11 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         gunDrop.enabled = false;
         enemy.speed = enemySpeed;
 
-        //from enemyGun.gunData (optimise potential)
-        shotDelay = enemyGun.shotDelay;
+        //from enemyGun.gunData
+        maxShotDelay = enemyGun.maxShotDelay;
+        minShotDelay = maxShotDelay - enemyGun.minShotDelay;
         fireRate = enemyGun.fireRate;
-        burstSize = enemyGun.burstSize;
+        maxBurstSize = enemyGun.maxBurstSize;
         //bulletsPerShot = enemyGun.bulletsPerShot;
 
         anim.SetBool("isAggro", isAggro);
@@ -146,24 +149,23 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     public void EnemyShoot()
     {
-        if (currentShotTimer > shotDelay && CheckLOS())
+        if (currentShotTimer > maxShotDelay && CheckLOS())
         {
+            currentShotTimer = Random.Range(0, minShotDelay);
+            currentBurstSize = Random.Range(0, maxBurstSize);
             ShootOneBurst();
-            currentShotTimer = 0;
-
-            //currentShotTimer = Random.Range(0, shotDelay/);
-            // Random.Range(0, currentBurstCounter);
         }
         currentShotTimer += Time.deltaTime;
     }
 
     private void ShootOneBurst()
     {
-        enemyGun.Shoot();
-        anim.Play("Upper Body.Pistol Shoot", -1, 0);
+        if (enemyGun != null)
+            enemyGun.Shoot();
+        anim.SetTrigger("enemyShoot");  
         bulletsShot += 1f;
 
-        if (bulletsShot < burstSize)
+        if (bulletsShot < currentBurstSize)
         {
             Invoke("ShootOneBurst", fireRate);
         }
