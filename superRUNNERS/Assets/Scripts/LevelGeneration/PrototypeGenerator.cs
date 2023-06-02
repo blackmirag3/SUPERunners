@@ -53,6 +53,8 @@ public class PrototypeGenerator : MonoBehaviour
                 prototypes[i * 4 + j].validNeighbours = new NeighbourList();
                 prototypes[i * 4 + j].meshRotation = j;
 
+                prototypes[i * 4 + j].weight = protoypePrefabs[i].weight;
+
                 prototypes[i * 4 + j].posX = protoypePrefabs[i].posX;
                 prototypes[i * 4 + j].negX = protoypePrefabs[i].negX;
                 prototypes[i * 4 + j].posZ = protoypePrefabs[i].posZ;

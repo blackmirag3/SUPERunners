@@ -19,8 +19,31 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         InstantiateCells();
         TestActivateCell();
+        Debug.Log(transform.childCount);
     }
-    
+
+    // for fun
+    private void Update()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetGrid();
+            TestActivateCell();
+        }
+        
+        
+    }
+
+    private void ResetGrid()
+    {
+        Debug.Log("Reset");
+        ClearGrid();
+        cells.Clear();
+        activeCells.Clear();
+        InstantiateCells();
+    }
+
     private void InstantiateCells()
     {
         for (int x = 0; x < gridSize; x++)
@@ -43,6 +66,14 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             FindCellNeighbors(cell);
         }
+    }
+
+    private void ClearGrid()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }    
     }
 
     private void FindCellNeighbors(Cell cell)
@@ -72,6 +103,14 @@ public class WaveFunctionCollapse : MonoBehaviour
         while (!AllCollapsed())
         {
             Cell cellToCollapse = GetLowestCellEntropy();
+
+            if (cellToCollapse.possiblePrototypes.Count == 0)
+            {
+                Debug.Log("Failure case encountered");
+                ResetGrid();
+                cellToCollapse = remainingCells[Random.Range(0, remainingCells.Count)];
+            }
+
             CollapseAt(cellToCollapse);
             PropogateCells(cellToCollapse);
         }
@@ -88,9 +127,8 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     private void CollapseAt(Cell cell)
     {
-        int prototypeIndex = Random.Range(0, cell.possiblePrototypes.Count);
+        int prototypeIndex = GetIndexToCollapse(cell);
         Prototype selectedProto = cell.possiblePrototypes[prototypeIndex];
-        // selectedProto.prefab = cell.possiblePrototypes[prototypeIndex].prefab;
         cell.possiblePrototypes.Clear();
         cell.possiblePrototypes.Add(selectedProto);
         GameObject tilePrefab = Instantiate(selectedProto.prefab, cell.transform, true);
@@ -104,6 +142,29 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             remainingCells.Remove(cell);
         }
+    }
+
+    private int GetIndexToCollapse(Cell cell)
+    {
+        int weightSum = 0;
+
+        foreach (Prototype prototype in cell.possiblePrototypes)
+        {
+            weightSum += prototype.weight;
+        }
+
+        int randomWeightVal = Random.Range(0, weightSum + 1);
+
+        for (int i = 0, toCompare = 0; i < cell.possiblePrototypes.Count; i++)
+        {
+            toCompare += cell.possiblePrototypes[i].weight;
+            if (randomWeightVal <= toCompare)
+            {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     private Cell GetLowestCellEntropy()
