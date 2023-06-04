@@ -22,6 +22,7 @@ public enum Socket
     a,
     b,
     air,
+    high,
 }
 
 [System.Serializable]

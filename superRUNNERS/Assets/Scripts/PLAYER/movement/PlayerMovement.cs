@@ -105,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         ControlDrag();
         SpeedLimit();
         SpeedControl();
+        
     }
 
     private void FixedUpdate()
@@ -156,7 +157,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(crouchKey) && !isWallRunning)
         {
             Crouch();
-            Debug.Log($"Slope state: {onSlope}");
         }
         if (Input.GetKeyUp(crouchKey))
         {
@@ -256,13 +256,11 @@ public class PlayerMovement : MonoBehaviour
     {
         isCrouching = true;
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-        Debug.Log("Crouching");
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         if (isGrounded && currVelocity.magnitude > crouchSpeed) //(currVelocity.magnitude - 0.5f) > walkSpeed)
         {
             isSliding = true;
             moveSpeed += slideSpeedIncrease;
-            Debug.Log($"Sliding Called, moveSpeed: {moveSpeed}");
         }
     }
 
@@ -291,7 +289,7 @@ public class PlayerMovement : MonoBehaviour
     private void GravityControl()
     {
         if (onSlope && !isWASD)
-        {
+        { 
             rb.useGravity = false;
         }
         else if (!isWallRunning)

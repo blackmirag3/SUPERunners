@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerCamSettings")]
+[CreateAssetMenu(fileName = "PlayerCamSettings", menuName = "Settings/Player Cam Settings")]
 public class PlayerCamSettings : ScriptableObject
 {
     [Header("Cam Settings")]

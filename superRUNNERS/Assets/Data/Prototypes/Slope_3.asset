@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 614b2ba2d4194a1489ee240a2b62d6d1, type: 3}
-  m_Name: New Prototype
+  m_Name: Slope_3
   m_EditorClassIdentifier: 
   meshRotation: 0
   prefab: {fileID: 0}

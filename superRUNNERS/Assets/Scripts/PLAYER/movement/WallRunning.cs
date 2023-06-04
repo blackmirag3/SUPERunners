@@ -134,7 +134,10 @@ public class WallRunning : MonoBehaviour
     private void ExitWallRun()
     {
         playerMovement.isWallRunning = false;
-        rb.useGravity = true;
+        if (!playerMovement.onSlope)
+        {
+            rb.useGravity = true;
+        }
 
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
         Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);

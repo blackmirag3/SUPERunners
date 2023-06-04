@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon Movement Settings")]
+[CreateAssetMenu(fileName = "Weapon Movement Settings", menuName = "Settings/Weapon Movement Settings")]
 public class WeaponMovementSettings : ScriptableObject
 {
 
