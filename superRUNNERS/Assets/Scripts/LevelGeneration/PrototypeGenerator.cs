@@ -35,6 +35,7 @@ public class PrototypeGenerator : MonoBehaviour
             {
                 Prototype newProto = CreateMyAsset(path, protoypePrefabs[i].name, j.ToString().Replace(" ", ""));
                 prototypes.Add(newProto);
+
             }
         }
         UpdatePrototypes();
@@ -84,7 +85,15 @@ public class PrototypeGenerator : MonoBehaviour
 
         // // Generate valid neighbors
         for (int i = 0; i < prototypes.Count; i++)
+        {
             prototypes[i].validNeighbours = GetValidNeighbors(prototypes[i]);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(prototypes[i]);
+            Debug.Log(prototypes[i]);
+            AssetDatabase.SaveAssetIfDirty(prototypes[i]);
+#endif
+        }
     }
 
     public static Prototype CreateMyAsset(string assetFolder, string name, string j)
@@ -96,6 +105,7 @@ public class PrototypeGenerator : MonoBehaviour
         AssetDatabase.SaveAssets();
 
         EditorUtility.FocusProjectWindow();
+        Debug.Log("Generating prototype");
 #endif
 
         return asset;
@@ -120,19 +130,21 @@ public class PrototypeGenerator : MonoBehaviour
 
     private bool CheckSockets(FaceData socket, FaceData socketToCheck)
     {
-        switch (socket.isSymmetric)
+        switch (socket.socketType)
         {
-            case true:
+            case SocketType.symmetric:
                 if (socket.socket == socketToCheck.socket)
                 {
                     return true;
                 }
                 break;
-            case false:
+            case SocketType.asymmetric:
                 if (socket.socket == socketToCheck.socket && socket.flipped != socketToCheck.flipped)
                 {
                     return true;
                 }
+                break;
+            case SocketType.oneWay:
                 break;
         }
         return false;

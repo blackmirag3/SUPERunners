@@ -15,19 +15,19 @@ MonoBehaviour:
   meshRotation: 0
   prefab: {fileID: 8569055237054900945, guid: 04b5e18b31fc9044fab73dc5536d0894, type: 3}
   posX:
-    isSymmetric: 1
+    socketType: 2
     socket: 4
     flipped: 0
   negX:
-    isSymmetric: 1
+    socketType: 2
     socket: 4
     flipped: 0
   posZ:
-    isSymmetric: 1
+    socketType: 2
     socket: 4
     flipped: 0
   negZ:
-    isSymmetric: 1
+    socketType: 2
     socket: 4
     flipped: 0
   weight: 2

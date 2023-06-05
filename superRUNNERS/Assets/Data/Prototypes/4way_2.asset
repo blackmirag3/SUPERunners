@@ -12,25 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614b2ba2d4194a1489ee240a2b62d6d1, type: 3}
   m_Name: 4way_2
   m_EditorClassIdentifier: 
-  meshRotation: 0
-  prefab: {fileID: 0}
+  meshRotation: 2
+  prefab: {fileID: 3795667079501356793, guid: a54f801fbdc7c224785e79840024ead3, type: 3}
   posX:
-    isSymmetric: 0
+    socketType: 2
     socket: 0
     flipped: 0
   negX:
-    isSymmetric: 0
+    socketType: 2
     socket: 0
     flipped: 0
   posZ:
-    isSymmetric: 0
+    socketType: 2
     socket: 0
     flipped: 0
   negZ:
-    isSymmetric: 0
+    socketType: 2
     socket: 0
     flipped: 0
-  weight: 0
+  weight: 3
   validNeighbours:
     posX: []
     posZ: []

@@ -343,16 +343,22 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         foreach (FaceData face in socketsToCheck)
         {
-            switch (socket.isSymmetric)
+            switch (socket.socketType)
             {
-                case true:
+                case SocketType.symmetric:
                     if (socket.socket == face.socket)
                     {
                         return true;
                     }
                     break;
-                case false:
+                case SocketType.asymmetric:
                     if (socket.socket == face.socket && socket.flipped != face.flipped)
+                    {
+                        return true;
+                    }
+                    break;
+                case SocketType.oneWay:
+                    if (socket.socket == face.socket && face.socketType != SocketType.oneWay)
                     {
                         return true;
                     }

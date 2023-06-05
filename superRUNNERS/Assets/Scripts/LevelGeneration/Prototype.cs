@@ -25,10 +25,17 @@ public enum Socket
     high,
 }
 
+public enum SocketType
+{
+    symmetric,
+    asymmetric,
+    oneWay,
+}
+
 [System.Serializable]
 public struct FaceData
 {
-    public bool isSymmetric;
+    public SocketType socketType;
     public Socket socket;
     public bool flipped;
 }
