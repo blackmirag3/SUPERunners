@@ -12,10 +12,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - ground
+  - Ground
   - Water
   - UI
-  - wall
+  - Wall
   - 
   - 
   - 
@@ -35,11 +35,11 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - ItemThrown
   - BulletProj
   - 
   - 
-  - player
+  - Player
   - 
   m_SortingLayers:
   - name: Default

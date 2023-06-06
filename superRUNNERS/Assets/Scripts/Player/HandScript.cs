@@ -15,8 +15,10 @@ public class HandScript : MonoBehaviour
 
     public float pickupRange;
     public KeyCode pickupKey = KeyCode.Mouse1;
-    public KeyCode throwKey = KeyCode.Mouse0;
+    public KeyCode attackKey = KeyCode.Mouse0;
     public static bool handEmpty = true;
+
+    private bool itemIsGun;
 
     void Start()
     {
@@ -24,6 +26,8 @@ public class HandScript : MonoBehaviour
         handHitbox = GetComponentInChildren<Collider>();
         handHitbox.enabled = false;
         handHitbox.isTrigger = true;
+
+        itemIsGun = false;
     }
 
     // Update is called once per frame
@@ -35,11 +39,11 @@ public class HandScript : MonoBehaviour
             {
                 PickupItem();
             }
-            else if (handEmpty && Input.GetKeyDown(throwKey) && canPunch)
+            else if (handEmpty && Input.GetKeyDown(attackKey) && canPunch)
             {
                 MeleeAttack();
             }
-            else if (!handEmpty && Input.GetKeyDown(pickupKey))
+            else if (!handEmpty && (Input.GetKeyDown(pickupKey) || (!itemIsGun && Input.GetKeyDown(attackKey))))
             {
                 ThrowItem();
             }
@@ -63,6 +67,8 @@ public class HandScript : MonoBehaviour
             {
                 handEmpty = false;
                 grab.Pickup(transform);
+                itemIsGun = grab.isGun;
+                Debug.Log(itemIsGun);
             }
         }
     }

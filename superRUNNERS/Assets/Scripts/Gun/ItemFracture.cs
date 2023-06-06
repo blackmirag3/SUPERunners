@@ -16,7 +16,7 @@ public class ItemFracture : MonoBehaviour
             float force = Random.Range(minExplosionForce, maxExplosionForce);
             rb.AddExplosionForce(force, transform.position, 10f);
         }
-        
+        Destroy(gameObject, 4f);
     }
 
 }

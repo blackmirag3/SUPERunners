@@ -17,6 +17,8 @@ public class GunPickup : MonoBehaviour, IHoldable
     public bool equipped;
     private float despawnTime = 2f;
 
+    public bool isGun { get; set; }
+
     void Start()
     {
         gun = GetComponent<GunFire>();
@@ -26,6 +28,7 @@ public class GunPickup : MonoBehaviour, IHoldable
         damageCol.enabled = false;
         damageRb.isKinematic = true;
         gunBreak.enabled = false;
+        isGun = true;
 
         if (equipped)
         {

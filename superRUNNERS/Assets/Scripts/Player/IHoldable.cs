@@ -8,4 +8,5 @@ public interface IHoldable
 
     void Throw(Vector3 dir, Vector3 velocity);
 
+    bool isGun { get; set; }
 }

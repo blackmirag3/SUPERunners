@@ -20,7 +20,12 @@ public class GunBreak : MonoBehaviour
         {
             col.enabled = false;
             hasHit = true;
-            gunBreak.Play();
+
+            if (gunBreak != null)
+            {
+                gunBreak.Play();
+            }
+
             Instantiate(gunShattered, transform.position, transform.rotation, transform.parent);
             Destroy(gameObject);
         }   
