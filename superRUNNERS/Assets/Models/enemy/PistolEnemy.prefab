@@ -531,15 +531,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039797472892742056}
-  m_LocalRotation: {x: 0.0076473327, y: -0.08475935, z: 0.65727806, w: 0.7488277}
-  m_LocalPosition: {x: -0.027, y: 0.126, z: 0.055}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.08111211, y: -0.019834628, z: 0.66242385, w: 0.74446094}
+  m_LocalPosition: {x: -0.0207, y: 0.101, z: 0.029}
+  m_LocalScale: {x: 0.5, y: 0.6, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6531323304183064632}
   m_Father: {fileID: 1402383867961555509}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 7.058, y: -6.764, z: 82.132}
+  m_LocalEulerAnglesHint: {x: 8.456, y: 4.519, z: 83.66}
 --- !u!33 &3641742435352165559
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -608,8 +608,9 @@ MonoBehaviour:
   shootingSound: {fileID: 3641742435352165558}
   bulletPos: {fileID: 6531323304183064632}
   playerPos: {fileID: 0}
-  shotDelay: 0
-  burstSize: 0
+  maxShotDelay: 0
+  minShotDelay: 0
+  maxBurstSize: 0
   fireRate: 0
   bulletsPerShot: 0
 --- !u!82 &3641742435352165558
@@ -621,8 +622,9 @@ AudioSource:
   m_GameObject: {fileID: 1039797472892742056}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c5d6f8134452f9046a7aeb27b5c78d6d, type: 3}
+  OutputAudioMixerGroup: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 34b0a90ef6ecc0645a41c80405272f14, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -631,9 +633,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  DopplerLevel: 1.99
+  MinDistance: 20
+  MaxDistance: 80
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -652,8 +654,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 0
+      time: 0.94277954
+      value: 0.039642334
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -668,7 +670,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2045,7 +2047,7 @@ MonoBehaviour:
   killCounter: {fileID: 0}
   recentHit: 0
   meleeSpeed: 9.5
-  meleeDist: 1
+  meleeDist: 2
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2081,7 +2083,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fb0753a6b1e0c474d83454090c5723f6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

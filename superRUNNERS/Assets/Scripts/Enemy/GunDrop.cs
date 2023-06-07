@@ -10,7 +10,7 @@ public class GunDrop : MonoBehaviour
 
     private void DropGun()
     {
-        GameObject playerGun = Instantiate(gunType, enemyHand.position, Quaternion.identity);
+        GameObject playerGun = Instantiate(gunType, enemyHand.position, Quaternion.identity, transform.parent.parent);
 
         Destroy(enemyHand.GetChild(0).gameObject);
         Rigidbody gunRb = playerGun.GetComponent<Rigidbody>();

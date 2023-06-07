@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public class WaveFunctionCollapse : MonoBehaviour
 {
@@ -14,25 +15,38 @@ public class WaveFunctionCollapse : MonoBehaviour
     public Dictionary<Vector3, Cell> activeCells = new Dictionary<Vector3, Cell>();
     public List<Cell> cellsToPropagate = new List<Cell>();
 
+    public NavMeshSurface surface;
+
+    public bool testSpawn = false;
 
     private void Start()
     {
+        testSpawn = false;
         InstantiateCells();
-        TestActivateCell();
+        StartCollapse();
         Debug.Log(transform.childCount);
+        surface.BuildNavMesh();
+        testSpawn = true;
     }
 
     // for fun
     private void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.R))
         {
             ResetGrid();
-            TestActivateCell();
+            StartCollapse();
+            StartCoroutine(UpdateMesh());
+            testSpawn = true;
         }
         
         
+    }
+
+    IEnumerator UpdateMesh()
+    {
+        yield return null;
+        surface.UpdateNavMesh(surface.navMeshData);
     }
 
     private void ResetGrid()
@@ -94,7 +108,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         return null;
     }
 
-    private void TestActivateCell()
+    private void StartCollapse()
     {
         Cell firstCell = remainingCells[Random.Range(0, remainingCells.Count)];
         CollapseAt(firstCell);
