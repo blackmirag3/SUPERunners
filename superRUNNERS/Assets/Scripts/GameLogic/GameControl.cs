@@ -7,19 +7,28 @@ public class GameControl : MonoBehaviour
 {
     public KillCounter kill;
 
+    public int EnemyPerLevel { get; private set; }
+    [SerializeField]
+    private int startEnemyCount;
+    [SerializeField]
+    private int maxEnemies;
+
     public bool GameStart { get; private set; }
     private bool levelWon;
     public GameObject winScreen;
 
-    // Start is called before the first frame update
+    public GameEvent onLevelComplete;
+
     private void Start()
     {
+        EnemyPerLevel = startEnemyCount;
+
         GameStart = false;
         levelWon = false;
-        winScreen.SetActive(false);
+        
+        RebuildArena();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         levelWon = kill.LevelWon;
@@ -42,8 +51,12 @@ public class GameControl : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void Restart()
+    public void RebuildArena()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        winScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        onLevelComplete.CallEvent(this, EnemyPerLevel < maxEnemies ? EnemyPerLevel++ : maxEnemies);
     }
 }

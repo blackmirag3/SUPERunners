@@ -17,16 +17,25 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     public NavMeshSurface surface;
 
-    public bool testSpawn = false;
+    public EnemySpawn spawn;
+
+    public void BuildArena(Component sender, object data)
+    {
+        if (data is not int)
+        {
+            Debug.Log($"Error in data received from event listener {sender}");
+            return;
+        }
+        int enemyCount = (int)data;
+
+        ResetGrid();
+        StartCollapse();
+        StartCoroutine(UpdateMeshAndSpawn(enemyCount));
+    }
 
     private void Start()
     {
-        testSpawn = false;
-        InstantiateCells();
-        StartCollapse();
-        Debug.Log(transform.childCount);
         surface.BuildNavMesh();
-        testSpawn = true;
     }
 
     // for fun
@@ -36,17 +45,16 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             ResetGrid();
             StartCollapse();
-            StartCoroutine(UpdateMesh());
-            testSpawn = true;
+            StartCoroutine(UpdateMeshAndSpawn(5));
         }
-        
-        
+
     }
 
-    IEnumerator UpdateMesh()
+    IEnumerator UpdateMeshAndSpawn(int enemyCount)
     {
         yield return null;
         surface.UpdateNavMesh(surface.navMeshData);
+        spawn.SpawnEnemies(enemyCount);
     }
 
     private void ResetGrid()

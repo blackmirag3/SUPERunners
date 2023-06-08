@@ -5,38 +5,41 @@ using TMPro;
 
 public class KillCounter : MonoBehaviour
 {
-    public float needToKill;
-    public int leftToKill = 0;
+    [SerializeField]
+    private float needToKill;
+    [SerializeField]
+    private int leftToKill = 0;
+    private int enemiesKilled;
+
+    public GameControl gameControl;
 
     public TextMeshProUGUI countDisplay;
+    public TextMeshProUGUI killsDisplay;
     public GameObject victoryScreen;
 
     public bool LevelWon { get; private set; }
 
     private void Start()
     {
-        leftToKill = (int)needToKill;
+        enemiesKilled = 0;
         LevelWon = false;
     }
 
-    private void Update()
+    private void UpdateText()
     {
-        if (!LevelWon)
-        {
-            CheckForWin();
-            UpdateTextCol();
-            countDisplay.SetText(leftToKill.ToString());
-        }
+        UpdateTextCol();
+        countDisplay.SetText(leftToKill.ToString());
+        killsDisplay.SetText(enemiesKilled.ToString());
     }
-    
+
     private void UpdateTextCol()
     {
-        if (leftToKill > needToKill * 0.66)
+        if (leftToKill > needToKill * 0.66f)
         {
             // Green
             countDisplay.color = new Color32(0, 255, 0, 255);
         }
-        else if (leftToKill > needToKill * 0.33)
+        else if (leftToKill > needToKill * 0.33f)
         {
             // Yellow
             countDisplay.color = new Color32(255, 255, 0, 255);
@@ -48,12 +51,34 @@ public class KillCounter : MonoBehaviour
         }
     }
 
-    private void CheckForWin()
+    public void OnEnemyKill()
     {
-        if (leftToKill == 0)
+        leftToKill--;
+        enemiesKilled++;
+        UpdateText();
+
+        // Check for all enemies killed within single level
+        if (leftToKill == 0 && !LevelWon)
         {
             LevelWon = true;
             victoryScreen.SetActive(true);
+        }
+    }
+
+    public void ResetKillCount(Component sender, object data)
+    {
+        if (data is int)
+        {
+            int enemyCount = (int)data;
+            Debug.Log("Kill count resetting");
+            LevelWon = false;
+            needToKill = enemyCount;
+            leftToKill = enemyCount;
+            UpdateText();
+        }
+        else
+        {
+            Debug.Log($"Error in data received from event listener {sender}");
         }
     }
 }

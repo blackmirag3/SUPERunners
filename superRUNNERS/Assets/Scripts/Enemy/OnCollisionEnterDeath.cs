@@ -26,14 +26,14 @@ public class OnCollisionEnterDeath : MonoBehaviour
                 anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
                 float damage = collision.gameObject.GetComponent<BulletScript>().damage;
-                Debug.Log($"Bullet hit detected {times++}");
+                Debug.Log($"Bullet hit detected {++times}");
                 enemy.Damage(damage);
             }
             else if (collision.gameObject.CompareTag(gunTag))
             {
                 anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;
-                Debug.Log($"Gun hit detected {times++}");
+                Debug.Log($"Gun hit detected {++times}");
                 enemy.Damage(0.5f);
             }
         }

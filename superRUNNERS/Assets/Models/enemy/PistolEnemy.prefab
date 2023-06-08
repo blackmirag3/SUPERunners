@@ -2004,7 +2004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3856570245020946934
 Transform:
   m_ObjectHideFlags: 0
@@ -2044,10 +2044,10 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c, type: 2}
   isDead: 0
   despawnTime: 2.5
-  killCounter: {fileID: 0}
   recentHit: 0
   meleeSpeed: 9.5
   meleeDist: 2
+  onEnemyDeath: {fileID: 11400000, guid: b5ffbd6429c8ecd49b9854659b4327f9, type: 2}
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0

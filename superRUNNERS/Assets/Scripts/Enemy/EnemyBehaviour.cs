@@ -18,7 +18,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float enemySpeed;
     public bool isDead;
     public float despawnTime;
-    public KillCounter killCounter;
 
     private bool isAggro;
     private bool hasReachedPlayer;
@@ -41,7 +40,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float currentBurstSize;
     //private float bulletsPerShot;
 
-
+    public GameEvent onEnemyDeath;
     //TODO
     //variation in firing
     //check aggro function
@@ -62,7 +61,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         if (enemyHealth <= 0 && !isDead)
         {
             isDead = true;
-            killCounter.leftToKill--;
+            onEnemyDeath.CallEvent(this, null);
             Destroy(gameObject, despawnTime);
         }
         else if (!isDead)
@@ -95,7 +94,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private void Update()
     {
         if (isDead)
-
         {
             anim.enabled = false;
             //anim.SetBool("isDead", isDead);
