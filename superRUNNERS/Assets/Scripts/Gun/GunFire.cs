@@ -42,6 +42,8 @@ public class GunFire : MonoBehaviour
     public AudioSource shootingSound;
     public AudioSource emptySound;
 
+    private bool isPaused;
+
     private void Awake()
     {
         shootForce = gunData.shootForce;
@@ -56,14 +58,14 @@ public class GunFire : MonoBehaviour
 
     void Start()
     {
+        isPaused = false;
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
     }
 
-    
     private void Update()
     {
-        if (Time.timeScale != 0)
+        if (!isPaused)
         {
             MyInput();
 
@@ -161,7 +163,6 @@ public class GunFire : MonoBehaviour
         allowInvoke = true;
     }
 
-    // Reset gun when picked up (for now)
     private void OnDisable()
     {
         if (ammoDisplay != null)
@@ -172,5 +173,15 @@ public class GunFire : MonoBehaviour
     {
        if (Input.GetKeyDown(KeyCode.Mouse0))
             emptySound.Play();
+    }
+
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            isPaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
     }
 }

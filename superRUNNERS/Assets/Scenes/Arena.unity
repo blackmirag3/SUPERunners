@@ -5017,6 +5017,78 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &448895027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 448895028}
+  - component: {fileID: 448895029}
+  m_Layer: 30
+  m_Name: EventListeners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &448895028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448895027}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1919028132}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &448895029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448895027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1835b218a250a6447be9eba4fc8c7a79, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1977068979}
+        m_TargetAssemblyTypeName: PlayerCam, Assembly-CSharp
+        m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1597615230}
+        m_TargetAssemblyTypeName: HandScript, Assembly-CSharp
+        m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &495778043
 GameObject:
   m_ObjectHideFlags: 0
@@ -14929,6 +15001,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1597615230 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3726381203946812157, guid: d1641f1f2eca9e64b86245a72d6384f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 998607408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac94b37b6a309c244a5231105e86f634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1612695386
 GameObject:
   m_ObjectHideFlags: 0
@@ -17992,6 +18076,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886544843}
   m_CullTransparentMesh: 1
+--- !u!4 &1919028132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3726381204027226437, guid: d1641f1f2eca9e64b86245a72d6384f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 998607408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1927178292 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4525724657128622924, guid: 5c44e8b50c48e64479ff2823d1823e09,
@@ -18569,6 +18659,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1977068979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3726381203992480165, guid: d1641f1f2eca9e64b86245a72d6384f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 998607408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52d54f5bcc1e45448896f85b3dc7238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1991156256
 GameObject:
   m_ObjectHideFlags: 0
@@ -19641,6 +19743,7 @@ MonoBehaviour:
   currentMenu: {fileID: 1629020786}
   settingsMenu: {fileID: 800658583}
   gameIsPaused: 0
+  onPause: {fileID: 11400000, guid: 1835b218a250a6447be9eba4fc8c7a79, type: 2}
 --- !u!4 &2057760454
 Transform:
   m_ObjectHideFlags: 0

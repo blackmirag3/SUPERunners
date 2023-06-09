@@ -19,10 +19,12 @@ public class HandScript : MonoBehaviour
     public static bool handEmpty = true;
 
     private bool itemIsGun;
+    private bool isPaused;
 
     void Start()
     {
         CheckHandOnStart();
+        isPaused = false;
         handHitbox = GetComponentInChildren<Collider>();
         handHitbox.enabled = false;
         handHitbox.isTrigger = true;
@@ -33,7 +35,7 @@ public class HandScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Time.timeScale != 0)
+        if (!isPaused)
         {
             if (handEmpty && Input.GetKeyDown(pickupKey))
             {
@@ -129,5 +131,15 @@ public class HandScript : MonoBehaviour
         {
             handEmpty = false;
         }
+    }
+
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            isPaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
     }
 }

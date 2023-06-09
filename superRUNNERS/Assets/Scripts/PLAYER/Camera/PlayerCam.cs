@@ -33,6 +33,8 @@ public class PlayerCam : MonoBehaviour
 
     private bool canFootstep;
 
+    private bool isPaused;
+
     //private float velocity = 10000f;
 
     private void InitialiseSettings()
@@ -49,6 +51,7 @@ public class PlayerCam : MonoBehaviour
     void Start()
     {
         InitialiseSettings();
+        isPaused = false;
         startPos = transform.localPosition;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -59,7 +62,7 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (!isPaused)
         {
             mouseX = Input.GetAxisRaw("Mouse X") * sensX;
             mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
@@ -78,7 +81,15 @@ public class PlayerCam : MonoBehaviour
         }
     }
 
-
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            isPaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
+    }
 
     private void fovUpdate()
     {

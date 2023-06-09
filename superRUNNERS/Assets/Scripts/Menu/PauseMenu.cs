@@ -11,8 +11,8 @@ public class PauseMenu : MonoBehaviour
 
     private KeyCode escapeKey = KeyCode.Escape;
     private bool isOtherMenu;
-    
 
+    public GameEvent onPause;
 
     private void Start()
     {
@@ -26,9 +26,15 @@ public class PauseMenu : MonoBehaviour
             if (isOtherMenu)
                 CloseSettings();
             else if (!gameIsPaused)
+            {
                 PauseGame();
+                onPause.CallEvent(this, true);
+            }
             else
+            {
                 ResumeGame();
+                onPause.CallEvent(this, false);
+            }
         }
     }
 

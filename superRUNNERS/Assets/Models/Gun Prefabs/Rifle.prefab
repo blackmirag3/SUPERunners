@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 8992282703537518641}
   - component: {fileID: 8992282703537518642}
   - component: {fileID: 8992282703537518643}
+  - component: {fileID: 1608439006910929086}
   m_Layer: 30
   m_Name: Rifle
   m_TagString: Gun
@@ -670,3 +671,31 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &1608439006910929086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8992282703537518647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1835b218a250a6447be9eba4fc8c7a79, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8992282703537518641}
+        m_TargetAssemblyTypeName: GunFire, Assembly-CSharp
+        m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
