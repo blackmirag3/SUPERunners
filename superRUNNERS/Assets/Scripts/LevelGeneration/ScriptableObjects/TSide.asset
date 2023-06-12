@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614b2ba2d4194a1489ee240a2b62d6d1, type: 3}
+  m_Name: TSide
+  m_EditorClassIdentifier: 
+  meshRotation: 0
+  prefab: {fileID: 570832461115242738, guid: 9e6f19e069679c44db72822b1fc7b6b6, type: 3}
+  id: 9
+  posX:
+    socketType: 0
+    socket: 0
+    flipped: 0
+    prototypeID: 9
+  negX:
+    socketType: 0
+    socket: 0
+    flipped: 0
+    prototypeID: 9
+  posZ:
+    socketType: 1
+    socket: 2
+    flipped: 0
+    prototypeID: 9
+  negZ:
+    socketType: 1
+    socket: 2
+    flipped: 1
+    prototypeID: 9
+  weight: 2
+  validNeighbours:
+    posX: []
+    posZ: []
+    negX: []
+    negZ: []

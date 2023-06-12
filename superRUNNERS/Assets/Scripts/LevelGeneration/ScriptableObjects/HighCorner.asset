@@ -14,23 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRotation: 0
   prefab: {fileID: 1186048390343546910, guid: 0f40b1d0e5d64ff4eb6c60d1d04d165d, type: 3}
+  id: 3
   posX:
-    isSymmetric: 1
+    socketType: 0
     socket: 4
     flipped: 0
+    prototypeID: 3
   negX:
-    isSymmetric: 1
+    socketType: 0
     socket: 3
     flipped: 0
+    prototypeID: 3
   posZ:
-    isSymmetric: 1
+    socketType: 0
     socket: 3
     flipped: 0
+    prototypeID: 3
   negZ:
-    isSymmetric: 1
+    socketType: 0
     socket: 4
     flipped: 0
-  weight: 1
+    prototypeID: 3
+  weight: 2
   validNeighbours:
     posX: []
     posZ: []

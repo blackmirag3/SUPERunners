@@ -27,10 +27,16 @@ public class PrototypeGenerator : MonoBehaviour
 
         Directory.CreateDirectory(path);
 #endif
-
+        byte id = 0;
         // Generate rotations for all prototypes
         for (int i = 0; i < protoypePrefabs.Count; i++)
         {
+            protoypePrefabs[i].id = id++;
+            protoypePrefabs[i].posX.prototypeID = protoypePrefabs[i].id;
+            protoypePrefabs[i].posZ.prototypeID = protoypePrefabs[i].id;
+            protoypePrefabs[i].negX.prototypeID = protoypePrefabs[i].id;
+            protoypePrefabs[i].negZ.prototypeID = protoypePrefabs[i].id;
+
             for (int j = 0; j < 4; j++)
             {
                 Prototype newProto = CreateMyAsset(path, protoypePrefabs[i].name, j.ToString().Replace(" ", ""));
@@ -41,6 +47,10 @@ public class PrototypeGenerator : MonoBehaviour
         UpdatePrototypes();
 
         prototypeHolderPrefab.GetComponent<Cell>().possiblePrototypes = prototypes;
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(prototypeHolderPrefab);
+        AssetDatabase.SaveAssetIfDirty(prototypeHolderPrefab);
+#endif
     }
 
     public void UpdatePrototypes()
@@ -52,6 +62,7 @@ public class PrototypeGenerator : MonoBehaviour
             {
                 prototypes[i * 4 + j].prefab = protoypePrefabs[i].prefab;
                 prototypes[i * 4 + j].validNeighbours = new NeighbourList();
+                prototypes[i * 4 + j].id = protoypePrefabs[i].id;
                 prototypes[i * 4 + j].meshRotation = j;
 
                 prototypes[i * 4 + j].weight = protoypePrefabs[i].weight;
@@ -145,6 +156,10 @@ public class PrototypeGenerator : MonoBehaviour
                 }
                 break;
             case SocketType.oneWay:
+                if (socket.socket == socketToCheck.socket && socketToCheck.prototypeID != socket.prototypeID)
+                {
+                    return true;
+                }
                 break;
         }
         return false;

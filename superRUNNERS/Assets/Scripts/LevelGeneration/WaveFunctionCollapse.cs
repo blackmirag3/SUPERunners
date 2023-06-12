@@ -18,12 +18,14 @@ public class WaveFunctionCollapse : MonoBehaviour
     public NavMeshSurface surface;
 
     public EnemySpawn spawn;
+    public Transform border;
+    public GameObject borderWall;
 
     public void BuildArena(Component sender, object data)
     {
         if (data is not int)
         {
-            Debug.Log($"Error in data received from event listener {sender}");
+            Debug.Log($"Error in data received from event caller {sender}");
             return;
         }
         int enemyCount = (int)data;
@@ -36,6 +38,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     private void Start()
     {
         surface.BuildNavMesh();
+        BuildBorder();
     }
 
     // for fun
@@ -61,7 +64,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         Debug.Log("Reset");
         ClearGrid();
-        cells.Clear();
+        remainingCells.Clear();
         activeCells.Clear();
         InstantiateCells();
     }
@@ -77,14 +80,14 @@ public class WaveFunctionCollapse : MonoBehaviour
                 GameObject newCellBlock = Instantiate(cellPrefab, pos, Quaternion.identity, transform);
                 Cell newCell = newCellBlock.GetComponent<Cell>();
                 newCell.coords = pos;
-                cells.Add(newCell);
+                remainingCells.Add(newCell);
                 activeCells.Add(newCell.coords, newCell);
             }
         }
 
-        remainingCells = cells;
+        //remainingCells = cells;
 
-        foreach (Cell cell in cells)
+        foreach (Cell cell in remainingCells)
         {
             FindCellNeighbors(cell);
         }
@@ -380,7 +383,7 @@ public class WaveFunctionCollapse : MonoBehaviour
                     }
                     break;
                 case SocketType.oneWay:
-                    if (socket.socket == face.socket && face.socketType != SocketType.oneWay)
+                    if (socket.socket == face.socket && face.prototypeID != socket.prototypeID)
                     {
                         return true;
                     }
@@ -388,5 +391,32 @@ public class WaveFunctionCollapse : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void BuildBorder()
+    {
+        float startX = startPos.x - cellLength;
+        float startZ = startPos.z - cellLength;
+
+        float endX = startX + (gridSize + 1) * cellLength;
+        float endZ = startZ + (gridSize + 1) * cellLength;
+
+        for (int i = 0; i <= gridSize + 1; i++)
+        {
+            GameObject negXWall = Instantiate(borderWall, border, true);
+            negXWall.transform.localPosition = new Vector3(startX, 0f, startZ + (i * cellLength));
+            
+            GameObject posZWall = Instantiate(borderWall, border, true);
+            posZWall.transform.localPosition = new Vector3(startX + (i * cellLength), 0f, endZ);
+            posZWall.transform.rotation = Quaternion.AngleAxis(90f, Vector3.up);
+
+            GameObject posXWall = Instantiate(borderWall, border, true);
+            posXWall.transform.localPosition = new Vector3(endX, 0f, startZ + (i * cellLength));
+            posXWall.transform.rotation = Quaternion.AngleAxis(180f, Vector3.up);
+
+            GameObject negZWall = Instantiate(borderWall, border, true);
+            negZWall.transform.localPosition = new Vector3(startX + (i * cellLength), 0f, startZ);
+            negZWall.transform.rotation = Quaternion.AngleAxis(270f, Vector3.up);
+        }
     }
 }

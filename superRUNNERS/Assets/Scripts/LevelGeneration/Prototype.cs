@@ -7,6 +7,7 @@ public class Prototype : ScriptableObject
 {
     public int meshRotation;
     public GameObject prefab;
+    public byte id;
     public FaceData posX;
     public FaceData negX;
     public FaceData posZ;
@@ -19,9 +20,9 @@ public class Prototype : ScriptableObject
 public enum Socket
 {
     ground,
-    a,
-    b,
     air,
+    b,
+    wall,
     high,
 }
 
@@ -38,6 +39,8 @@ public struct FaceData
     public SocketType socketType;
     public Socket socket;
     public bool flipped;
+    [HideInInspector]
+    public byte prototypeID;
 }
 
 [System.Serializable]
