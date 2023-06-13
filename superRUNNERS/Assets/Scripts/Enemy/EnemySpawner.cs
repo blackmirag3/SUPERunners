@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        enableSpawn = game.GameStart;
+        enableSpawn = game.GameInProgress;
         if (enableSpawn)
         {
             if (!canSpawn)

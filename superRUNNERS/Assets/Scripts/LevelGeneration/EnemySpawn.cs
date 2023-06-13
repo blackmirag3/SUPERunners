@@ -29,6 +29,8 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemies(int enemyCount)
     {
+        UpdateSpawnpoints();
+
         int enemiesSpawned = 0;
         byte timeOut = 0;
         while (enemiesSpawned < enemyCount && timeOut < byte.MaxValue)
@@ -55,5 +57,14 @@ public class EnemySpawn : MonoBehaviour
             }
 
         }
+    }
+
+    private void UpdateSpawnpoints()
+    {
+        startX = wave.startPos.x - (0.5f * cellSize);
+        startZ = wave.startPos.z - (0.5f * cellSize);
+
+        endX = startX + cellSize * gridSize;
+        endZ = startZ + cellSize * gridSize;
     }
 }

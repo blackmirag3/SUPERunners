@@ -11,11 +11,11 @@ public class KillCounter : MonoBehaviour
     private int leftToKill = 0;
     private int enemiesKilled;
 
-    public GameControl gameControl;
-
     public TextMeshProUGUI countDisplay;
     public TextMeshProUGUI killsDisplay;
     public GameObject victoryScreen;
+
+    public GameEvent gameStopped;
 
     public bool LevelWon { get; private set; }
 
@@ -61,7 +61,7 @@ public class KillCounter : MonoBehaviour
         if (leftToKill == 0 && !LevelWon)
         {
             LevelWon = true;
-            victoryScreen.SetActive(true);
+            gameStopped.CallEvent(this, null);
         }
     }
 

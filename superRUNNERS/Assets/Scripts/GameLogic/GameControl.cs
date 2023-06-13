@@ -13,26 +13,27 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private int maxEnemies;
 
-    public bool GameStart { get; private set; }
+    public bool GameInProgress { get; private set; }
     private bool levelWon;
     public GameObject winScreen;
 
-    public GameEvent onLevelComplete;
+    public GameEvent buildNewArena;
+    public GameEvent gameStopped;
 
     private void Start()
     {
         EnemyPerLevel = startEnemyCount;
 
-        GameStart = false;
+        StartGame();
         levelWon = false;
         
-        RebuildArena();
+        RebuildArena(this, null);
     }
 
     private void Update()
     {
         levelWon = kill.LevelWon;
-        if (levelWon)
+        if (levelWon && GameInProgress)
         {
             StopGame();
         }
@@ -40,23 +41,23 @@ public class GameControl : MonoBehaviour
 
     public void StartGame()
     {
-        GameStart = true;
+        GameInProgress = true;
     }
 
     public void StopGame()
     {
-        GameStart = false;
+        GameInProgress = false;
         winScreen.SetActive(true);
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        
     }
 
-    public void RebuildArena()
+    public void RebuildArena(Component sender, object data)
     {
         winScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        onLevelComplete.CallEvent(this, EnemyPerLevel < maxEnemies ? EnemyPerLevel++ : maxEnemies);
+        buildNewArena.CallEvent(this, EnemyPerLevel < maxEnemies ? EnemyPerLevel++ : maxEnemies);
+        StartGame();
     }
 }

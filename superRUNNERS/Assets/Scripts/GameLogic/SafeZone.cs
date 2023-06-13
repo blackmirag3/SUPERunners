@@ -10,7 +10,7 @@ public class SafeZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!game.GameStart && other.gameObject.CompareTag(playerTag))
+        if (!game.GameInProgress && other.gameObject.CompareTag(playerTag))
         {
             game.StartGame();
             enabled = false;

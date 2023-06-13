@@ -38,7 +38,6 @@ public class WaveFunctionCollapse : MonoBehaviour
     private void Start()
     {
         surface.BuildNavMesh();
-        BuildBorder();
     }
 
     // for fun
@@ -56,7 +55,8 @@ public class WaveFunctionCollapse : MonoBehaviour
     IEnumerator UpdateMeshAndSpawn(int enemyCount)
     {
         yield return null;
-        surface.UpdateNavMesh(surface.navMeshData);
+        Destroy(surface.navMeshData);
+        surface.BuildNavMesh();
         spawn.SpawnEnemies(enemyCount);
     }
 
