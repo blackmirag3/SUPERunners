@@ -27,7 +27,6 @@ public class GameControl : MonoBehaviour
         StartGame();
         levelWon = false;
         
-        RebuildArena(this, null);
     }
 
     private void Update()

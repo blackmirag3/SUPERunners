@@ -8,31 +8,37 @@ public class PlayerStartRoom : MonoBehaviour
     [SerializeField]
     private string playerTag;
 
-    public GameEvent onLevelComplete;
+    public GameEvent nextLevel;
+
+    public DoorControl entryDoor;
+    public DoorControl exitDoor;
+    public GameObject exitIndicator;
 
     private void Start()
     {
         col = GetComponent<Collider>();
         col.isTrigger = true;
-        col.enabled = false;
     }
 
     public void LevelComplete(Component sender, object data)
     {
         col.enabled = true;
-    }
-
-    private void OpenDoor()
-    {
-
+        if (exitDoor.enabled)
+        {
+            exitDoor.Open();
+            exitIndicator.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
-            onLevelComplete.CallEvent(this, null);
+            nextLevel.CallEvent(this, null);
             col.enabled = false;
+            entryDoor.Open();
+            exitDoor.Close();
+            exitIndicator.SetActive(false);
         }
     }
 }

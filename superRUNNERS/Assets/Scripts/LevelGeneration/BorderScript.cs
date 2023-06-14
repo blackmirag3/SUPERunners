@@ -162,28 +162,33 @@ public class BorderScript : MonoBehaviour
     {
         yield return null;
         possibleSides.Add(entrySide);
-        
+        wave.firstCellCoords = entryCoord;
+
         switch (exitSide)
         {
             case Side.west:
                 entrySide = Side.east;
                 wave.startPos += (gridSize + 3) * cellLength * -Vector3.right;
+                wave.firstCellCoords += cellLength * -Vector3.right;
                 break;
             case Side.north:
                 entrySide = Side.south;
                 wave.startPos += (gridSize + 3) *cellLength * Vector3.forward;
+                wave.firstCellCoords += cellLength * Vector3.forward;
                 break;
             case Side.east:
                 entrySide = Side.west;
                 wave.startPos += (gridSize + 3) * cellLength * Vector3.right;
+                wave.firstCellCoords += cellLength * Vector3.right;
                 break;
             case Side.south:
                 entrySide = Side.north;
                 wave.startPos += (gridSize + 3) * cellLength * -Vector3.forward;
+                wave.firstCellCoords += cellLength * -Vector3.forward;
                 break;
         }
-        Debug.Log(wave.startPos);
         startPos = wave.startPos;
+        
         possibleSides.Remove(entrySide);
     }
 

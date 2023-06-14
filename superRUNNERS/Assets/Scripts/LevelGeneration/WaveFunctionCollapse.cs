@@ -9,20 +9,23 @@ public class WaveFunctionCollapse : MonoBehaviour
     public float cellLength;
     public float gridSize;
 
+    [SerializeField] private Prototype startingTile;
+
     public GameObject cellPrefab;
     public List<Cell> cells;
     public List<Cell> remainingCells;
     public Dictionary<Vector3, Cell> activeCells = new Dictionary<Vector3, Cell>();
     public List<Cell> cellsToPropagate = new List<Cell>();
 
+    public Vector3 firstCellCoords;
+
     public NavMeshSurface surface;
 
     public EnemySpawn spawn;
-    public Transform border;
-    public GameObject borderWall;
 
     public void BuildArena(Component sender, object data)
     {
+        Debug.Log("Building arena");
         if (data is not int)
         {
             Debug.Log($"Error in data received from event caller {sender}");
@@ -40,19 +43,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         surface.BuildNavMesh();
     }
 
-    // for fun
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ResetGrid();
-            StartCollapse();
-            StartCoroutine(UpdateMeshAndSpawn(5));
-        }
-
-    }
-
-    IEnumerator UpdateMeshAndSpawn(int enemyCount)
+    private IEnumerator UpdateMeshAndSpawn(int enemyCount)
     {
         yield return null;
         Destroy(surface.navMeshData);
@@ -121,8 +112,13 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     private void StartCollapse()
     {
-        Cell firstCell = remainingCells[Random.Range(0, remainingCells.Count)];
-        CollapseAt(firstCell);
+        Cell firstCell = FindCell(firstCellCoords.x, firstCellCoords.z);
+        if (firstCell == null)
+        { 
+            firstCell = remainingCells[Random.Range(0, remainingCells.Count)];
+            Debug.LogWarning($"Failed to locate cell at {firstCellCoords}");
+        }
+        FirstCollapse(firstCell);
         PropogateCells(firstCell);
 
         while (!AllCollapsed())
@@ -131,13 +127,30 @@ public class WaveFunctionCollapse : MonoBehaviour
 
             if (cellToCollapse.possiblePrototypes.Count == 0)
             {
-                Debug.Log("Failure case encountered");
+                Debug.LogWarning("Failure case encountered");
                 ResetGrid();
                 cellToCollapse = remainingCells[Random.Range(0, remainingCells.Count)];
             }
 
             CollapseAt(cellToCollapse);
             PropogateCells(cellToCollapse);
+        }
+    }
+
+    private void FirstCollapse(Cell cell)
+    {
+        cell.possiblePrototypes.Clear();
+        cell.possiblePrototypes.Add(startingTile);
+        GameObject tilePrefab = Instantiate(startingTile.prefab, cell.transform, true);
+
+        tilePrefab.transform.Rotate(new Vector3(0f, startingTile.meshRotation * 90f, 0f), Space.Self);
+        tilePrefab.transform.localPosition = Vector3.zero;
+
+        cell.isCollapsed = true;
+
+        if (remainingCells.Contains(cell))
+        {
+            remainingCells.Remove(cell);
         }
     }
 
@@ -393,30 +406,4 @@ public class WaveFunctionCollapse : MonoBehaviour
         return false;
     }
 
-    private void BuildBorder()
-    {
-        float startX = startPos.x - cellLength;
-        float startZ = startPos.z - cellLength;
-
-        float endX = startX + (gridSize + 1) * cellLength;
-        float endZ = startZ + (gridSize + 1) * cellLength;
-
-        for (int i = 0; i <= gridSize + 1; i++)
-        {
-            GameObject negXWall = Instantiate(borderWall, border, true);
-            negXWall.transform.localPosition = new Vector3(startX, 0f, startZ + (i * cellLength));
-            
-            GameObject posZWall = Instantiate(borderWall, border, true);
-            posZWall.transform.localPosition = new Vector3(startX + (i * cellLength), 0f, endZ);
-            posZWall.transform.rotation = Quaternion.AngleAxis(90f, Vector3.up);
-
-            GameObject posXWall = Instantiate(borderWall, border, true);
-            posXWall.transform.localPosition = new Vector3(endX, 0f, startZ + (i * cellLength));
-            posXWall.transform.rotation = Quaternion.AngleAxis(180f, Vector3.up);
-
-            GameObject negZWall = Instantiate(borderWall, border, true);
-            negZWall.transform.localPosition = new Vector3(startX + (i * cellLength), 0f, startZ);
-            negZWall.transform.rotation = Quaternion.AngleAxis(270f, Vector3.up);
-        }
-    }
 }
