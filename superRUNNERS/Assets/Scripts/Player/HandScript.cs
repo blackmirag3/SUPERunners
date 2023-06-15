@@ -21,6 +21,11 @@ public class HandScript : MonoBehaviour
     private bool itemIsGun;
     private bool isPaused;
 
+    [SerializeField]
+    private float meleeActionDur, throwActionDur, pickActionDur;
+
+    public GameEvent onPlayerAction;
+
     void Start()
     {
         CheckHandOnStart();
@@ -68,6 +73,7 @@ public class HandScript : MonoBehaviour
             if (grab != null)
             {
                 handEmpty = false;
+                onPlayerAction.CallEvent(this, pickActionDur);
                 grab.Pickup(transform);
                 itemIsGun = grab.isGun;
                 Debug.Log(itemIsGun);
@@ -91,6 +97,7 @@ public class HandScript : MonoBehaviour
         {
             targetPoint = ray.GetPoint(75);
         }
+        onPlayerAction.CallEvent(this, throwActionDur);
 
         Vector3 throwDir = targetPoint - transform.position;
         Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
@@ -104,6 +111,8 @@ public class HandScript : MonoBehaviour
 
     private void MeleeAttack()
     {
+        onPlayerAction.CallEvent(this, meleeActionDur);
+        
         canPunch = false;       
         handHitbox.enabled = true;
 

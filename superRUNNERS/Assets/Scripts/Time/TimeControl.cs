@@ -11,12 +11,16 @@ public class TimeControl : MonoBehaviour
     public AudioMixer audioMixer;
 
     public bool isShifting;
-    public float timeShiftRatio = 0.5f;
+    public float slowedTimeRatio = 0.5f;
     public float normalTimeRatio = 1f;
     private AudioLowPassFilter audioLowPassFilter;
     private AudioEchoFilter audioEchoFilter;
 
-    private bool timeSlowed;
+    //private bool timeSlowed;
+
+    // Time resumes for a split second on player action call
+    private bool isPlayerAction;
+    [SerializeField] private float defaultActionTime;
 
     private bool gamePaused;
 
@@ -24,7 +28,7 @@ public class TimeControl : MonoBehaviour
     private void Start()
     {
         gamePaused = false;
-        timeSlowed = false;
+        //timeSlowed = false;
         audioLowPassFilter = playerCam.GetComponent<AudioLowPassFilter>();
         audioEchoFilter = playerCam.GetComponent<AudioEchoFilter>();
 
@@ -39,17 +43,25 @@ public class TimeControl : MonoBehaviour
     {
         if (!gamePaused)
         {
-            if (timeSlowed && playerBody.velocity.magnitude > 0.1f)
-            {
+            float xInput = Input.GetAxisRaw("Horizontal");
+            float zInput = Input.GetAxisRaw("Vertical");
 
+            float newTime = (xInput != 0 || zInput != 0) ? normalTimeRatio : slowedTimeRatio;
+            float lerpTime = (xInput != 0 || zInput != 0) ? 0.05f : 0.5f;
+
+            newTime = isPlayerAction ? normalTimeRatio : newTime;
+            lerpTime = isPlayerAction ? 0.1f : lerpTime;
+
+            Time.timeScale = Mathf.Lerp(Time.timeScale, newTime, lerpTime);
+            Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
+
+            if (newTime == normalTimeRatio)
+            {
                 NormalTime();
-                timeSlowed = false;
-                
             }
-            else if (playerBody.velocity.magnitude < 0.1f && !timeSlowed)
+            else if (newTime == slowedTimeRatio)
             {
                 WarpTime();
-                timeSlowed = true;
             }
         }
     }
@@ -64,7 +76,7 @@ public class TimeControl : MonoBehaviour
 
     private void WarpTime()
     {
-        Time.timeScale = timeShiftRatio;
+        //Time.timeScale = timeShiftRatio;
         Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = true;
         audioEchoFilter.enabled = true;
@@ -72,12 +84,12 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", timeShiftRatio);
+        audioMixer.SetFloat("MasterPitch", slowedTimeRatio);
     }
 
     private void NormalTime()
     {
-        Time.timeScale = normalTimeRatio;
+        //Time.timeScale = normalTimeRatio;
         Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = false;
         audioEchoFilter.enabled = false;
@@ -88,20 +100,6 @@ public class TimeControl : MonoBehaviour
         audioMixer.SetFloat("MasterPitch", normalTimeRatio);
     }
 
-    private bool CheckInput()
-    {
-        if (Input.anyKey)
-        {
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        return false;
-    }
-
     public void PauseCalled(Component sender, object data)
     {
         if (data is bool)
@@ -110,5 +108,23 @@ public class TimeControl : MonoBehaviour
             return;
         }
         Debug.Log($"Unwanted event call from {sender}");
+    }
+
+    public void ActionCalled(Component sender, object data)
+    {
+        float actionTime = defaultActionTime;
+        if (data is float && (float)data != 0)
+        {
+            actionTime = (float)data;
+        }
+        StartCoroutine(AllowActionTime(actionTime));
+    }
+
+    private IEnumerator AllowActionTime(float time)
+    {
+        Debug.Log("Time temporarily resumed");
+        isPlayerAction = true;
+        yield return new WaitForSecondsRealtime(time);
+        isPlayerAction = false;
     }
 }

@@ -7249,6 +7249,8 @@ GameObject:
   - component: {fileID: 881288983}
   - component: {fileID: 881288984}
   - component: {fileID: 881288985}
+  - component: {fileID: 881288987}
+  - component: {fileID: 881288986}
   m_Layer: 0
   m_Name: EventListeners
   m_TagString: Untagged
@@ -7346,6 +7348,62 @@ MonoBehaviour:
       - m_Target: {fileID: 1382456883}
         m_TargetAssemblyTypeName: GameControl, Assembly-CSharp
         m_MethodName: RebuildArena
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &881288986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881288980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1835b218a250a6447be9eba4fc8c7a79, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2131762053}
+        m_TargetAssemblyTypeName: TimeControl, Assembly-CSharp
+        m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &881288987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881288980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2131762053}
+        m_TargetAssemblyTypeName: TimeControl, Assembly-CSharp
+        m_MethodName: ActionCalled
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8098,6 +8156,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3726381203946812157, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: pickActionDur
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726381203946812157, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: meleeActionDur
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726381203946812157, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: onPlayerAction
+      value: 
+      objectReference: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac,
+        type: 2}
+    - target: {fileID: 3726381203946812157, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: throwActionDur
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 3726381204027226436, guid: d1641f1f2eca9e64b86245a72d6384f4,
         type: 3}
       propertyPath: m_Name
@@ -8158,6 +8237,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3726381204713736556, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: jumpActionDur
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726381204713736556, guid: d1641f1f2eca9e64b86245a72d6384f4,
+        type: 3}
+      propertyPath: onPlayerAction
+      value: 
+      objectReference: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1641f1f2eca9e64b86245a72d6384f4, type: 3}
 --- !u!1 &1040453144
@@ -15835,8 +15925,9 @@ MonoBehaviour:
   playerCam: {fileID: 1135964192}
   audioMixer: {fileID: 0}
   isShifting: 0
-  timeShiftRatio: 0.2
+  slowedTimeRatio: 0.05
   normalTimeRatio: 1
+  defaultActionTime: 0.05
 --- !u!1 &2140520063
 GameObject:
   m_ObjectHideFlags: 0

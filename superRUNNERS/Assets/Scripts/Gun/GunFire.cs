@@ -44,6 +44,8 @@ public class GunFire : MonoBehaviour
 
     private bool isPaused;
 
+    public GameEvent onPlayerAction;
+
     private void Awake()
     {
         shootForce = gunData.shootForce;
@@ -102,6 +104,7 @@ public class GunFire : MonoBehaviour
     { 
         shootingSound.Play();
         canShoot = false;
+        onPlayerAction.CallEvent(this, null);
 
         // Find exact hit pos using a raycast
         // (0.5f, 0.5f, 0) is middle of screen

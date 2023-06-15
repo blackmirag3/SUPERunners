@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce;
-    public float jumpCD, airMultiplier, wallJumpUpForce, wallJumpSideForce;
+    public float wallJumpUpForce, wallJumpSideForce;
+    [SerializeField]
+    private float jumpCD, airMultiplier, jumpActionDur;
     private bool canJump;
 
     [Header("Crouching")]
@@ -46,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallRunning;
     public bool hasMovementInputs;
     public bool onSlope;
-    public bool isJumping;
 
     public float horizontalInput;
     public float verticalInput;
@@ -54,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
 
     private RaycastHit slopeHit;
+
+    public GameEvent onPlayerAction;
 
     private void Start()
     {
@@ -63,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         canJump = true;
-        isJumping = false;
 
         startYScale = transform.localScale.y;
         isSprinting = true;
@@ -145,11 +147,12 @@ public class PlayerMovement : MonoBehaviour
         // WASD inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        hasMovementInputs = (horizontalInput != 0) || (verticalInput != 0) || (Input.GetKey(jumpKey));
+        hasMovementInputs = (horizontalInput != 0) || (verticalInput != 0);
 
         // Jump
         if (Input.GetKey(jumpKey) && canJump && isGrounded)
         {
+            onPlayerAction.CallEvent(this, jumpActionDur);
             canJump = false;
             Jump();
 
@@ -226,12 +229,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
-
-        if (isGrounded && !hasMovementInputs)
-        {
-            rb.velocity = Vector3.zero;
-        }
-
     }
 
     private void SpeedLimit()
@@ -257,19 +254,6 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
-        StartCoroutine(CheckJumping());
-    }
-
-    private IEnumerator CheckJumping()
-    {
-        while (isJumping)
-        {
-            yield return null;
-            if (isGrounded)
-            {
-                isJumping = false;
-            }
-        }
     }
 
     private void Crouch()
