@@ -2708,6 +2708,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PistolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4525724657128622924, guid: d4d30d5ac96d7b44890966f8bb47c165,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4884056361479880605, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
       propertyPath: playerPos
@@ -3507,7 +3512,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh43646
+  m_Name: pb_Mesh96884
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4202,7 +4207,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh190186
+  m_Name: pb_Mesh97756
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12150,7 +12155,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189590
+  m_Name: pb_Mesh97168
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13607,7 +13612,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189702
+  m_Name: pb_Mesh97280
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18278,7 +18283,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189348
+  m_Name: pb_Mesh96932
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19338,7 +19343,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34000
+  m_Name: pb_Mesh98162
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19830,7 +19835,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh190494
+  m_Name: pb_Mesh98068
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -20670,7 +20675,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189956
+  m_Name: pb_Mesh97534
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -20871,7 +20876,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh190118
+  m_Name: pb_Mesh97690
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -24139,7 +24144,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189988
+  m_Name: pb_Mesh97562
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -24467,7 +24472,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189732
+  m_Name: pb_Mesh97310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25404,7 +25409,9 @@ MonoBehaviour:
   needToKill: 100
   leftToKill: 0
   countDisplay: {fileID: 618324555}
+  killsDisplay: {fileID: 0}
   victoryScreen: {fileID: 180615935}
+  gameStopped: {fileID: 0}
 --- !u!4 &1181320585
 Transform:
   m_ObjectHideFlags: 0
@@ -25434,7 +25441,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kill: {fileID: 1181320584}
+  startEnemyCount: 0
+  maxEnemies: 0
   winScreen: {fileID: 180615935}
+  buildNewArena: {fileID: 0}
+  gameStopped: {fileID: 0}
 --- !u!1 &1189861844
 GameObject:
   m_ObjectHideFlags: 0
@@ -59020,11 +59031,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb43cf4ff2a2a7458aea6f6397a0398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1673917945}
+  playerBody: {fileID: 1813878137}
   playerCam: {fileID: 1720051412}
   audioMixer: {fileID: 24100000, guid: ba0adb92e2c981845b70e2b6a9cd14fd, type: 2}
   isShifting: 0
-  timeShiftRatio: 0.3
+  timeShiftRatio: 0.1
   normalTimeRatio: 1
 --- !u!1 &1341752312
 GameObject:
@@ -60042,7 +60053,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189440
+  m_Name: pb_Mesh97024
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -67211,7 +67222,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh189466
+  m_Name: pb_Mesh97050
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -69075,6 +69086,7 @@ MonoBehaviour:
   currentMenu: {fileID: 447454031}
   settingsMenu: {fileID: 1159185590}
   gameIsPaused: 0
+  onPause: {fileID: 11400000, guid: 1835b218a250a6447be9eba4fc8c7a79, type: 2}
 --- !u!43 &1682966451
 Mesh:
   m_ObjectHideFlags: 0
@@ -72782,6 +72794,12 @@ Transform:
   m_Father: {fileID: 309215912}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1813878137 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3726381204713736555, guid: d1641f1f2eca9e64b86245a72d6384f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 3726381204725885662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1814690573
 GameObject:
   m_ObjectHideFlags: 0
@@ -83049,7 +83067,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh190076
+  m_Name: pb_Mesh97650
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -86921,11 +86939,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 227741810}
-    - target: {fileID: 3856570245020946931, guid: 5c44e8b50c48e64479ff2823d1823e09,
-        type: 3}
-      propertyPath: killCounter
-      value: 
-      objectReference: {fileID: 1181320584}
     - target: {fileID: 3856570245020946934, guid: 5c44e8b50c48e64479ff2823d1823e09,
         type: 3}
       propertyPath: m_RootOrder

@@ -40,12 +40,13 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 currVelocity;
     public float currVelocityMagnitude;
     public bool isGrounded;
-    public bool isSprinting;// = false;
+    public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
-    public bool isWallRunning;// = false;
-    public bool isWASD;
+    public bool isWallRunning;
+    public bool hasMovementInputs;
     public bool onSlope;
+    public bool isJumping;
 
     public float horizontalInput;
     public float verticalInput;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         canJump = true;
+        isJumping = false;
 
         startYScale = transform.localScale.y;
         isSprinting = true;
@@ -116,11 +118,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (onSlope && rb.velocity.y < 0)
             {
-                moveSpeed += slideSlopeIncrease * Time.timeScale;
+                moveSpeed += slideSlopeIncrease;
             }
             else
             {
-                moveSpeed -= slideSpeedDecrease * Time.timeScale;
+                moveSpeed -= slideSpeedDecrease;
             }
         }
     }
@@ -143,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
         // WASD inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        isWASD = (horizontalInput != 0) || (verticalInput != 0);
+        hasMovementInputs = (horizontalInput != 0) || (verticalInput != 0) || (Input.GetKey(jumpKey));
 
         // Jump
         if (Input.GetKey(jumpKey) && canJump && isGrounded)
@@ -225,6 +227,11 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
 
+        if (isGrounded && !hasMovementInputs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+
     }
 
     private void SpeedLimit()
@@ -250,6 +257,19 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
+        StartCoroutine(CheckJumping());
+    }
+
+    private IEnumerator CheckJumping()
+    {
+        while (isJumping)
+        {
+            yield return null;
+            if (isGrounded)
+            {
+                isJumping = false;
+            }
+        }
     }
 
     private void Crouch()
@@ -288,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void GravityControl()
     {
-        if (onSlope && !isWASD)
+        if (onSlope && !hasMovementInputs)
         { 
             rb.useGravity = false;
         }

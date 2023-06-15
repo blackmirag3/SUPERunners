@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class TimeControl : MonoBehaviour
-{
-    [SerializeField] private PauseMenu pauseMenu;
+{ 
     private float initialFixedDeltaTime;
-    private float playerVelocity;
+    public Rigidbody playerBody;
     public GameObject playerCam;
     public AudioMixer audioMixer;
 
@@ -17,11 +16,19 @@ public class TimeControl : MonoBehaviour
     private AudioLowPassFilter audioLowPassFilter;
     private AudioEchoFilter audioEchoFilter;
 
+    private bool timeSlowed;
+
+    private bool gamePaused;
+
     // Start is called before the first frame update
     private void Start()
     {
+        gamePaused = false;
+        timeSlowed = false;
         audioLowPassFilter = playerCam.GetComponent<AudioLowPassFilter>();
         audioEchoFilter = playerCam.GetComponent<AudioEchoFilter>();
+
+        normalTimeRatio = Time.timeScale;
         initialFixedDeltaTime = Time.fixedDeltaTime;
         isShifting = false;
         NormalTime();
@@ -30,17 +37,24 @@ public class TimeControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!pauseMenu.gameIsPaused)
+        if (!gamePaused)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (timeSlowed && playerBody.velocity.magnitude > 0.1f)
             {
-                isShifting ^= true;
-                TimeShift();
+
+                NormalTime();
+                timeSlowed = false;
+                
+            }
+            else if (playerBody.velocity.magnitude < 0.1f && !timeSlowed)
+            {
+                WarpTime();
+                timeSlowed = true;
             }
         }
     }
 
-    void TimeShift()
+    private void TimeShift()
     {
         if (isShifting)
             WarpTime();
@@ -48,21 +62,53 @@ public class TimeControl : MonoBehaviour
             NormalTime();
     }
 
-    void WarpTime()
+    private void WarpTime()
     {
         Time.timeScale = timeShiftRatio;
         Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = true;
         audioEchoFilter.enabled = true;
+        if (audioMixer == null)
+        {
+            return;
+        }
         audioMixer.SetFloat("MasterPitch", timeShiftRatio);
     }
 
-    void NormalTime()
+    private void NormalTime()
     {
         Time.timeScale = normalTimeRatio;
         Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = false;
         audioEchoFilter.enabled = false;
+        if (audioMixer == null)
+        {
+            return;
+        }
         audioMixer.SetFloat("MasterPitch", normalTimeRatio);
+    }
+
+    private bool CheckInput()
+    {
+        if (Input.anyKey)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            gamePaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
     }
 }

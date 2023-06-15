@@ -97,11 +97,11 @@ public class PlayerCam : MonoBehaviour
         {
             targetFOV = baseFOV + 20f;
         }
-        else if (playerMovement.isSprinting && !playerMovement.isWallRunning && !playerMovement.isCrouching && player.isWASD)
+        else if (playerMovement.isSprinting && !playerMovement.isWallRunning && !playerMovement.isCrouching && player.hasMovementInputs)
         {
             targetFOV = baseFOV + 10f;
         }
-        else if ((!playerMovement.isSprinting || !playerMovement.isWASD || !playerMovement.isSliding) && !playerMovement.isWallRunning)
+        else if ((!playerMovement.isSprinting || !playerMovement.hasMovementInputs || !playerMovement.isSliding) && !playerMovement.isWallRunning)
         {
             targetFOV = baseFOV;
         }
@@ -110,7 +110,7 @@ public class PlayerCam : MonoBehaviour
 
     private void PlayMotion()
     {
-        if (isBobEnabled && (player.isGrounded || player.isWallRunning) && player.isWASD && !player.isSliding)
+        if (isBobEnabled && (player.isGrounded || player.isWallRunning) && player.hasMovementInputs && !player.isSliding)
         {
             float sine = Mathf.Sin(Time.time * bobFrequency);
             playerSound.HandleFootstep(sine);

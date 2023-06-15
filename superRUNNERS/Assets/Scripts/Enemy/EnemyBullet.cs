@@ -26,15 +26,14 @@ public class EnemyBullet : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!tagArr.Contains(collision.gameObject.tag))
-        { 
+        if (!tagArr.Contains(other.tag))
+        {
             DespawnBullet();
             // Debug.Log("Bullet Death");
         }
     }
-    
 
     private void DespawnBullet()
     {

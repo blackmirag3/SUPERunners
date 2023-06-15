@@ -54,7 +54,7 @@ public class WeaponMovement : MonoBehaviour {
 
     private void WeaponBob()
     {
-        if ((player.isGrounded || player.isWallRunning) && player.isWASD)
+        if ((player.isGrounded || player.isWallRunning) && player.hasMovementInputs)
         {
             transform.localPosition += -transform.up * Mathf.Sin(Time.time * bobFrequency) * bobAmplitudeY;
             transform.localPosition += transform.right * Mathf.Cos(Time.time * bobFrequency / 2) * bobAmplitudeX;

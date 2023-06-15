@@ -30,11 +30,6 @@ public class EnemyGun : MonoBehaviour
         InitialiseGunData();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void Shoot()
     {
         SpawnOneBullet();

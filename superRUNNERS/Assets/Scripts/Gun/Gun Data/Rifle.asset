@@ -25,4 +25,4 @@ MonoBehaviour:
   enemyMaxShotDelay: 1.5
   enemyMinShotDelay: 0.7
   enemyMaxBurstSize: 3
-  enemyBulletVelocity: 25
+  enemyBulletVelocity: 30
