@@ -1843,6 +1843,10 @@ MonoBehaviour:
   meleeSpeed: 9.5
   meleeDist: 2
   onEnemyDeath: {fileID: 11400000, guid: b5ffbd6429c8ecd49b9854659b4327f9, type: 2}
+  lineOfSightDist: 100
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 1073741824
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0

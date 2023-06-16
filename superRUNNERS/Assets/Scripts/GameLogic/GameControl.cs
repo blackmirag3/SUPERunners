@@ -18,7 +18,6 @@ public class GameControl : MonoBehaviour
     public GameObject winScreen;
 
     public GameEvent buildNewArena;
-    public GameEvent gameStopped;
 
     private void Start()
     {

@@ -41,6 +41,12 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     //private float bulletsPerShot;
 
     public GameEvent onEnemyDeath;
+
+    [SerializeField]
+    private float lineOfSightDist;
+    [SerializeField]
+    private LayerMask layerMasks;
+
     //TODO
     //variation in firing
     //check aggro function
@@ -141,8 +147,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private bool CheckLOS()
     {
-        NavMeshHit hit;
-        return (!enemy.Raycast(player.position, out hit)); //if no obstacle between enemy LOS and player
+        Vector3 playerDir = (player.position - transform.position).normalized;
+        if (Physics.SphereCast(transform.position, 0.1f,playerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
+        {
+            return hit.collider.GetComponent<IDamageable>() != null;
+        }
+
+        return false;
     }
 
     public void EnemyShoot()

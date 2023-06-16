@@ -16,7 +16,8 @@ public class BorderScript : MonoBehaviour
 
     public WaveFunctionCollapse wave;
 
-    public List<Side> possibleSides = new List<Side>(){ Side.west, Side.north, Side.east, Side.south };
+    [SerializeField]
+    private List<Side> possibleSides = new List<Side>(){ Side.west, Side.north, Side.east, Side.south };
     private Side entrySide, exitSide;
 
     [SerializeField]
@@ -24,6 +25,8 @@ public class BorderScript : MonoBehaviour
 
     private List<Vector3> wallCoords = new List<Vector3>();
     private Dictionary<Vector3, Side> walls = new Dictionary<Vector3, Side>();
+
+    public GameEvent updateWaypointPos;
 
     // We start spawn at the south
     private void Start()
@@ -136,6 +139,7 @@ public class BorderScript : MonoBehaviour
                 break;
         }
 
+        updateWaypointPos.CallEvent(this, exitCoord);
         wallCoords.Remove(exitCoord);
         walls.Remove(exitCoord);
     }

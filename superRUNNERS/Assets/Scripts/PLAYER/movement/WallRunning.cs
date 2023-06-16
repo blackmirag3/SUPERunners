@@ -35,6 +35,10 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private float camTilt;
     [SerializeField] private float camTiltTime;
 
+    [Header("Player action event")]
+    public GameEvent onPlayerAction;
+    [SerializeField] private float jumpActionDur;
+
     public float Tilt { get; private set; }
 
     void Start()
@@ -54,6 +58,7 @@ public class WallRunning : MonoBehaviour
             EnableWallRun();
             if (Input.GetKeyDown(jumpKey))
             {
+                onPlayerAction.CallEvent(this, jumpActionDur);
                 WallJump();
                 ExitWallRun();
             }
@@ -70,6 +75,7 @@ public class WallRunning : MonoBehaviour
 
             if (Input.GetKeyDown(jumpKey))
             {
+                onPlayerAction.CallEvent(this, jumpActionDur);
                 WallLatchJump();
                 WallDetach();
                 ExitWallRun();

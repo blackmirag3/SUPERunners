@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Splashscreen/Splashscreen.unity
     guid: 6115b6a91b166cd4ab1c1403122b9de8
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 45ede3e3a215f134392576da984de80e,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 07e357978f5a12f4cb54352024012ca3,
       type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba,
       type: 2}

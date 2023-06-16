@@ -16,29 +16,25 @@ public class TimeControl : MonoBehaviour
     private AudioLowPassFilter audioLowPassFilter;
     private AudioEchoFilter audioEchoFilter;
 
-    //private bool timeSlowed;
-
     // Time resumes for a split second on player action call
     private bool isPlayerAction;
     [SerializeField] private float defaultActionTime;
 
     private bool gamePaused;
 
-    // Start is called before the first frame update
     private void Start()
     {
         gamePaused = false;
-        //timeSlowed = false;
         audioLowPassFilter = playerCam.GetComponent<AudioLowPassFilter>();
         audioEchoFilter = playerCam.GetComponent<AudioEchoFilter>();
 
         normalTimeRatio = Time.timeScale;
         initialFixedDeltaTime = Time.fixedDeltaTime;
+
         isShifting = false;
         NormalTime();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (!gamePaused)
@@ -105,6 +101,7 @@ public class TimeControl : MonoBehaviour
         if (data is bool)
         {
             gamePaused = (bool)data;
+            Time.fixedDeltaTime = initialFixedDeltaTime;
             return;
         }
         Debug.Log($"Unwanted event call from {sender}");
@@ -122,7 +119,7 @@ public class TimeControl : MonoBehaviour
 
     private IEnumerator AllowActionTime(float time)
     {
-        Debug.Log("Time temporarily resumed");
+        //Debug.Log("Time temporarily resumed");
         isPlayerAction = true;
         yield return new WaitForSecondsRealtime(time);
         isPlayerAction = false;
