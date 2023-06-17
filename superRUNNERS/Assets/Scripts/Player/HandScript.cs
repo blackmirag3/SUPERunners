@@ -13,6 +13,13 @@ public class HandScript : MonoBehaviour
     private bool canPunch = true;
     public float punchCD;
 
+    private const string punchTrigger = "Punch";
+    private const string punchAnimState = "ArmReturn";
+    [SerializeField] private float returnTransitionTime;
+    
+
+    [SerializeField] private Animator handAnim;
+
     public float pickupRange;
     public KeyCode pickupKey = KeyCode.Mouse1;
     public KeyCode attackKey = KeyCode.Mouse0;
@@ -26,7 +33,12 @@ public class HandScript : MonoBehaviour
 
     public GameEvent onPlayerAction;
 
-    void Start()
+    private void Awake()
+    {
+        handAnim = GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
     {
         CheckHandOnStart();
         isPaused = false;
@@ -74,6 +86,8 @@ public class HandScript : MonoBehaviour
             {
                 handEmpty = false;
                 onPlayerAction.CallEvent(this, pickActionDur);
+                
+                handAnim.CrossFadeInFixedTime(punchAnimState, returnTransitionTime);
                 grab.Pickup(transform);
                 itemIsGun = grab.isGun;
                 Debug.Log(itemIsGun);
@@ -117,10 +131,10 @@ public class HandScript : MonoBehaviour
         handHitbox.enabled = true;
 
         // Animate melee punch
-        Animator handAnim = GetComponentInChildren<Animator>();
-        handAnim.SetTrigger("Punch");
+        handAnim.SetTrigger(punchTrigger);
         
         Invoke(nameof(ResetMelee), punchCD);
+
     }
     
     private void ResetMelee()

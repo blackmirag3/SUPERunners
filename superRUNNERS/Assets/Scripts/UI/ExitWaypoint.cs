@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ExitWaypoint : MonoBehaviour
 {
     [SerializeField]
     private Vector3 exit, offset;
-
-    public Transform exitTransform;
+    [SerializeField]
+    private Transform player;
     [SerializeField] private GameObject waypoint;
     [SerializeField] private Image waypointSprite;
+    private TextMeshProUGUI distanceText;
 
     private float minX, maxX, minY, maxY;
 
@@ -18,6 +20,8 @@ public class ExitWaypoint : MonoBehaviour
 
     private void Awake()
     {
+        distanceText = waypoint.GetComponentInChildren<TextMeshProUGUI>();
+
         minX = waypointSprite.GetPixelAdjustedRect().width * 0.5f;
         maxX = Screen.width - minX;
 
@@ -39,6 +43,7 @@ public class ExitWaypoint : MonoBehaviour
     {
         if (exit == null)
         {
+            Debug.LogWarning("Exit vector is null");
             return;
         }
         Vector3 pos = Camera.main.WorldToScreenPoint(exit + offset);
@@ -57,8 +62,9 @@ public class ExitWaypoint : MonoBehaviour
                 pos.x = minX;
             }
         }
-
+        int distance = (int)Vector3.Distance(exit, player.position);
         waypoint.transform.position = pos;
+        distanceText.SetText($"{distance}m");
     }
 
     public void EnableWaypoint(Component sender, object data)

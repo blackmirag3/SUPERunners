@@ -865,10 +865,16 @@ MonoBehaviour:
   player: {fileID: 3726381204713736552}
   handHitbox: {fileID: 3726381203827517417}
   meleeReach: 1
-  punchCD: 0.5
+  punchCD: 0.32
+  returnTransitionTime: 0.02
+  handAnim: {fileID: 0}
   pickupRange: 5
   pickupKey: 324
   attackKey: 323
+  meleeActionDur: 0.1
+  throwActionDur: 0.08
+  pickActionDur: 0.05
+  onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
 --- !u!1 &3726381203992480166
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +891,7 @@ GameObject:
   - component: {fileID: 1720051418}
   m_Layer: 30
   m_Name: PlayerCam
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1067,6 +1073,7 @@ GameObject:
   - component: {fileID: 3726381204402063939}
   - component: {fileID: 3726381204402063938}
   - component: {fileID: 3726381204402063941}
+  - component: {fileID: 1905024724}
   m_Layer: 30
   m_Name: PlayerObj
   m_TagString: Player
@@ -1153,6 +1160,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1905024724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3726381204402063943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40824fb3106da554eb940561f3868d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 1
 --- !u!1 &3726381204531393287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1526,8 @@ MonoBehaviour:
   wallRunfovTime: 20
   camTilt: 20
   camTiltTime: 20
+  onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
+  jumpActionDur: 0.1
 --- !u!114 &3726381204713736556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1531,10 +1553,11 @@ MonoBehaviour:
   wallRunSpeed: 10
   groundDrag: 5
   jumpForce: 0
-  jumpCD: 0.25
-  airMultiplier: 0.4
   wallJumpUpForce: 12.5
   wallJumpSideForce: 15
+  jumpCD: 0.25
+  airMultiplier: 0.4
+  jumpActionDur: 0.1
   crouchSpeed: 3.5
   crouchYScale: 0.4
   slideSpeedIncrease: 10
@@ -1548,10 +1571,11 @@ MonoBehaviour:
   isCrouching: 0
   isSliding: 0
   isWallRunning: 0
-  isWASD: 0
+  hasMovementInputs: 0
   onSlope: 0
   horizontalInput: 0
   verticalInput: 0
+  onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
 --- !u!136 &3726381204713736557
 CapsuleCollider:
   m_ObjectHideFlags: 0
