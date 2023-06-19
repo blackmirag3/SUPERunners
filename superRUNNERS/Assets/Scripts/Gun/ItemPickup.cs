@@ -45,4 +45,11 @@ public class ItemPickup : MonoBehaviour, IHoldable
 
         Destroy(gameObject);
     }
+
+    public void SetItemInHand(Transform hand)
+    {
+        transform.SetParent(hand);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
+    }
 }

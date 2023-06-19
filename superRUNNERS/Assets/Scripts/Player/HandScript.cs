@@ -32,6 +32,7 @@ public class HandScript : MonoBehaviour
     private float meleeActionDur, throwActionDur, pickActionDur;
 
     public GameEvent onPlayerAction;
+    [SerializeField] WallRunning wallRun;
 
     private void Awake()
     {
@@ -88,7 +89,17 @@ public class HandScript : MonoBehaviour
                 onPlayerAction.CallEvent(this, pickActionDur);
                 
                 handAnim.CrossFadeInFixedTime(punchAnimState, returnTransitionTime);
-                grab.Pickup(transform);
+
+                // Hand children index - 0 right, 1 left
+                if (wallRun.defaultHandActive)
+                {
+                    grab.Pickup(transform.GetChild(0));
+                }
+                else
+                {
+                    grab.Pickup(transform.GetChild(1));
+                }
+                
                 itemIsGun = grab.isGun;
                 Debug.Log(itemIsGun);
             }

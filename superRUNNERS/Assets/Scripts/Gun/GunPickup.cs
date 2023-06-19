@@ -51,7 +51,7 @@ public class GunPickup : MonoBehaviour, IHoldable
         // Disable forces acting on gun and BoxCollider a trigger
         rb.isKinematic = true;
         col.isTrigger = true;
-
+        
         // Pickup by making gun a child of hand
         transform.SetParent(hand);
         transform.localPosition = Vector3.zero;
@@ -84,5 +84,12 @@ public class GunPickup : MonoBehaviour, IHoldable
         gunBreak.enabled = true;
        
         Destroy(gameObject, despawnTime);
+    }
+
+    public void SetItemInHand(Transform hand)
+    {
+        transform.SetParent(hand);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 }

@@ -14,7 +14,7 @@ public class EnemyGun : MonoBehaviour
     private float inaccuracy;
     public float maxShotDelay;
     public float minShotDelay;
-    public float maxBurstSize;
+    public int maxBurstSize;
     private float bulletVelocity;
     public float fireRate;
 
@@ -58,7 +58,7 @@ public class EnemyGun : MonoBehaviour
         //for enemy behaviour
         maxShotDelay = gunData.enemyMaxShotDelay;
         maxBurstSize = gunData.enemyMaxBurstSize;
-        fireRate = gunData.fireRate;
+        fireRate = gunData.enemyFirerate;
         bulletsPerShot = gunData.bulletsPerShot;
         minShotDelay = gunData.enemyMinShotDelay;
     }

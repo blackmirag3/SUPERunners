@@ -34,10 +34,10 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float currentShotTimer = 0;
     private float maxShotDelay;
     private float minShotDelay;
-    private float maxBurstSize;
+    private int maxBurstSize;
     private float bulletsShot;
     private float fireRate;
-    private float currentBurstSize;
+    private int currentBurstSize;
     //private float bulletsPerShot;
 
     public GameEvent onEnemyDeath;
@@ -148,7 +148,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private bool CheckLOS()
     {
         Vector3 playerDir = (player.position - transform.position).normalized;
-        if (Physics.SphereCast(transform.position, 0.1f,playerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
+        if (Physics.SphereCast(transform.position, 0.1f, playerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
         {
             return hit.collider.GetComponent<IDamageable>() != null;
         }
@@ -161,7 +161,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         if (currentShotTimer > maxShotDelay && CheckLOS())
         {
             currentShotTimer = Random.Range(0, minShotDelay);
-            currentBurstSize = Random.Range(0, maxBurstSize);
+            currentBurstSize = Random.Range(1, maxBurstSize + 1);
             ShootOneBurst();
         }
         currentShotTimer += Time.deltaTime;

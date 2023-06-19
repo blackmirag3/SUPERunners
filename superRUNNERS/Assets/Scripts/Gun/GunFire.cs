@@ -87,7 +87,7 @@ public class GunFire : MonoBehaviour
         // Shoot
         if (shooting)
         {
-            if (canShoot) //false if: ammo <= 0 or yet to reset shot
+            if (canShoot && ammoLeft > 0) //false if: ammo <= 0 or yet to reset shot
             {
                 bulletsShot = 0;
                 Shoot();

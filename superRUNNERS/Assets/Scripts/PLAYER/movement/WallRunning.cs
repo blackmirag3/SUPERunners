@@ -39,12 +39,18 @@ public class WallRunning : MonoBehaviour
     public GameEvent onPlayerAction;
     [SerializeField] private float jumpActionDur;
 
+    [SerializeField] private GameObject rightHand;
+    [SerializeField] private GameObject leftHand;
+
+    public bool defaultHandActive { get; private set; } //default hand is the right hand
+
     public float Tilt { get; private set; }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         baseFov = playerCam.fieldOfView;
+        defaultHandActive = true;
     }
 
     void Update()
@@ -130,10 +136,12 @@ public class WallRunning : MonoBehaviour
         if (wallLeft)
         {
             Tilt = Mathf.Lerp(Tilt, -camTilt, camTiltTime * Time.deltaTime);
+            SetRightHand();
         }
         else if (wallRight)
         {
             Tilt = Mathf.Lerp(Tilt, camTilt, camTiltTime * Time.deltaTime);
+            SetLeftHand();
         }
     }
 
@@ -147,6 +155,7 @@ public class WallRunning : MonoBehaviour
 
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
         Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
+        SetRightHand();
     }
 
     private void CalcWallNormal()
@@ -207,5 +216,39 @@ public class WallRunning : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(wallJumpDirForce, ForceMode.Impulse);
         Invoke(nameof(ResetJump), 0.5f);
+    }
+
+    private void SetLeftHand()
+    {
+        if (!defaultHandActive)
+        {
+            return;
+        }
+        leftHand.SetActive(true);
+        defaultHandActive = false;
+
+        IHoldable item = rightHand.GetComponentInChildren<IHoldable>();
+        if (item != null)
+        {
+            item.SetItemInHand(leftHand.transform);
+        }
+        rightHand.SetActive(false);
+    }
+
+    private void SetRightHand()
+    {
+        if (defaultHandActive)
+        {
+            return;
+        }
+        rightHand.SetActive(true);
+        defaultHandActive = true;
+
+        IHoldable item = leftHand.GetComponentInChildren<IHoldable>();
+        if (item != null)
+        {
+            item.SetItemInHand(rightHand.transform);
+        }
+        leftHand.SetActive(false);
     }
 }
