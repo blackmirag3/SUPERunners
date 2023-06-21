@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6965402145254568507}
   - component: {fileID: 1630075620071093498}
   - component: {fileID: 6632725901977773842}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.027_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 8691561489901639145}
   - component: {fileID: 2115900766538669020}
   - component: {fileID: 7307106605721491284}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 3163085705574670346}
   - component: {fileID: 6056149398938369483}
   - component: {fileID: 3266480830325091263}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.042_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 483899691374026551}
   - component: {fileID: 3881327292676116103}
   - component: {fileID: 7873968734909137939}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 4027280245591102617}
   - component: {fileID: 6309638660515511343}
   - component: {fileID: 6332505247019679266}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.046
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 5634690742917177368}
   - component: {fileID: 3414969085359737115}
   - component: {fileID: 4790058540405697559}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 3776295444010900214}
   - component: {fileID: 7269778618768483993}
   - component: {fileID: 2910744284608593805}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -818,7 +818,7 @@ GameObject:
   - component: {fileID: 78096737047068079}
   - component: {fileID: 4184727832770226932}
   - component: {fileID: 5970320256943737342}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 17277837171234886}
   - component: {fileID: 2174573053353216355}
   - component: {fileID: 5683339793676081246}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.042_cell.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 6823292475213875704}
   - component: {fileID: 6427013196732942295}
   - component: {fileID: 6262440515345690084}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,7 +1163,7 @@ GameObject:
   - component: {fileID: 959207440128807716}
   - component: {fileID: 702421434833919739}
   - component: {fileID: 4161925010896704750}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.042_cell.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1278,7 +1278,7 @@ GameObject:
   - component: {fileID: 371860952401299465}
   - component: {fileID: 8412546497703771985}
   - component: {fileID: 1636832237525784294}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1393,7 +1393,7 @@ GameObject:
   - component: {fileID: 5129920283086277539}
   - component: {fileID: 4240826833480787807}
   - component: {fileID: 7091547602280561612}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.040
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1508,7 +1508,7 @@ GameObject:
   - component: {fileID: 6586972103126607665}
   - component: {fileID: 5879269430746228804}
   - component: {fileID: 4073061281855955331}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1623,7 +1623,7 @@ GameObject:
   - component: {fileID: 1624704508359443064}
   - component: {fileID: 3675769923985638802}
   - component: {fileID: 5984083747569650189}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1738,7 +1738,7 @@ GameObject:
   - component: {fileID: 8011841447711574205}
   - component: {fileID: 333173562528413827}
   - component: {fileID: 1002152725860170890}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1853,7 +1853,7 @@ GameObject:
   - component: {fileID: 9217094777015020335}
   - component: {fileID: 6661640517451644812}
   - component: {fileID: 1143398632697423129}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,7 +1968,7 @@ GameObject:
   - component: {fileID: 5475758386664793085}
   - component: {fileID: 3471240067031441220}
   - component: {fileID: 2401490270320953265}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.043
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2083,7 +2083,7 @@ GameObject:
   - component: {fileID: 2998833117833434767}
   - component: {fileID: 5063491596620265361}
   - component: {fileID: 3594697033023385819}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.037
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2198,7 +2198,7 @@ GameObject:
   - component: {fileID: 3275315447829490183}
   - component: {fileID: 7549070704292729838}
   - component: {fileID: 1447530821208638051}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.039
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2313,7 +2313,7 @@ GameObject:
   - component: {fileID: 1003615552984692450}
   - component: {fileID: 6161341442002314664}
   - component: {fileID: 2206741834697913240}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.042_cell.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2428,7 +2428,7 @@ GameObject:
   - component: {fileID: 8000909876528100067}
   - component: {fileID: 8591431467560248426}
   - component: {fileID: 3887434895587605162}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2543,7 +2543,7 @@ GameObject:
   - component: {fileID: 756972829923925041}
   - component: {fileID: 893113269975297598}
   - component: {fileID: 4506201171415728760}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.044
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2658,7 +2658,7 @@ GameObject:
   - component: {fileID: 3044630048568464348}
   - component: {fileID: 6620538151324461451}
   - component: {fileID: 623020568840416149}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2773,7 +2773,7 @@ GameObject:
   - component: {fileID: 7952943474373056127}
   - component: {fileID: 4555931170863746443}
   - component: {fileID: 9174378659747469070}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.042_cell.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2885,7 +2885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9206983432613161002}
   - component: {fileID: 5546722407555258449}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: RifleBroken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2971,7 +2971,7 @@ GameObject:
   - component: {fileID: 8041693955491190049}
   - component: {fileID: 5890796813218708031}
   - component: {fileID: 337397250436402177}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.024
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3086,7 +3086,7 @@ GameObject:
   - component: {fileID: 3560736769525196790}
   - component: {fileID: 5948092591251829594}
   - component: {fileID: 2564914784450559816}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.028
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3201,7 +3201,7 @@ GameObject:
   - component: {fileID: 681005440517829556}
   - component: {fileID: 4785347767545663587}
   - component: {fileID: 9027765155648514092}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3316,7 +3316,7 @@ GameObject:
   - component: {fileID: 8979837956487239370}
   - component: {fileID: 553411232699986688}
   - component: {fileID: 8414374370489515210}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.045
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3431,7 +3431,7 @@ GameObject:
   - component: {fileID: 5996597076900340188}
   - component: {fileID: 5345608364536826138}
   - component: {fileID: 8345344437630471568}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3546,7 +3546,7 @@ GameObject:
   - component: {fileID: 2784304836832278717}
   - component: {fileID: 3300987341489208493}
   - component: {fileID: 6818084727189224663}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.027_cell.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3661,7 +3661,7 @@ GameObject:
   - component: {fileID: 8667505171573229451}
   - component: {fileID: 41594411974281833}
   - component: {fileID: 794767820493496602}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.027_cell.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3776,7 +3776,7 @@ GameObject:
   - component: {fileID: 3368728151339635696}
   - component: {fileID: 2495146470548034835}
   - component: {fileID: 6858473851773091315}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.031
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3891,7 +3891,7 @@ GameObject:
   - component: {fileID: 3034330004891473995}
   - component: {fileID: 2287308639480270351}
   - component: {fileID: 7335253567666368139}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.038
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4006,7 +4006,7 @@ GameObject:
   - component: {fileID: 5532108710939530358}
   - component: {fileID: 1041735864092776381}
   - component: {fileID: 5357110272794677337}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4121,7 +4121,7 @@ GameObject:
   - component: {fileID: 2991996927853444373}
   - component: {fileID: 5698650801386887487}
   - component: {fileID: 5804073264405645180}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Assult Rifle 3.047
   m_TagString: Untagged
   m_Icon: {fileID: 0}

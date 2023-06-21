@@ -29,6 +29,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     public float meleeSpeed;
     public float meleeDist;
     private bool isArmed;
+    private bool isStaggered;
 
     //shooting
     private float currentShotTimer = 0;
@@ -56,6 +57,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     {
         enemyHitSound.Play();
         enemy.isStopped = true;
+        isStaggered = true;
         enemyHealth -= damage;
         if (isArmed)
         {
@@ -63,7 +65,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             isArmed = false;
             anim.SetBool("isArmed", isArmed);
         }
-        Invoke(nameof(ResetHit), 0.5f); 
+        StartCoroutine(ResetHit()); 
         if (enemyHealth <= 0 && !isDead)
         {
             isDead = true;
@@ -95,6 +97,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
+        isStaggered = false;
     }
 
     private void Update()
@@ -114,7 +117,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             }
         }
 
-        else if (!recentHit)
+        else if (!recentHit && !isStaggered)
         {
             EnemyChase();
             if (isArmed)
@@ -124,10 +127,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         }
     }
 
-    private void ResetHit()
+    private IEnumerator ResetHit()
     {
+        yield return new WaitForSeconds(0.3f);
         recentHit = false;
+        yield return new WaitForSeconds(0.2f);
         enemy.isStopped = false;
+        isStaggered = false;
     }
 
     private void EnemyChase()

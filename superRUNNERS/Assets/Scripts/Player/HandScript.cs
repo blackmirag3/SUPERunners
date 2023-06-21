@@ -124,11 +124,10 @@ public class HandScript : MonoBehaviour
         }
         onPlayerAction.CallEvent(this, throwActionDur);
 
-        Vector3 throwDir = targetPoint - transform.position;
         Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
         Vector3 throwVelocity = new Vector3(playerVelocity.x, 0, playerVelocity.z);
 
-        throwable.Throw(throwDir, throwVelocity);
+        throwable.Throw(targetPoint, throwVelocity);
         handEmpty = true;
 
 

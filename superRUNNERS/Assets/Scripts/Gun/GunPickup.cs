@@ -62,21 +62,25 @@ public class GunPickup : MonoBehaviour, IHoldable
         gun.enabled = true;
     }
 
-    public void Throw(Vector3 dir, Vector3 velocity)
+    public void Throw(Vector3 point, Vector3 velocity)
     {
         equipped = false;
 
+        transform.localPosition = Vector3.zero;
         transform.SetParent(null);
         
         // Enable damage hitboxes
         damageRb.isKinematic = false;
         damageCol.enabled = true;
 
+        Vector3 dir = (point - transform.position).normalized;
+
         // Throw gun
         damageRb.velocity = velocity;
-        damageRb.AddForce(dir.normalized * throwForwardForce, ForceMode.Impulse);
+        damageRb.AddForce(dir * throwForwardForce, ForceMode.Impulse);
         damageRb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);
 
+        transform.localRotation = Random.rotation;
         float random = Random.Range(-1f, 1f);
         damageRb.AddTorque(new Vector3(random, random, random));
 

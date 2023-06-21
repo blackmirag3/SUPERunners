@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1311549497404584042}
   - component: {fileID: 2074195573}
   - component: {fileID: 2074195572}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.001_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2900486668742824238}
   - component: {fileID: 295318623}
   - component: {fileID: 295318622}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.028_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 8123716766332878707}
   - component: {fileID: 2095321308}
   - component: {fileID: 2095321307}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.028_cell.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 3400125900079118674}
   - component: {fileID: 1647987314}
   - component: {fileID: 1647987313}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5351860700248246425}
   - component: {fileID: 3666702654785775315}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: PistolBroken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 8932823236817039428}
   - component: {fileID: 664733827}
   - component: {fileID: 664733826}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.001_cell.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 2728723374774989179}
   - component: {fileID: 524497716}
   - component: {fileID: 524497715}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.029
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 5513845972346448988}
   - component: {fileID: 566459701}
   - component: {fileID: 566459700}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Pistol1.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
