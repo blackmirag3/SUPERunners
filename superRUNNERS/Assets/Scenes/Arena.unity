@@ -8077,6 +8077,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &974605917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8287051751720658247, guid: 84f03d95c84b5b643a2fa9a73aa169f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1997173365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &974837456
 GameObject:
   m_ObjectHideFlags: 0
@@ -13162,6 +13168,7 @@ GameObject:
   - component: {fileID: 1771791329}
   - component: {fileID: 1771791330}
   - component: {fileID: 1771791332}
+  - component: {fileID: 1771791334}
   - component: {fileID: 1771791331}
   - component: {fileID: 1771791333}
   m_Layer: 0
@@ -13209,7 +13216,8 @@ MonoBehaviour:
   cellsToPropagate: []
   firstCellCoords: {x: 0, y: 0, z: 20}
   surface: {fileID: 1771791331}
-  spawn: {fileID: 1771791332}
+  enemies: {fileID: 1771791332}
+  items: {fileID: 1771791334}
 --- !u!114 &1771791331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13281,6 +13289,27 @@ MonoBehaviour:
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
   m_Area: 0
+--- !u!114 &1771791334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771791328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def86187a7c6e734984bfefb32c6b44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  y: 10
+  minItems: 10
+  maxItems: 32
+  wave: {fileID: 1771791330}
+  ground:
+    serializedVersion: 2
+    m_Bits: 8
+  items:
+  - {fileID: 974605917}
 --- !u!1 &1773247325
 GameObject:
   m_ObjectHideFlags: 0

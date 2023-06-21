@@ -21,7 +21,8 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     public NavMeshSurface surface;
 
-    public EnemySpawn spawn;
+    [SerializeField] private EnemySpawn enemies;
+    [SerializeField] private ItemSpawn items;
 
     public void BuildArena(Component sender, object data)
     {
@@ -48,7 +49,8 @@ public class WaveFunctionCollapse : MonoBehaviour
         yield return null;
         Destroy(surface.navMeshData);
         surface.BuildNavMesh();
-        spawn.SpawnEnemies(enemyCount);
+        enemies.SpawnEnemies(enemyCount);
+        items.SpawnItems();
     }
 
     private void ResetGrid()

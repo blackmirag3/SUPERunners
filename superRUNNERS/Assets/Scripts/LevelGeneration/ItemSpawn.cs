@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawn : MonoBehaviour
+public class ItemSpawn : MonoBehaviour
 {
     private float startX, startZ, endX, endZ;
     private float gridSize, cellSize;
     [SerializeField]
-    private float y;
+    private float y; 
+    [SerializeField]
+    private int minItems, maxItems;
 
-    public WaveFunctionCollapse wave;
+    [SerializeField]
+    private WaveFunctionCollapse wave;
 
     public LayerMask ground;
 
     [SerializeField]
-    private GameObject[] enemyType;
+    private GameObject[] items;
 
     private void Start()
     {
@@ -28,13 +31,22 @@ public class EnemySpawn : MonoBehaviour
         endZ = startZ + cellSize * gridSize;
     }
 
-    public void SpawnEnemies(int enemyCount)
+    private void UpdateSpawnpoints()
     {
-        UpdateSpawnpoints();
+        startX = wave.startPos.x - (0.5f * cellSize);
+        startZ = wave.startPos.z - (0.5f * cellSize);
 
-        int enemiesSpawned = 0;
+        endX = startX + cellSize * gridSize;
+        endZ = startZ + cellSize * gridSize;
+    }
+
+    public void SpawnItems()
+    {
+        int itemsToSpawn = Random.Range(minItems, maxItems + 1);
         byte timeOut = 0;
-        while (enemiesSpawned < enemyCount && timeOut < byte.MaxValue)
+        int itemsSpawned = 0;
+
+        while (itemsSpawned < itemsToSpawn && timeOut < byte.MaxValue)
         {
             float xPos = Random.Range(startX, endX);
             float zPos = Random.Range(startZ, endZ);
@@ -43,29 +55,17 @@ public class EnemySpawn : MonoBehaviour
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, y + 1f, ground))
             {
-                int selectEnemy = Random.Range(0, enemyType.Length);
+                int selectItem = Random.Range(0, items.Length);
 
-                GameObject newEnemy = Instantiate(enemyType[selectEnemy], hit.point, Quaternion.identity, transform);
+                GameObject newEnemy = Instantiate(items[selectItem], hit.point, Quaternion.identity, transform);
                 newEnemy.SetActive(true);
-                enemiesSpawned++;
+                itemsSpawned++;
                 timeOut = 0;
-                Debug.Log("Spawned");
             }
             else
             {
                 timeOut++;
-                Debug.Log($"Not spawning, pos = {spawnPos}");
             }
-
         }
-    }
-
-    private void UpdateSpawnpoints()
-    {
-        startX = wave.startPos.x - (0.5f * cellSize);
-        startZ = wave.startPos.z - (0.5f * cellSize);
-
-        endX = startX + cellSize * gridSize;
-        endZ = startZ + cellSize * gridSize;
     }
 }
