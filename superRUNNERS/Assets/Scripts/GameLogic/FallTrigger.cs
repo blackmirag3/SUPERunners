@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletTrigger : MonoBehaviour
+public class FallTrigger : MonoBehaviour
 {
-    [SerializeField]
-    private string playerTag = "Player";
-    [SerializeField]
-    private float damage;
+    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private float damageToKill;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,11 +14,8 @@ public class EnemyBulletTrigger : MonoBehaviour
             IDamageable player = other.GetComponent<IDamageable>();
             if (player != null)
             {
-                player.Damage(damage);
+                player.Damage(damageToKill);
             }
-            Destroy(transform.parent.gameObject);
-            //Debug.Log("Player hit detected");
         }
-            
     }
 }

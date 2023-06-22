@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-
-    public Transform player;
-    [SerializeField]
-    private string playerName = "PlayerBody";
     private readonly string[] tagArr = { "Gun" };
     public float damage = 0;
 
@@ -16,22 +12,11 @@ public class BulletScript : MonoBehaviour
     [SerializeField]
     private string enemyTag = "Enemy";
     [SerializeField]
-    private float distFromPlayer;
+    private float despawnTime;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        // playerCol = GameObject.Find(playerName).GetComponent<Collider>();
-        player = GameObject.Find(playerName).GetComponent<Transform>();
-        // Physics.IgnoreCollision(playerCol, GetComponent<Collider>());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 dist = transform.position - player.position;
-        if (dist.magnitude > distFromPlayer)
-            DespawnBullet();
+        Destroy(gameObject, despawnTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -43,14 +28,9 @@ public class BulletScript : MonoBehaviour
                 // Debug.Log("Enemy hit");
             }
 
-            DespawnBullet();
+            Destroy(gameObject);
         }
         
-    }
-
-    private void DespawnBullet()
-    {
-        Destroy(gameObject);
     }
     
 

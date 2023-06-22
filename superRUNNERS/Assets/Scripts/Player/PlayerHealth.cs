@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    // Placeholder for now
-
     [SerializeField] private float playerHealth;
+
+    public GameEvent playerDeath;
 
     public void Damage(float damage)
     {
-        Debug.Log($"Player Hit for {damage}");
-    }
-
-    private void Start()
-    {
-        
-    }
-
-
-    private void Update()
-    {
-        
+        playerHealth -= damage;
+        Debug.Log($"Health left: {playerHealth}");
+        if (playerHealth <= 0)
+        {
+            // stop game
+            playerDeath.CallEvent(this, null);
+        }
     }
 }

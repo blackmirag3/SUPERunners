@@ -128,11 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c82e6c2a6d9b1d47bef4674d5344ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerName: PlayerBody
   damage: 0
   enemyTag: Enemy
-  distFromPlayer: 400
+  despawnTime: 20
 --- !u!96 &176118750481033735
 TrailRenderer:
   serializedVersion: 2

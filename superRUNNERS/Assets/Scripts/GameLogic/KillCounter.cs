@@ -9,7 +9,7 @@ public class KillCounter : MonoBehaviour
     private float needToKill;
     [SerializeField]
     private int leftToKill = 0;
-    private int enemiesKilled;
+    public int enemiesKilled;
 
     public TextMeshProUGUI countDisplay;
     public TextMeshProUGUI killsDisplay;

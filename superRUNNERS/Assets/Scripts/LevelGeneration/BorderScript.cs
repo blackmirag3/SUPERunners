@@ -7,6 +7,7 @@ public class BorderScript : MonoBehaviour
     public GameObject borderWall;
     public GameObject borderCorner;
     public GameObject startRoom;
+    public GameObject fallDetector;
 
     public Transform exitRoomHolder;
 
@@ -48,6 +49,8 @@ public class BorderScript : MonoBehaviour
 
         endX = startX + (gridSize + 1) * cellLength;
         endZ = startZ + (gridSize + 1) * cellLength;
+
+        Instantiate(fallDetector, new Vector3(startX, 0f, startZ), Quaternion.identity, transform);
 
         for (int i = 1; i < gridSize + 1; i++)
         {
