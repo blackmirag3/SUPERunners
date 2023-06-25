@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyGun : MonoBehaviour
 {
-    public GunData gunData;
+    public EnemyBehaviourSettings enemyBehaviourSettings;
     public GameObject currBullet;
     public AudioSource shootingSound;
     public Transform bulletPos, playerPos;
@@ -18,8 +18,8 @@ public class EnemyGun : MonoBehaviour
     private float bulletVelocity;
     public float fireRate;
 
-    private float bulletsShot;
-    public float bulletsPerShot;
+    private int bulletsShot;
+    public int bulletsPerShot;
 
 
     //TODO fire different gun functions + stats, based on player gun script or 
@@ -27,7 +27,7 @@ public class EnemyGun : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        InitialiseGunData();
+        InitialiseSettings();
     }
 
     public void Shoot()
@@ -39,27 +39,24 @@ public class EnemyGun : MonoBehaviour
 
     public void SpawnOneBullet()
     {
+        Vector3 shotDir = playerPos.position - bulletPos.position;
         float x = Random.Range(-inaccuracy, inaccuracy);
         float y = Random.Range(-inaccuracy, inaccuracy);
         float z = Random.Range(-inaccuracy, inaccuracy);
-        Vector3 shotDir = playerPos.position - bulletPos.position + new Vector3(x, y, z);
+        Vector3 shotDirSpread = shotDir.normalized + new Vector3(x, y, z);
+        shotDirSpread = shotDirSpread.normalized;
         GameObject newBullet = Instantiate(currBullet, bulletPos.position, Quaternion.identity);
-        newBullet.transform.forward = shotDir.normalized;
-        newBullet.GetComponent<Rigidbody>().AddForce(shotDir.normalized * bulletVelocity, ForceMode.Impulse);
-        bulletsShot += 1f;
+        newBullet.transform.forward = shotDirSpread;
+        newBullet.GetComponent<Rigidbody>().AddForce(shotDirSpread * bulletVelocity, ForceMode.Impulse);
+        bulletsShot += 1;
         if (bulletsShot < bulletsPerShot)
             SpawnOneBullet();
     }
 
-    private void InitialiseGunData()
+    private void InitialiseSettings()
     {
-        inaccuracy = gunData.enemyInaccuracy;
-        bulletVelocity = gunData.enemyBulletVelocity;
-        //for enemy behaviour
-        maxShotDelay = gunData.enemyMaxShotDelay;
-        maxBurstSize = gunData.enemyMaxBurstSize;
-        fireRate = gunData.enemyFirerate;
-        bulletsPerShot = gunData.bulletsPerShot;
-        minShotDelay = gunData.enemyMinShotDelay;
+        inaccuracy = enemyBehaviourSettings.enemyInaccuracy;
+        bulletVelocity = enemyBehaviourSettings.enemyBulletVelocity;
+        bulletsPerShot = enemyBehaviourSettings.bulletsPerShot;
     }
 }

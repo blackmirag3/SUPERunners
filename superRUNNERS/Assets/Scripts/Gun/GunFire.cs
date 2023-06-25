@@ -125,11 +125,14 @@ public class GunFire : MonoBehaviour
 
     private void ShootOneBullet()
     {
+        Vector3 shotDirSpread = shotDir.normalized;
+
         // Calculate new dir with spread
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
         float z = Random.Range(-spread, spread);
-        Vector3 dirSpread = shotDir + new Vector3(x, y, z);
+        shotDirSpread = shotDirSpread + new Vector3(x, y, z);
+        shotDirSpread = shotDirSpread.normalized;
 
         // Instantiate bullet
         GameObject currBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
@@ -137,10 +140,10 @@ public class GunFire : MonoBehaviour
         currBullet.GetComponent<BulletScript>().damage = gunData.damage;
 
         // Rotate bullet to shooting direction
-        currBullet.transform.forward = dirSpread.normalized;
+        currBullet.transform.forward = shotDirSpread;
 
         // Add force to bullet
-        currBullet.GetComponent<Rigidbody>().AddForce(dirSpread.normalized * shootForce, ForceMode.Impulse);
+        currBullet.GetComponent<Rigidbody>().AddForce(shotDirSpread * shootForce, ForceMode.Impulse);
 
         if (muzzleFlash != null)
             Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);

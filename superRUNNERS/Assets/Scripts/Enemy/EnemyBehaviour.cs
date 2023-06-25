@@ -24,19 +24,22 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float enemyHealth;
     public bool recentHit = false;
     private float aggroDistance;
+    private bool recentMelee = false;
 
 
-    public float meleeSpeed;
-    public float meleeDist;
+    private float unarmedSpeed;
+    private float unarmedStoppingDistance;
     private bool isArmed;
     private bool isStaggered;
+    private float minPunchDelay;
+    private float maxPunchDelay;
 
     //shooting
-    private float currentShotTimer = 0;
+    private float currentAttackTimer = 0;
     private float maxShotDelay;
     private float minShotDelay;
     private int maxBurstSize;
-    private float bulletsShot;
+    private int bulletsShot;
     private float fireRate;
     private int currentBurstSize;
     //private float bulletsPerShot;
@@ -47,11 +50,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float lineOfSightDist;
     [SerializeField]
     private LayerMask layerMasks;
-
-    //TODO
-    //variation in firing
-    //check aggro function
-    //Enemy attack distance
 
     public void Damage(float damage)
     {
@@ -74,7 +72,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         }
         else if (!isDead)
         {
-            EnableEnemyMelee();
+            EnableEnemyUnarmed();
+            currentAttackTimer = 0;
         }
     }
 
@@ -87,14 +86,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemy.stoppingDistance = stoppingDistance;
         gunDrop.enabled = false;
         enemy.speed = enemySpeed;
-
-        //from enemyGun.gunData
-        maxShotDelay = enemyGun.maxShotDelay;
-        minShotDelay = maxShotDelay - enemyGun.minShotDelay;
-        fireRate = enemyGun.fireRate;
-        maxBurstSize = enemyGun.maxBurstSize;
-        //bulletsPerShot = enemyGun.bulletsPerShot;
-
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
         isStaggered = false;
@@ -102,13 +93,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (isDead)
+        if (isDead) //In Dead state
         {
             anim.enabled = false;
             //anim.SetBool("isDead", isDead);
         }
 
-        else if (!isAggro)
+        else if (!isAggro) //In Idle state
         {
             if (!isAggro)
             {
@@ -117,12 +108,20 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             }
         }
 
-        else if (!recentHit && !isStaggered)
+        else if (!recentHit && !isStaggered) //In Aggro state
         {
-            EnemyChase();
-            if (isArmed)
+            if (!recentMelee)
+                EnemyChase();
+
+            if (isArmed) //In Armed sub-state
             {
                 EnemyShoot();
+            }
+
+            else //In Unarmed sub-state
+            {
+                if (hasReachedPlayer)
+                    EnemyPunch();
             }
         }
     }
@@ -158,27 +157,26 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         {
             return hit.collider.GetComponent<IDamageable>() != null;
         }
-
         return false;
     }
 
     public void EnemyShoot()
     {
-        if (currentShotTimer > maxShotDelay && CheckLOS())
+        if (currentAttackTimer > maxShotDelay && CheckLOS())
         {
-            currentShotTimer = Random.Range(0, minShotDelay);
+            currentAttackTimer = Random.Range(0, maxShotDelay - minShotDelay);
             currentBurstSize = Random.Range(1, maxBurstSize + 1);
             ShootOneBurst();
         }
-        currentShotTimer += Time.deltaTime;
+        currentAttackTimer += Time.deltaTime;
     }
 
     private void ShootOneBurst()
     {
         if (enemyGun != null)
             enemyGun.Shoot();
-        anim.Play("Additive Layer.enemyShoot", -1, 0);  
-        bulletsShot += 1f;
+        anim.Play("Additive Layer.Shoot", -1, 0);  
+        bulletsShot += 1;
 
         if (bulletsShot < currentBurstSize)
         {
@@ -187,9 +185,29 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         else bulletsShot = 0;
     }
 
+    private void EnemyPunch()
+    {
+        if (currentAttackTimer > maxPunchDelay)
+        {
+            enemy.isStopped = true;
+            anim.Play("Additive Layer.HeavyJab", -1, 0);
+            anim.SetInteger("UnarmedIndex", Random.Range(0, 4));
+            currentAttackTimer = Random.Range(0, maxPunchDelay - minPunchDelay);
+            recentMelee = true;
+            StartCoroutine(ResetMelee());
+        }
+        else currentAttackTimer += Time.deltaTime;
+    }
+
+    private IEnumerator ResetMelee()
+    {
+        yield return new WaitForSeconds(0.6f);
+        enemy.isStopped = false;
+        recentMelee = false;
+    }
+
     private bool CheckAggro()
     {
-
         float distance = Vector3.Distance(transform.position, player.position);
         return ((distance <= aggroDistance) && CheckLOS());
     }
@@ -199,10 +217,18 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         isAggro = settings.isAggro;
         isDead = settings.isDead;
         hasReachedPlayer = settings.hasReachedPlayer;
-        enemyHealth = settings.enemyHealth;
-        enemySpeed = settings.enemySpeed;
-        stoppingDistance = settings.stoppingDistance;
+        enemyHealth = settings.health;
+        enemySpeed = settings.armedSpeed;
+        stoppingDistance = settings.armedStoppingDistance;
         aggroDistance = settings.aggroDistance;
+        maxShotDelay = settings.maxShotDelay;
+        minShotDelay = settings.minShotDelay;
+        fireRate = settings.fireRate;
+        maxBurstSize = settings.maxBurstSize;
+        unarmedStoppingDistance = settings.unarmedStoppingDistance;
+        unarmedSpeed = settings.unarmedSpeed;
+        minPunchDelay = settings.minPunchDelay;
+        maxPunchDelay = settings.maxPunchDelay;
     }
 
     private void CheckedArmed()
@@ -211,12 +237,11 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         anim.SetBool("isArmed", isArmed);
     }
 
-    private void EnableEnemyMelee()
+    private void EnableEnemyUnarmed()
     {
-        enemy.speed = meleeSpeed;
-        enemy.stoppingDistance = meleeDist;
+        enemy.speed = unarmedSpeed;
+        enemy.stoppingDistance = unarmedStoppingDistance;
     }
-
 }
         
 

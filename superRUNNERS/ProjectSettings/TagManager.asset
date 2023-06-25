@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - PlayerBullet
   - Damageable
+  - EnemyHand
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - 
   - ItemThrown
   - BulletProj
-  - 
+  - EnemyMelee
   - 
   - Player
   - 
