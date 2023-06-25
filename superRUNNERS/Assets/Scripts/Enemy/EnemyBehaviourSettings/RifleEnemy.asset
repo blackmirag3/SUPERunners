@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2814f44196943c94ab1d1c81062590ce, type: 3}
   m_Name: RifleEnemy
   m_EditorClassIdentifier: 
-  isAggro: 0
+  isAggro: 1
   isDead: 0
   hasReachedPlayer: 0
   health: 1

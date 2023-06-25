@@ -42,6 +42,8 @@ public class ItemSpawn : MonoBehaviour
 
     public void SpawnItems()
     {
+        UpdateSpawnpoints();
+
         int itemsToSpawn = Random.Range(minItems, maxItems + 1);
         byte timeOut = 0;
         int itemsSpawned = 0;
