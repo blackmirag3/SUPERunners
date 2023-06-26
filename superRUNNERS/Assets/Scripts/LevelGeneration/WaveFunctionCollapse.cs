@@ -212,28 +212,6 @@ public class WaveFunctionCollapse : MonoBehaviour
         List<Cell> possibleCells = new List<Cell>();
         int minSoFar = int.MaxValue;
 
-        /* needs to be rewritten
-        foreach (Cell cell in remainingCells)
-        {
-            float weightSum = 0;
-            foreach (Prototype prototype in cell.possiblePrototypes)
-            {
-                weightSum += prototype.weight;
-            }
-
-            if (weightSum < minSoFar)
-            {
-                possibleCells.Clear();
-                possibleCells.Add(cell);
-            }
-            else if (weightSum == minSoFar)
-            {
-                possibleCells.Add(cell);
-            }
-        }
-        */
-
-        // for now
         foreach (Cell cell in remainingCells)
         {
             if (cell.possiblePrototypes.Count < minSoFar)

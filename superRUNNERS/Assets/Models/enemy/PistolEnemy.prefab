@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8032376378068587428}
   - component: {fileID: 483751128164730480}
+  - component: {fileID: 9112454285848767147}
   m_Layer: 0
   m_Name: mixamorig:LeftHand
   m_TagString: Enemy
@@ -240,12 +241,26 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483751128164730481}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
+  m_IsTrigger: 1
+  m_Enabled: 0
   m_Radius: 0.07
   m_Height: 0.09
   m_Direction: 1
   m_Center: {x: 0, y: 0.06, z: 0}
+--- !u!114 &9112454285848767147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483751128164730481}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ece337df4182c40a9950abdbe77c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  damage: 1
 --- !u!1 &538148354339862150
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195fd2f0fe878454dab093aba223661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBehaviourSettings: {fileID: 0}
+  enemyBehaviourSettings: {fileID: 11400000, guid: c8f8132de4723294bad90e2a6fd6a01c,
+    type: 2}
   currBullet: {fileID: 6404851984394500890, guid: fe6d88918992682449c2dc38b3e7a7a7,
     type: 3}
   shootingSound: {fileID: 3641742435352165558}
@@ -2004,7 +2020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3856570245020946934
 Transform:
   m_ObjectHideFlags: 0
@@ -2049,7 +2065,11 @@ MonoBehaviour:
   lineOfSightDist: 100
   layerMasks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1073741896
+  rightHand: {fileID: 1402383867961555508}
+  leftHand: {fileID: 483751128164730480}
+  punchColTime: 0.4
+  punchResetTime: 0.2
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2962,6 +2982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1402383867961555509}
   - component: {fileID: 1402383867961555508}
+  - component: {fileID: 5161528646644932949}
   m_Layer: 0
   m_Name: mixamorig:RightHand
   m_TagString: Enemy
@@ -2998,12 +3019,26 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6516888048465115534}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
+  m_IsTrigger: 1
+  m_Enabled: 0
   m_Radius: 0.07
   m_Height: 0.09
   m_Direction: 1
   m_Center: {x: 0, y: 0.06, z: 0}
+--- !u!114 &5161528646644932949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516888048465115534}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ece337df4182c40a9950abdbe77c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  damage: 1
 --- !u!1 &6531323304183064635
 GameObject:
   m_ObjectHideFlags: 0

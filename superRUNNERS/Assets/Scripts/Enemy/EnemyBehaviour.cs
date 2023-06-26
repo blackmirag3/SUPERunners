@@ -51,6 +51,11 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     [SerializeField]
     private LayerMask layerMasks;
 
+    [SerializeField]
+    private Collider rightHand, leftHand;
+    [SerializeField]
+    private float punchColTime, punchResetTime;
+
     public void Damage(float damage)
     {
         enemyHitSound.Play();
@@ -67,6 +72,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         if (enemyHealth <= 0 && !isDead)
         {
             isDead = true;
+            rightHand.enabled = false;
+            leftHand.enabled = false;
             onEnemyDeath.CallEvent(this, null);
             Destroy(gameObject, despawnTime);
         }
@@ -85,6 +92,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         anim = GetComponent<Animator>();
         enemy.stoppingDistance = stoppingDistance;
         gunDrop.enabled = false;
+        isDead = false;
         enemy.speed = enemySpeed;
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
@@ -110,8 +118,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
         else if (!recentHit && !isStaggered) //In Aggro state
         {
-            if (!recentMelee)
-                EnemyChase();
+            EnemyChase();
 
             if (isArmed) //In Armed sub-state
             {
@@ -160,7 +167,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         return false;
     }
 
-    public void EnemyShoot()
+    private void EnemyShoot()
     {
         if (currentAttackTimer > maxShotDelay && CheckLOS())
         {
@@ -187,21 +194,26 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void EnemyPunch()
     {
-        if (currentAttackTimer > maxPunchDelay)
+        if (!recentMelee)
         {
             enemy.isStopped = true;
             anim.Play("Additive Layer.HeavyJab", -1, 0);
             anim.SetInteger("UnarmedIndex", Random.Range(0, 4));
-            currentAttackTimer = Random.Range(0, maxPunchDelay - minPunchDelay);
             recentMelee = true;
-            StartCoroutine(ResetMelee());
+
+            StartCoroutine(PunchRoutine());
         }
-        else currentAttackTimer += Time.deltaTime;
     }
 
-    private IEnumerator ResetMelee()
+    private IEnumerator PunchRoutine()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(punchResetTime);
+        rightHand.enabled = true;
+        leftHand.enabled = true;
+        yield return new WaitForSeconds(punchColTime);
+        rightHand.enabled = false;
+        leftHand.enabled = false;
+        yield return new WaitForSeconds(punchResetTime);
         enemy.isStopped = false;
         recentMelee = false;
     }

@@ -43,7 +43,7 @@ public class OnCollisionEnterDeath : MonoBehaviour
     {
         if (!enemy.recentHit)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Hand"))
             {
                 anim.SetTrigger("enemyHit");
                 enemy.recentHit = true;

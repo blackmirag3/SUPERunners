@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - Damageable
   - EnemyHand
+  - Hand
   layers:
   - Default
   - TransparentFX

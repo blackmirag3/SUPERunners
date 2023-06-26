@@ -60,18 +60,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3726381203946812157}
-        m_TargetAssemblyTypeName: HandScript, Assembly-CSharp
-        m_MethodName: PauseCalled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &613575706
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,14 +451,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6962520652165259250}
   - component: {fileID: 562396267967499058}
-  - component: {fileID: 1263716574640921675}
   m_Layer: 30
   m_Name: LeftHand
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6962520652165259250
 Transform:
   m_ObjectHideFlags: 0
@@ -509,32 +496,6 @@ MonoBehaviour:
   tiltX: 0
   tiltY: 0
   tiltZ: 0
---- !u!114 &1263716574640921675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2700170404226863238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac94b37b6a309c244a5231105e86f634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCam: {fileID: 3726381203992480164}
-  player: {fileID: 3726381204713736552}
-  handHitbox: {fileID: 1908671737660680407}
-  meleeReach: 1
-  punchCD: 0.32
-  returnTransitionTime: 0.02
-  handAnim: {fileID: 0}
-  pickupRange: 5
-  pickupKey: 324
-  attackKey: 323
-  meleeActionDur: 0.1
-  throwActionDur: 0.08
-  pickActionDur: 0.05
-  onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
 --- !u!1 &3418306019141151996
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +556,7 @@ MonoBehaviour:
   throwActionDur: 0.08
   pickActionDur: 0.05
   onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
+  wallRun: {fileID: 3726381204713736554}
 --- !u!1 &3726381203181828237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1066,7 @@ GameObject:
   - component: {fileID: 3726381203827517417}
   m_Layer: 30
   m_Name: HandCapsule
-  m_TagString: Player
+  m_TagString: Hand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1197,7 +1159,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3726381203946812156}
   - component: {fileID: 3726381203946812154}
-  - component: {fileID: 3726381203946812157}
   m_Layer: 30
   m_Name: RightHand
   m_TagString: Player
@@ -1243,32 +1204,6 @@ MonoBehaviour:
   tiltX: 0
   tiltY: 0
   tiltZ: 0
---- !u!114 &3726381203946812157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3726381203946812159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac94b37b6a309c244a5231105e86f634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCam: {fileID: 3726381203992480164}
-  player: {fileID: 3726381204713736552}
-  handHitbox: {fileID: 3726381203827517417}
-  meleeReach: 1
-  punchCD: 0.32
-  returnTransitionTime: 0.02
-  handAnim: {fileID: 0}
-  pickupRange: 5
-  pickupKey: 324
-  attackKey: 323
-  meleeActionDur: 0.1
-  throwActionDur: 0.08
-  pickActionDur: 0.05
-  onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
 --- !u!1 &3726381203992480166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 1
+  playerDeath: {fileID: 11400000, guid: f32bb82d4092cfe4aa2b2ef7079f6341, type: 2}
 --- !u!1 &3726381204531393287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1857,9 @@ MonoBehaviour:
   camTilt: 20
   camTiltTime: 20
   onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
-  jumpActionDur: 0.1
+  jumpActionDur: 0.3
+  rightHand: {fileID: 3726381203946812159}
+  leftHand: {fileID: 2700170404226863238}
 --- !u!114 &3726381204713736556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,7 +1889,7 @@ MonoBehaviour:
   wallJumpSideForce: 15
   jumpCD: 0.25
   airMultiplier: 0.4
-  jumpActionDur: 0.1
+  jumpActionDur: 0.3
   crouchSpeed: 3.5
   crouchYScale: 0.4
   slideSpeedIncrease: 10
@@ -2268,7 +2206,7 @@ BoxCollider:
   m_GameObject: {fileID: 5541611912860085747}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.08, y: 1.11, z: 1.43}
   m_Center: {x: 0, y: 0.65, z: 0}

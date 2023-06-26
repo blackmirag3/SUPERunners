@@ -8,21 +8,42 @@ public class EnemyHandTrigger : MonoBehaviour
     private string playerTag = "Player";
     [SerializeField]
     private float damage;
-    private void Start()
+
+    private void Awake()
     {
-        Physics.IgnoreCollision(GetComponentInParent<Collider>(), GetComponent<Collider>());
+        Physics.IgnoreCollision(GetComponent<Collider>(), GetComponentInParent<Collider>());
     }
-    private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider col)
     {
-        if (other.CompareTag(playerTag))
+        
+        if (col.CompareTag(playerTag))
         {
-            IDamageable player = other.GetComponent<IDamageable>();
+            Debug.Log($"Hand collided ({col})");
+            IDamageable player = col.gameObject.GetComponent<IDamageable>();
             if (player != null)
             {
                 player.Damage(damage);
+                Debug.Log("Enemy has punched player");
+                GetComponent<Collider>().enabled = false;
             }
-            //Debug.Log("Player hit detected");
         }
-            
     }
+
+    /*
+    private void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.collider);
+        if (col.collider.CompareTag(playerTag))
+        {
+            Debug.Log("Hand collided (collision)");
+            IDamageable player = col.gameObject.GetComponent<IDamageable>();
+            if (player != null)
+            {
+                player.Damage(damage);
+                Debug.Log("Enemy has punched player");
+            }
+        }
+    }
+    */
 }
