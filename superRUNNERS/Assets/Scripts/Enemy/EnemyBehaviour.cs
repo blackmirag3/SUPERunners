@@ -56,6 +56,20 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     [SerializeField]
     private float punchColTime, punchResetTime;
 
+    [SerializeField] private DifficultySettings diff;
+
+    private void Awake()
+    {
+        if (DifficultySelector.instance != null)
+        {
+            diff = DifficultySelector.instance.selectedDifficulty;
+        }
+
+        InitialiseSettings();
+        enemy = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+    }
+
     public void Damage(float damage)
     {
         enemyHitSound.Play();
@@ -87,9 +101,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private void Start()
     {
         CheckedArmed();
-        InitialiseSettings();
-        enemy = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        
         enemy.stoppingDistance = stoppingDistance;
         gunDrop.enabled = false;
         isDead = false;
@@ -226,11 +238,9 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void InitialiseSettings()
     {
-        isAggro = settings.isAggro;
-        isDead = settings.isDead;
+        // Default enemy type settings
         hasReachedPlayer = settings.hasReachedPlayer;
         enemyHealth = settings.health;
-        enemySpeed = settings.armedSpeed;
         stoppingDistance = settings.armedStoppingDistance;
         aggroDistance = settings.aggroDistance;
         maxShotDelay = settings.maxShotDelay;
@@ -238,9 +248,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         fireRate = settings.fireRate;
         maxBurstSize = settings.maxBurstSize;
         unarmedStoppingDistance = settings.unarmedStoppingDistance;
-        unarmedSpeed = settings.unarmedSpeed;
         minPunchDelay = settings.minPunchDelay;
         maxPunchDelay = settings.maxPunchDelay;
+
+        // Difficulty adjustments
+        isAggro = diff.isAggro;
+        enemySpeed = diff.enemySpeed;
+        unarmedSpeed = diff.enemySpeed;
     }
 
     private void CheckedArmed()

@@ -21,12 +21,18 @@ public class EnemyGun : MonoBehaviour
     private int bulletsShot;
     public int bulletsPerShot;
 
+    [SerializeField] private DifficultySettings diff;
 
     //TODO fire different gun functions + stats, based on player gun script or 
 
     // Start is called before the first frame update
     void Awake()
     {
+        if (DifficultySelector.instance != null)
+        {
+            diff = DifficultySelector.instance.selectedDifficulty;
+        }
+
         InitialiseSettings();
     }
 
@@ -57,6 +63,7 @@ public class EnemyGun : MonoBehaviour
     {
         inaccuracy = enemyBehaviourSettings.enemyInaccuracy;
         bulletVelocity = enemyBehaviourSettings.enemyBulletVelocity;
+        bulletVelocity = diff.enemyBulletVelocity;
         bulletsPerShot = enemyBehaviourSettings.bulletsPerShot;
     }
 }

@@ -80,4 +80,17 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1f;
+
+        if (DifficultySelector.instance != null)
+        {
+            
+            Destroy(DifficultySelector.instance.gameObject);
+        }
+
+        SceneManager.LoadScene(0);
+    }
 }

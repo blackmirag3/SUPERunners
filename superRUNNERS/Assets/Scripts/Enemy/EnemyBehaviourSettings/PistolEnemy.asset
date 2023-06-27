@@ -20,7 +20,7 @@ MonoBehaviour:
   armedSpeed: 6
   armedStoppingDistance: 8
   enemyInaccuracy: 0.1
-  enemyBulletVelocity: 25
+  enemyBulletVelocity: 30
   fireRate: 0.5
   maxShotDelay: 2
   minShotDelay: 1

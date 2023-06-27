@@ -1501,6 +1501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40824fb3106da554eb940561f3868d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diff: {fileID: 11400000, guid: 4d65c4fb1b0d60a469d7a66e449d7778, type: 2}
   playerHealth: 1
   playerDeath: {fileID: 11400000, guid: f32bb82d4092cfe4aa2b2ef7079f6341, type: 2}
 --- !u!1 &3726381204531393287

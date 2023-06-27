@@ -16,15 +16,32 @@ public class GameControl : MonoBehaviour
 
     public bool GameInProgress { get; private set; }
     private bool levelWon;
-    public GameObject winScreen;
-    public GameObject hud;
-    public GameObject gameOverScreen;
-    public PauseMenu pauseMenu;
+    [SerializeField]
+    private GameObject winScreen;
+    [SerializeField]
+    private GameObject hud;
+    [SerializeField]
+    private GameObject gameOverScreen;
+    [SerializeField]
+    private PauseMenu pauseMenu;
     [SerializeField]
     private TextMeshProUGUI finalScore;
 
     public GameEvent buildNewArena;
     public GameEvent onPause;
+
+    [SerializeField]
+    private DifficultySettings diff;
+
+    private void Awake()
+    {
+        if (DifficultySelector.instance != null)
+        {
+            diff = DifficultySelector.instance.selectedDifficulty;
+        }
+
+        startEnemyCount = diff.startEnemySpawn;
+    }
 
     private void Start()
     {

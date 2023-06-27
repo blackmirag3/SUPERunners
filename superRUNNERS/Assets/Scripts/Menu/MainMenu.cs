@@ -5,22 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject currentMenu;
-    public GameObject settingsMenu;
-    public bool gameIsPaused;
+    [SerializeField]
+    private GameObject currentMenu;
+    [SerializeField]
+    private GameObject settingsMenu;
+    [SerializeField]
+    private GameObject diffSelector;
 
     private KeyCode escapeKey = KeyCode.Escape;
-
-    private void Start()
-    {
-        gameIsPaused = false;
-    }
 
     private void Update()
     {
         if (Input.GetKeyDown(escapeKey))
         {
-            CloseSettings();
+            OpenMainMenu();
         }
     }
 
@@ -40,9 +38,16 @@ public class MainMenu : MonoBehaviour
         settingsMenu.SetActive(true);
     }
 
-    public void CloseSettings()
+    public void OpenMainMenu()
     {
         currentMenu.SetActive(true);
         settingsMenu.SetActive(false);
+        diffSelector.SetActive(false);
+    }
+
+    public void SelectDifficulty()
+    {
+        currentMenu.SetActive(false);
+        diffSelector.SetActive(true);
     }
 }

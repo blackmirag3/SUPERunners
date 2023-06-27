@@ -29,21 +29,4 @@ public class EnemyHandTrigger : MonoBehaviour
             }
         }
     }
-
-    /*
-    private void OnCollisionEnter(Collision col)
-    {
-        Debug.Log(col.collider);
-        if (col.collider.CompareTag(playerTag))
-        {
-            Debug.Log("Hand collided (collision)");
-            IDamageable player = col.gameObject.GetComponent<IDamageable>();
-            if (player != null)
-            {
-                player.Damage(damage);
-                Debug.Log("Enemy has punched player");
-            }
-        }
-    }
-    */
 }
