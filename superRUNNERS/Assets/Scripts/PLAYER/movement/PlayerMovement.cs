@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private MoveSettings settings;
 
-    public Transform orientation;
-    public Transform groundCheck;
-    public LayerMask groundMask;
-
-    //[Header("Keybinds")]
-    [HideInInspector] public KeyCode jumpKey = KeyCode.Space;
-    private KeyCode sprintHoldKey = KeyCode.LeftShift;
-    private KeyCode sprintToggleKey = KeyCode.LeftAlt;
-    private KeyCode crouchKey = KeyCode.LeftControl;
+    [SerializeField]
+    private Transform orientation;
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private LayerMask groundMask;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -28,19 +26,27 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump;
 
     [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
+    [SerializeField]
+    private float crouchSpeed;
+    [SerializeField]
+    private float crouchYScale;
     private float startYScale;
 
     [Header("Sliding")]
-    public float slideSpeedIncrease;
-    public float slideSlopeIncrease;
-    public float slideSpeedDecrease;
+    [SerializeField]
+    private float slideSpeedIncrease;
+    [SerializeField]
+    private float slideSlopeIncrease;
+    [SerializeField]
+    private float slideSpeedDecrease;
 
     [Header("Movement States")]
-    public Vector3 moveDirection;
-    public Vector3 currVelocity;
-    public float currVelocityMagnitude;
+    [SerializeField]
+    private Vector3 moveDirection;
+    [SerializeField]
+    private Vector3 currVelocity;
+    [SerializeField]
+    private float currVelocityMagnitude;
     public bool isGrounded;
     public bool isSprinting;
     public bool isCrouching;
@@ -52,11 +58,31 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalInput;
     public float verticalInput;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
     private RaycastHit slopeHit;
 
     public GameEvent onPlayerAction;
+
+    private bool isPaused;
+
+    [SerializeField]
+    private PlayerInput inputs = null;
+    private InputAction moveInput = null;
+    private InputAction jumpInput = null;
+    private InputAction crouchInput = null;
+
+    private void Awake()
+    {
+        inputs = InputManager.instance.PlayerInput;
+        moveInput = inputs.actions["Move"];
+        jumpInput = inputs.actions["Jump"];
+        crouchInput = inputs.actions["Crouch"];
+
+        jumpInput.performed += CallJump;
+        crouchInput.performed += Crouch;
+        crouchInput.canceled += Uncrouch;
+    }
 
     private void Start()
     {
@@ -69,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
         startYScale = transform.localScale.y;
         isSprinting = true;
+
+        isPaused = false;
     }
 
     private void InitializeSettings()
@@ -77,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         walkSpeed = settings.walkSpeed;
         sprintSpeed = settings.sprintSpeed;
         groundDrag = settings.groundDrag;
-                       //TODO add grounddrag to settings scriptable object
+        //TODO add grounddrag to settings scriptable object
         // Jump
         jumpForce = settings.jumpMulti;
         jumpCD = settings.jumpCD;
@@ -85,11 +113,6 @@ public class PlayerMovement : MonoBehaviour
         // Crouch
         crouchSpeed = settings.crouchSpeed;
         crouchYScale = settings.yScale;
-        // Move keybinds
-        jumpKey = settings.jumpKey;
-        sprintToggleKey = settings.sprintToggleKey;
-        sprintHoldKey = settings.sprintHoldKey;
-        crouchKey = settings.crouchKey;
         // Misc
     }
 
@@ -103,13 +126,13 @@ public class PlayerMovement : MonoBehaviour
         // Find curr vel
         currVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        MyInput();
+        GetBasicMovementInputs();
         CheckSlope();
         GravityControl();
         ControlDrag();
         SpeedLimit();
         SpeedControl();
-        
+
     }
 
     private void FixedUpdate()
@@ -129,6 +152,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void CallJump(InputAction.CallbackContext ctx)
+    {
+        if (!isPaused && canJump && isGrounded)
+        {
+            onPlayerAction.CallEvent(this, jumpActionDur);
+            canJump = false;
+            Jump();
+
+            Invoke(nameof(ResetJump), jumpCD);
+        }
+    }
+
     private void ControlDrag()
     {
         // handle drag
@@ -142,44 +177,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MyInput()
+    private void GetBasicMovementInputs()
     {
-        // WASD inputs
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        Vector2 moveVal = moveInput.ReadValue<Vector2>();
+        horizontalInput = moveVal.x;
+        verticalInput = moveVal.y;
         hasMovementInputs = (horizontalInput != 0) || (verticalInput != 0);
-
-        // Jump
-        if (Input.GetKey(jumpKey) && canJump && isGrounded)
-        {
-            onPlayerAction.CallEvent(this, jumpActionDur);
-            canJump = false;
-            Jump();
-
-            Invoke(nameof(ResetJump), jumpCD);
-        }
-        // Crouching and sliding
-        if (Input.GetKeyDown(crouchKey) && !isWallRunning)
-        {
-            Crouch();
-        }
-        if (Input.GetKeyUp(crouchKey))
-        {
-            Uncrouch();
-        }
-        // Sprinting
-        if (Input.GetKeyDown(sprintToggleKey))
-        {
-            isSprinting ^= true;
-        }
-        if (Input.GetKeyDown(sprintHoldKey))
-        {
-            isSprinting = true;
-        }
-        else if (Input.GetKeyUp(sprintHoldKey))
-        {
-            isSprinting = false;
-        }
     }
 
     private void SpeedControl()
@@ -193,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
             else if (isGrounded)
             {
                 moveSpeed = walkSpeed;
-            }        
+            }
             else if (isWallRunning)
             {
                 moveSpeed = wallRunSpeed;
@@ -256,8 +259,13 @@ public class PlayerMovement : MonoBehaviour
         canJump = true;
     }
 
-    private void Crouch()
+    private void Crouch(InputAction.CallbackContext ctx)
     {
+        if (isPaused)
+        {
+            return;
+        }
+
         isCrouching = true;
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -268,12 +276,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Uncrouch()
+    private void Uncrouch(InputAction.CallbackContext ctx)
     {
         isCrouching = false;
         isSliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-
     }
 
     private void CheckSlope()
@@ -293,12 +300,29 @@ public class PlayerMovement : MonoBehaviour
     private void GravityControl()
     {
         if (onSlope && !hasMovementInputs)
-        { 
+        {
             rb.useGravity = false;
         }
         else if (!isWallRunning)
         {
             rb.useGravity = true;
         }
+    }
+
+    private void OnDisable()
+    {
+        jumpInput.performed -= CallJump;
+        crouchInput.performed -= Crouch;
+        crouchInput.canceled -= Uncrouch;
+    }
+
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            isPaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
     }
 }

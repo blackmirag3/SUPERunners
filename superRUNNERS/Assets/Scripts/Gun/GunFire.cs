@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GunFire : MonoBehaviour
@@ -25,12 +26,12 @@ public class GunFire : MonoBehaviour
     bool shooting, canShoot;
     private Vector3 shotDir;
 
-    [HideInInspector] 
+    [HideInInspector]
     public Camera playerCam;
     public Transform attackPoint;
-    [HideInInspector] 
+    [HideInInspector]
     public GameObject muzzleFlash;
-    [HideInInspector] 
+    [HideInInspector]
     public TextMeshProUGUI ammoDisplay;
 
     [SerializeField] private string camName = "PlayerCam";
@@ -44,7 +45,11 @@ public class GunFire : MonoBehaviour
 
     private bool isPaused;
 
+    private bool hasFired;
+
     public GameEvent onPlayerAction;
+
+    private InputAction fireInput;
 
     private void Awake()
     {
@@ -53,39 +58,54 @@ public class GunFire : MonoBehaviour
         spread = gunData.spread;
         //timeBetweenBullets = gunData.timeBetweenBullets;
         bulletsPerShot = gunData.bulletsPerShot;
-        magSize = gunData.magSize;        
+        magSize = gunData.magSize;
         canShoot = true;
         ammoLeft = magSize;
     }
 
-    void Start()
+    private void OnEnable()
+    {
+        fireInput = InputManager.instance.PlayerInput.actions["Fire"];
+
+        fireInput.performed += FireDown;
+        fireInput.canceled += FireRelease;
+    }
+
+    private void Start()
     {
         isPaused = false;
+        shooting = false;
+        hasFired = false;
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
         ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
+    }
+
+    private void FireDown(InputAction.CallbackContext ctx)
+    {
+        shooting = true;
+    }
+
+    private void FireRelease(InputAction.CallbackContext ctx)
+    {
+        shooting = false;
+        hasFired = false;
     }
 
     private void Update()
     {
         if (!isPaused)
         {
-            MyInput();
+            FireGun();
 
             if (ammoDisplay != null)
                 ammoDisplay.SetText(ammoLeft.ToString());
         }
     }
 
-    private void MyInput()
+    private void FireGun()
     {
-        // Check for auto/semi-auto firing mechanism
-        if (gunData.isAuto)
-            shooting = Input.GetKey(KeyCode.Mouse0);
-        else
-            shooting = Input.GetKeyDown(KeyCode.Mouse0);
-
         // Shoot
-        if (shooting)
+        if (shooting && !hasFired)
         {
             if (canShoot && ammoLeft > 0) //false if: ammo <= 0 or yet to reset shot
             {
@@ -99,12 +119,17 @@ public class GunFire : MonoBehaviour
         }
     }
 
- 
+
     private void Shoot()
-    { 
+    {
         shootingSound.Play();
         canShoot = false;
         onPlayerAction.CallEvent(this, null);
+
+        if (!gunData.isAuto)
+        {
+            hasFired = true;
+        }
 
         // Find exact hit pos using a raycast
         // (0.5f, 0.5f, 0) is middle of screen
@@ -147,7 +172,7 @@ public class GunFire : MonoBehaviour
 
         if (muzzleFlash != null)
             Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-        
+
         ammoLeft--;
         bulletsShot++;
 
@@ -160,7 +185,7 @@ public class GunFire : MonoBehaviour
         // More than one bullet per tap
         if (bulletsShot < bulletsPerShot && ammoLeft > 0)
             ShootOneBullet();
-            //Invoke("ShootOneBullet", timeBetweenBullets);
+        //Invoke("ShootOneBullet", timeBetweenBullets);
     }
 
     private void ResetShot()
@@ -173,11 +198,14 @@ public class GunFire : MonoBehaviour
     {
         if (ammoDisplay != null)
             ammoDisplay.SetText("\n");
+
+        fireInput.performed -= FireDown;
+        fireInput.canceled -= FireRelease;
     }
 
     private void NoAmmo()
     {
-       if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
             emptySound.Play();
     }
 

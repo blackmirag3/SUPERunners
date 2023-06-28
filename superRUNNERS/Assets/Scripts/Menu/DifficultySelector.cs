@@ -14,7 +14,7 @@ public class DifficultySelector : MonoBehaviour
         {
             instance = this;
         }
-        else
+        else if (instance != null)
         {
             Destroy(this);
         }

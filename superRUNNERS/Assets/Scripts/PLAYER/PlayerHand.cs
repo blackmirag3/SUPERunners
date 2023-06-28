@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerHand : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PlayerHand : MonoBehaviour
     private const string punchTrigger = "Punch";
     private const string punchAnimState = "ArmReturn";
     [SerializeField] private float returnTransitionTime;
-    
+
 
     [SerializeField] private Animator handAnim;
 
@@ -34,9 +35,26 @@ public class PlayerHand : MonoBehaviour
     public GameEvent onPlayerAction;
     [SerializeField] WallRunning wallRun;
 
+    private PlayerInput input = null;
+    private InputAction fireInput = null;
+    private InputAction pickupInput = null;
+
     private void Awake()
     {
+        input = InputManager.instance.PlayerInput;
+        fireInput = input.actions["Fire"];
+        pickupInput = input.actions["Item Interact"];
+
+        fireInput.performed += PunchCall;
+        pickupInput.performed += PickupCall;
+
         handAnim = GetComponentInChildren<Animator>();
+    }
+
+    private void OnDisable()
+    {
+        fireInput.performed -= PunchCall;
+        pickupInput.performed -= PickupCall;
     }
 
     private void Start()
@@ -50,23 +68,39 @@ public class PlayerHand : MonoBehaviour
         itemIsGun = false;
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void PunchCall(InputAction.CallbackContext ctx)
     {
-        if (!isPaused)
+        if (isPaused)
         {
-            if (handEmpty && Input.GetKeyDown(pickupKey))
-            {
-                PickupItem();
-            }
-            else if (handEmpty && Input.GetKeyDown(attackKey) && canPunch)
-            {
-                MeleeAttack();
-            }
-            else if (!handEmpty && (Input.GetKeyDown(pickupKey) || (!itemIsGun && Input.GetKeyDown(attackKey))))
-            {
-                ThrowItem();
-            }
+            return;
+        }
+
+        if (handEmpty && canPunch)
+        {
+            MeleeAttack();
+        }
+        else if (!handEmpty && !itemIsGun)
+        {
+            ThrowItem();
+        }
+    }
+
+    private void PickupCall(InputAction.CallbackContext ctx)
+    {
+        if (isPaused)
+        {
+            return;
+        }
+
+        if (handEmpty)
+        {
+            PickupItem();
+            Debug.Log(ctx.phase);
+        }
+        else
+        {
+            ThrowItem();
+            Debug.Log(ctx.phase);
         }
     }
 
@@ -87,7 +121,7 @@ public class PlayerHand : MonoBehaviour
             {
                 handEmpty = false;
                 onPlayerAction.CallEvent(this, pickActionDur);
-                
+
                 handAnim.CrossFadeInFixedTime(punchAnimState, returnTransitionTime);
 
                 // Hand children index - 0 right, 1 left
@@ -99,7 +133,7 @@ public class PlayerHand : MonoBehaviour
                 {
                     grab.Pickup(transform.GetChild(1));
                 }
-                
+
                 itemIsGun = grab.isGun;
                 Debug.Log(itemIsGun);
             }
@@ -109,7 +143,7 @@ public class PlayerHand : MonoBehaviour
     private void ThrowItem()
     {
         IHoldable throwable = GetComponentInChildren<IHoldable>();
-       
+
         Ray ray = GetCamRay();
 
         Vector3 targetPoint;
@@ -136,23 +170,23 @@ public class PlayerHand : MonoBehaviour
     private void MeleeAttack()
     {
         onPlayerAction.CallEvent(this, meleeActionDur);
-        
-        canPunch = false;       
+
+        canPunch = false;
         handHitbox.enabled = true;
 
         // Animate melee punch
         handAnim.SetTrigger(punchTrigger);
-        
+
         Invoke(nameof(ResetMelee), punchCD);
 
     }
-    
+
     private void ResetMelee()
     {
         handHitbox.enabled = false;
         canPunch = true;
     }
-    
+
     private void CheckHandOnStart()
     {
         IHoldable item = GetComponentInChildren<IHoldable>();
