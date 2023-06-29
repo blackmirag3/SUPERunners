@@ -95,12 +95,10 @@ public class PlayerHand : MonoBehaviour
         if (handEmpty)
         {
             PickupItem();
-            Debug.Log(ctx.phase);
         }
         else
         {
             ThrowItem();
-            Debug.Log(ctx.phase);
         }
     }
 
@@ -119,7 +117,7 @@ public class PlayerHand : MonoBehaviour
             IHoldable grab = hit.collider.GetComponent<IHoldable>();
             if (grab != null)
             {
-                handEmpty = false;
+                StartCoroutine(SetEmptyHandBool(false));
                 onPlayerAction.CallEvent(this, pickActionDur);
 
                 handAnim.CrossFadeInFixedTime(punchAnimState, returnTransitionTime);
@@ -158,13 +156,8 @@ public class PlayerHand : MonoBehaviour
         }
         onPlayerAction.CallEvent(this, throwActionDur);
 
-        Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-        Vector3 throwVelocity = new Vector3(playerVelocity.x, 0, playerVelocity.z);
-
-        throwable.Throw(targetPoint, throwVelocity);
-        handEmpty = true;
-
-
+        throwable.Throw(targetPoint);
+        StartCoroutine(SetEmptyHandBool(true));
     }
 
     private void MeleeAttack()
@@ -208,5 +201,11 @@ public class PlayerHand : MonoBehaviour
             return;
         }
         Debug.Log($"Unwanted event call from {sender}");
+    }
+
+    private IEnumerator SetEmptyHandBool(bool state)
+    {
+        yield return null;
+        handEmpty = state;
     }
 }

@@ -114,7 +114,8 @@ public class GunFire : MonoBehaviour
             }
             else if (ammoLeft <= 0)
             {
-                NoAmmo();
+                emptySound.Play();
+                hasFired = true;
             }
         }
     }
@@ -150,14 +151,13 @@ public class GunFire : MonoBehaviour
 
     private void ShootOneBullet()
     {
-        Vector3 shotDirSpread = shotDir.normalized;
+        Vector3 shotDirSpread = 5f * shotDir.normalized;
 
         // Calculate new dir with spread
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
         float z = Random.Range(-spread, spread);
-        shotDirSpread = shotDirSpread + new Vector3(x, y, z);
-        shotDirSpread = shotDirSpread.normalized;
+        shotDirSpread = (shotDirSpread + new Vector3(x, y, z)).normalized;
 
         // Instantiate bullet
         GameObject currBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);

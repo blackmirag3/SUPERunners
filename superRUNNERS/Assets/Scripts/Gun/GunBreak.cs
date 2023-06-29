@@ -25,7 +25,7 @@ public class GunBreak : MonoBehaviour
             {
                 gunBreak.Play();
             }
-
+            Debug.Log($"Item hit {collision.collider}");
             Instantiate(gunShattered, transform.position, transform.rotation, transform.parent);
             Destroy(gameObject);
         }   

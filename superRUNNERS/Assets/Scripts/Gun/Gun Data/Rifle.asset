@@ -16,7 +16,7 @@ MonoBehaviour:
   shootForce: 100
   damage: 1
   maxDist: 30
-  spread: 0.05
+  spread: 0.25
   bulletsPerShot: 1
   magSize: 21
   fireRate: 0.1

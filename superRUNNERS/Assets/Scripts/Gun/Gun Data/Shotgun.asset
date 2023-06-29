@@ -16,14 +16,8 @@ MonoBehaviour:
   shootForce: 100
   damage: 1
   maxDist: 30
-  spread: 0.2
+  spread: 1
   bulletsPerShot: 4
-  magSize: 35
+  magSize: 32
   fireRate: 0.5
   isAuto: 0
-  enemyInaccuracy: 2.8
-  enemyMaxShotDelay: 3
-  enemyMinShotDelay: 0.5
-  enemyMaxBurstSize: 1
-  enemyBulletVelocity: 30
-  enemyFirerate: 0.7

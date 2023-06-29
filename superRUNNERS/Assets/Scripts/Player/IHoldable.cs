@@ -6,7 +6,7 @@ public interface IHoldable
 {
     void Pickup(Transform hand);
 
-    void Throw(Vector3 dir, Vector3 velocity);
+    void Throw(Vector3 dir);
 
     bool isGun { get; set; }
 

@@ -62,7 +62,7 @@ public class GunPickup : MonoBehaviour, IHoldable
         gun.enabled = true;
     }
 
-    public void Throw(Vector3 point, Vector3 velocity)
+    public void Throw(Vector3 point)
     {
         equipped = false;
 
@@ -76,7 +76,6 @@ public class GunPickup : MonoBehaviour, IHoldable
         Vector3 dir = (point - transform.position).normalized;
 
         // Throw gun
-        damageRb.velocity = velocity;
         damageRb.AddForce(dir * throwForwardForce, ForceMode.Impulse);
         damageRb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);
 
