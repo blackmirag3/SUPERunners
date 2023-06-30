@@ -60,6 +60,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1015420656378467978}
+        m_TargetAssemblyTypeName: PlayerHand, Assembly-CSharp
+        m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &613575706
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +708,8 @@ AudioSource:
   m_GameObject: {fileID: 3726381203236940350}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 112abc1671ec18c49883252c12c31167, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.202
@@ -878,7 +891,8 @@ AudioSource:
   m_GameObject: {fileID: 3726381203391838914}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 0ffb04424c7b8744bb2d8fa30e6de703, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.305
@@ -1591,7 +1605,8 @@ AudioSource:
   m_GameObject: {fileID: 3726381204551286229}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 4d01943ff3ef80d47bcfdf72fb0557d9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.316
@@ -1879,7 +1894,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  jumpKey: 32
   moveSpeed: 0
   walkSpeed: 7
   sprintSpeed: 10
@@ -1909,6 +1923,7 @@ MonoBehaviour:
   horizontalInput: 0
   verticalInput: 0
   onPlayerAction: {fileID: 11400000, guid: 48c7e8d2797757148954c8cc9adc1bac, type: 2}
+  inputs: {fileID: 0}
 --- !u!136 &3726381204713736557
 CapsuleCollider:
   m_ObjectHideFlags: 0

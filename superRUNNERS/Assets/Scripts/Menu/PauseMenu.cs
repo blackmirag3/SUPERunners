@@ -101,6 +101,7 @@ public class PauseMenu : MonoBehaviour
     {
         menuState = CurrentMenu.pause;
         OpenMenu(menuState);
+        PlayerPrefs.Save();
     }
 
     public void PauseGame()
