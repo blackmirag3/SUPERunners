@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Audio;
 
 public class TimeControl : MonoBehaviour
-{ 
+{
     private float initialFixedDeltaTime;
     public Rigidbody playerBody;
     public GameObject playerCam;
@@ -21,6 +22,13 @@ public class TimeControl : MonoBehaviour
     [SerializeField] private float defaultActionTime;
 
     private bool gamePaused;
+
+    private InputAction moveInput = null;
+
+    private void Awake()
+    {
+        moveInput = InputManager.instance.PlayerInput.actions["Move"];
+    }
 
     private void Start()
     {
@@ -39,8 +47,9 @@ public class TimeControl : MonoBehaviour
     {
         if (!gamePaused)
         {
-            float xInput = Input.GetAxisRaw("Horizontal");
-            float zInput = Input.GetAxisRaw("Vertical");
+            Vector2 inputValues = moveInput.ReadValue<Vector2>();
+            float xInput = inputValues.x;
+            float zInput = inputValues.y;
 
             float newTime = (xInput != 0 || zInput != 0) ? normalTimeRatio : slowedTimeRatio;
             float lerpTime = (xInput != 0 || zInput != 0) ? 0.05f : 0.5f;
@@ -60,14 +69,6 @@ public class TimeControl : MonoBehaviour
                 WarpTime();
             }
         }
-    }
-
-    private void TimeShift()
-    {
-        if (isShifting)
-            WarpTime();
-        else
-            NormalTime();
     }
 
     private void WarpTime()

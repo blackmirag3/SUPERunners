@@ -32,11 +32,11 @@ public class ItemPickup : MonoBehaviour, IHoldable
         transform.localScale = Vector3.one;
     }
 
-    public void Throw(Vector3 point, Vector3 velocity)
+    public void Throw(Vector3 point)
     {
         GameObject newItem = Instantiate(itemThrown, transform.position, Random.rotation);
         Rigidbody thrownItemRb = newItem.GetComponent<Rigidbody>();
-        thrownItemRb.velocity = velocity;
+
         Vector3 dir = (point - transform.position).normalized;
         thrownItemRb.AddForce(dir * throwForce, ForceMode.Impulse);
         thrownItemRb.AddForce(transform.up * throwUpForce, ForceMode.Impulse);

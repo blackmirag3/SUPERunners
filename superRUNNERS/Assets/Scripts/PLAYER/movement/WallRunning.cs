@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WallRunning : MonoBehaviour
 {
@@ -13,19 +14,18 @@ public class WallRunning : MonoBehaviour
     public LayerMask wallMask;
     public float minJumpHeight;
 
-
     RaycastHit wallRightHit, wallLeftHit;
-    bool wallRight, wallLeft;
-    bool wallJumping = false;
-    bool wallLatching = false;
+    private bool wallRight, wallLeft;
+    private bool wallJumping = false;
+    private bool wallLatching = false;
+    private bool wallRunning = false;
     Vector3 wallNormal;
 
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode latchKey = KeyCode.LeftControl;
     private Rigidbody rb;
 
-    float horizontalInput;
-    float verticalInput;
+    private float verticalInput;
 
     [Header("Camera")]
     public Camera playerCam;
@@ -42,55 +42,91 @@ public class WallRunning : MonoBehaviour
     [SerializeField] private GameObject rightHand;
     [SerializeField] private GameObject leftHand;
 
+    private bool isPaused;
+
     public bool defaultHandActive { get; private set; } //default hand is the right hand
 
     public float Tilt { get; private set; }
 
-    void Start()
+    private PlayerInput inputs = null;
+    private InputAction moveInput = null;
+    private InputAction jumpInput = null;
+    private InputAction latchInput = null;
+
+    private void Awake()
+    {
+        inputs = InputManager.instance.PlayerInput;
+        moveInput = InputManager.instance.PlayerInput.actions["Move"];
+        jumpInput = InputManager.instance.PlayerInput.actions["Jump"];
+        latchInput = InputManager.instance.PlayerInput.actions["Crouch"];
+
+        jumpInput.performed += JumpCall;
+        latchInput.performed += Latch;
+        latchInput.canceled += Unlatch;
+    }
+
+    private void OnDisable()
+    {
+        jumpInput.performed -= JumpCall;
+        latchInput.performed -= Latch;
+        latchInput.canceled -= Unlatch;
+    }
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         baseFov = playerCam.fieldOfView;
         defaultHandActive = true;
+
+        isPaused = false;
     }
 
-    void Update()
+    private void JumpCall(InputAction.CallbackContext ctx)
+    {
+        if (!isPaused && wallRunning)
+        {
+            onPlayerAction.CallEvent(this, jumpActionDur);
+            if (wallLatching)
+            {
+                WallLatchJump();
+                WallDetach();
+                ExitWallRun();
+                return;
+            }
+            WallJump();
+            ExitWallRun();
+        }
+
+    }
+
+    private void Latch(InputAction.CallbackContext ctx)
+    {
+        if (!isPaused && wallRunning)
+        {
+            WallLatch();
+        }
+    }
+
+    private void Unlatch(InputAction.CallbackContext ctx)
+    {
+        if (wallLatching)
+        {
+            WallDetach();
+        }
+    }
+
+    private void Update()
     {
         CheckWall();
         MoveKeyInputs();
 
         if ((wallLeft || wallRight) && CanWallRun() && verticalInput > 0 && !wallJumping && !wallLatching)
         {
-
             EnableWallRun();
-            if (Input.GetKeyDown(jumpKey))
-            {
-                onPlayerAction.CallEvent(this, jumpActionDur);
-                WallJump();
-                ExitWallRun();
-            }
-
-            if (Input.GetKeyDown(latchKey))
-            {
-                WallLatch();
-            }
-
         }
         else if (wallLatching)
         {
             Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
-
-            if (Input.GetKeyDown(jumpKey))
-            {
-                onPlayerAction.CallEvent(this, jumpActionDur);
-                WallLatchJump();
-                WallDetach();
-                ExitWallRun();
-            }
-
-            if (Input.GetKeyUp(latchKey))
-            {
-                WallDetach();
-            }
         }
         else
         {
@@ -100,7 +136,7 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerMovement.isWallRunning && !wallJumping && !wallLatching)
+        if (wallRunning && !wallJumping && !wallLatching)
         {
             WallRun();
         }
@@ -108,8 +144,7 @@ public class WallRunning : MonoBehaviour
 
     private void MoveKeyInputs()
     {
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = moveInput.ReadValue<Vector2>().y;
     }
 
     bool CanWallRun()
@@ -126,13 +161,14 @@ public class WallRunning : MonoBehaviour
     private void EnableWallRun()
     {
         // reset y velocity on wall run start
-        if (!playerMovement.isWallRunning)
+        if (!wallRunning)
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        
+
         playerMovement.isWallRunning = true;
+        wallRunning = true;
         rb.useGravity = false;
 
-        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
+        //playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
         if (wallLeft)
         {
             Tilt = Mathf.Lerp(Tilt, -camTilt, camTiltTime * Time.deltaTime);
@@ -148,12 +184,13 @@ public class WallRunning : MonoBehaviour
     private void ExitWallRun()
     {
         playerMovement.isWallRunning = false;
+        wallRunning = false;
         if (!playerMovement.onSlope)
         {
             rb.useGravity = true;
         }
 
-        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
+        //playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
         Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
         SetRightHand();
     }
@@ -187,7 +224,7 @@ public class WallRunning : MonoBehaviour
         wallJumping = true;
         CalcWallNormal();
         Vector3 wallJumpDirForce = wallNormal * playerMovement.wallJumpSideForce + transform.up * playerMovement.wallJumpUpForce;
-        
+
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(wallJumpDirForce, ForceMode.Impulse);
         Invoke(nameof(ResetJump), 0.5f);
@@ -250,5 +287,15 @@ public class WallRunning : MonoBehaviour
             item.SetItemInHand(rightHand.transform);
         }
         leftHand.SetActive(false);
+    }
+
+    public void PauseCalled(Component sender, object data)
+    {
+        if (data is bool)
+        {
+            isPaused = (bool)data;
+            return;
+        }
+        Debug.Log($"Unwanted event call from {sender}");
     }
 }

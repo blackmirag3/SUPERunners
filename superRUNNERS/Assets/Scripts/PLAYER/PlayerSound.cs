@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerSound : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class PlayerSound : MonoBehaviour
     private bool hasPlayedSlide = false;
     private bool hasJumped = false;
     private bool canFootstep = true;
+
+    private InputAction jumpInput = null;
+
+    private void Awake()
+    {
+        jumpInput = InputManager.instance.PlayerInput.actions["Jump"];
+        jumpInput.performed += PlayJumpSound;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,22 +60,28 @@ public class PlayerSound : MonoBehaviour
             hasPlayedSlide = false;
         }
     }
-    
+
     //TODO: Fix player movement states
     public void HandleJump()
     {
-        if (Input.GetKey(playerMovement.jumpKey))
-        {
-            if (!hasJumped)
-                jump.Play();
-
-            hasJumped = true;
-        }
-        else if (hasJumped && (playerMovement.isGrounded || playerMovement.isWallRunning))
+        if (hasJumped && (playerMovement.isGrounded || playerMovement.isWallRunning))
         {
             land.Play();
             hasJumped = false;
         }
     }
-    
+
+    private void PlayJumpSound(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !hasJumped)
+        {
+            jump.Play();
+            hasJumped = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        jumpInput.performed -= PlayJumpSound;
+    }
 }

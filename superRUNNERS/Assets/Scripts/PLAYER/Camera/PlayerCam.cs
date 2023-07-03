@@ -48,7 +48,7 @@ public class PlayerCam : MonoBehaviour
         stabAmount = settings.stabAmount;
     }
 
-    void Start()
+    private void Start()
     {
         InitialiseSettings();
         isPaused = false;
@@ -58,9 +58,17 @@ public class PlayerCam : MonoBehaviour
         cam = GetComponent<Camera>();
         baseFOV = cam.fieldOfView;
         targetFOV = baseFOV;
+
+        StartCoroutine(EnsureBaseFovOnStart());
     }
 
-    void Update()
+    private IEnumerator EnsureBaseFovOnStart()
+    {
+        yield return null;
+        baseFOV = cam.fieldOfView;
+    }
+
+    private void Update()
     {
         if (!isPaused)
         {
@@ -79,6 +87,7 @@ public class PlayerCam : MonoBehaviour
             ResetPosition();
             //cam.LookAt(FocusTarget());
         }
+        
     }
 
     public void PauseCalled(Component sender, object data)
@@ -93,15 +102,15 @@ public class PlayerCam : MonoBehaviour
 
     private void fovUpdate()
     {
-        if (playerMovement.isSliding)
+        if (playerMovement.isSliding || playerMovement.isWallRunning)
         {
-            targetFOV = baseFOV + 20f;
+            targetFOV = baseFOV + 15f;
         }
         else if (playerMovement.isSprinting && !playerMovement.isWallRunning && !playerMovement.isCrouching && player.hasMovementInputs)
         {
             targetFOV = baseFOV + 10f;
         }
-        else if ((!playerMovement.isSprinting || !playerMovement.hasMovementInputs || !playerMovement.isSliding) && !playerMovement.isWallRunning)
+        else if ((!playerMovement.hasMovementInputs || !playerMovement.isSliding) && !playerMovement.isWallRunning)
         {
             targetFOV = baseFOV;
         }
@@ -125,6 +134,18 @@ public class PlayerCam : MonoBehaviour
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, 1 * Time.deltaTime);
         }
+    }
+
+    public void CameraFovChanged(Component sender, object data)
+    {
+        if (data is float)
+        {
+            Debug.Log(data);
+            baseFOV = (float)data;
+            targetFOV = baseFOV;
+            return;
+        }
+        Debug.LogWarning($"Unwanted event call from {sender}");
     }
 
     /*TODO fix stab (clamp mouse angle?)

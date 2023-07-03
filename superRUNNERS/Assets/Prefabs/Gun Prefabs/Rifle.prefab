@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 8432122386392399234}
   - component: {fileID: 2039417879596535373}
   - component: {fileID: 6744877032469383842}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: RifleModel
   m_TagString: Damageable
   m_Icon: {fileID: 0}
@@ -671,7 +671,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 1
 --- !u!114 &1608439006910929086
 MonoBehaviour:
   m_ObjectHideFlags: 0
