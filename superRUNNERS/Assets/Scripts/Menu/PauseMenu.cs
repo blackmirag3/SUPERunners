@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Runtime.CompilerServices; 
+[assembly: InternalsVisibleTo( "PlayMode" )]
+[assembly: InternalsVisibleTo( "EditMode" )]
+[assembly: InternalsVisibleTo( "TestInfrastructure" )]
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject currentMenu;
+    internal GameObject currentMenu;
     [SerializeField]
-    private GameObject settingsMenu;
+    internal GameObject settingsMenu;
     [SerializeField]
-    private GameObject keybindMenu;
+    internal GameObject keybindMenu;
     public bool gameIsPaused;
 
     private KeyCode escapeKey = KeyCode.Escape;
@@ -28,14 +32,14 @@ public class PauseMenu : MonoBehaviour
         inputs = InputManager.instance.PlayerInput;
     }
 
-    private enum CurrentMenu
+    internal enum CurrentMenu
     {
         none,
         pause,
         settings,
         keybinds,
     }
-    private CurrentMenu menuState;
+    internal CurrentMenu menuState;
 
     private void Start()
     {
@@ -52,7 +56,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void OnEscapePress()
+    internal void OnEscapePress()
     {
         switch (menuState)
         {
@@ -76,6 +80,7 @@ public class PauseMenu : MonoBehaviour
                 }
                 break;
         }
+        //handler.OnEscapePress()
     }
 
     public void StartGame()
@@ -112,8 +117,7 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = true;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-
-        inputs.actions.Disable();
+        if (inputs != null) inputs.actions.Disable();
         onPause.CallEvent(this, true);
     }
 
@@ -125,8 +129,7 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        inputs.actions.Enable();
+        if (inputs != null) inputs.actions.Enable();
         onPause.CallEvent(this, false);
     }
 

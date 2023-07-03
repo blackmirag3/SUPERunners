@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Runtime.CompilerServices; 
+[assembly: InternalsVisibleTo( "PlayMode" )]
+[assembly: InternalsVisibleTo( "EditMode" )]
+
 public class GunPickup : MonoBehaviour, IHoldable
 {
 
@@ -15,9 +19,12 @@ public class GunPickup : MonoBehaviour, IHoldable
     public float throwForwardForce, throwUpForce;
 
     public bool equipped;
-    private float despawnTime = 2f;
-
+    internal float despawnTime = 2f;
     public bool isGun { get; set; }
+
+    //for unity test
+    internal bool isGunEnabled;
+    internal bool isGunBreakEnabled;
 
     void Start()
     {
@@ -83,8 +90,10 @@ public class GunPickup : MonoBehaviour, IHoldable
         float random = Random.Range(-1f, 1f);
         damageRb.AddTorque(new Vector3(random, random, random));
 
-        gun.enabled = false;
-        gunBreak.enabled = true;
+        isGunEnabled = false;
+        isGunBreakEnabled = true;
+        gun.enabled = isGunEnabled;
+        gunBreak.enabled = isGunBreakEnabled;
        
         Destroy(gameObject, despawnTime);
     }

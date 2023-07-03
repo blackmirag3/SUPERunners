@@ -16803,7 +16803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: P
+  m_Text: Space
 --- !u!222 &1010267160
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19940,8 +19940,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d71afea6936cfa4199507ff3e77e75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: ba0adb92e2c981845b70e2b6a9cd14fd, type: 2}
+  fovSlider: {fileID: 0}
+  fovValue: {fileID: 0}
+  fovInput: {fileID: 0}
   resolutionDropdown: {fileID: 634489796}
+  qualityDropdown: {fileID: 0}
+  fullscreenToggle: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: ba0adb92e2c981845b70e2b6a9cd14fd, type: 2}
+  volumeSlider: {fileID: 0}
+  volumeValue: {fileID: 0}
+  musicSlider: {fileID: 0}
+  musicValue: {fileID: 0}
+  sfxSlider: {fileID: 0}
+  sfxValue: {fileID: 0}
+  defaultVol: 0
+  defaultFov: 0
+  defaultGraphics: 0
+  onFovChange: {fileID: 0}
 --- !u!114 &1210714101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21364,7 +21379,7 @@ GameObject:
   - component: {fileID: 1280972246}
   - component: {fileID: 1280972245}
   m_Layer: 0
-  m_Name: CustomKeybinds
+  m_Name: Keybind Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
