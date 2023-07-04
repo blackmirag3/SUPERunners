@@ -1797,7 +1797,7 @@ MonoBehaviour:
   leftHand: {fileID: 419949072156179356}
   punchColTime: 0.4
   punchResetTime: 0.2
-  diff: {fileID: 11400000, guid: 4d65c4fb1b0d60a469d7a66e449d7778, type: 2}
+  diff: {fileID: 11400000, guid: 8a16fdc92d0c085418351a64547fd101, type: 2}
 --- !u!195 &3954193828582992920
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   maxBurstSize: 0
   fireRate: 0
   bulletsPerShot: 0
-  diff: {fileID: 11400000, guid: 4d65c4fb1b0d60a469d7a66e449d7778, type: 2}
+  diff: {fileID: 11400000, guid: 8a16fdc92d0c085418351a64547fd101, type: 2}
 --- !u!64 &8513470163437848799
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2770,7 +2770,8 @@ AudioSource:
   m_GameObject: {fileID: 6065614760911906896}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4249611783276956538, guid: ba0adb92e2c981845b70e2b6a9cd14fd,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: e9cfebcdd12b210468800a7fa4878300, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

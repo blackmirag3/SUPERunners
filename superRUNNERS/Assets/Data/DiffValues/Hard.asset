@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Hard
   m_EditorClassIdentifier: 
   difficulty: 2
+  enemySpeedMultipliers: 1.13
   playerHealth: 1
-  startEnemySpawn: 9
+  startEnemySpawn: 7
+  maxEnemySpawn: 24
   enemySpeed: 8
   enemyUnarmedSpeed: 10.02
+  maxEnemySpeed: 24
   isAggro: 1
   enemyBulletVelocity: 31.8

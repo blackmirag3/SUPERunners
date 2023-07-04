@@ -24,7 +24,7 @@ public class DifficultySelector : MonoBehaviour
 
     public void SelectDifficulty(DifficultySettings diff)
     {
-        selectedDifficulty = diff;
+        selectedDifficulty = Instantiate(diff);
         Debug.Log($"Difficulty selected - " + selectedDifficulty.name);
     }
 

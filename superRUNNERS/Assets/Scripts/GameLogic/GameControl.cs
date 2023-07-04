@@ -13,6 +13,7 @@ public class GameControl : MonoBehaviour
     private int startEnemyCount;
     [SerializeField]
     private int maxEnemies;
+    public static int areasCleared;
 
     public bool GameInProgress { get; private set; }
     private bool levelWon;
@@ -32,6 +33,7 @@ public class GameControl : MonoBehaviour
 
     [SerializeField]
     private DifficultySettings diff;
+    private DifficultySettings initialDiffValues;
 
     private void Awake()
     {
@@ -39,8 +41,10 @@ public class GameControl : MonoBehaviour
         {
             diff = DifficultySelector.instance.selectedDifficulty;
         }
+        initialDiffValues = Instantiate(diff);
 
         startEnemyCount = diff.startEnemySpawn;
+        maxEnemies = diff.maxEnemySpawn;
     }
 
     private void Start()
@@ -49,7 +53,7 @@ public class GameControl : MonoBehaviour
 
         StartGame();
         levelWon = false;
-        
+        areasCleared = 0;   
     }
 
     private void Update()
@@ -79,7 +83,7 @@ public class GameControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        buildNewArena.CallEvent(this, EnemyPerLevel < maxEnemies ? EnemyPerLevel++ : maxEnemies);
+        buildNewArena.CallEvent(this, EnemyPerLevel);
         StartGame();
     }
 
@@ -97,13 +101,87 @@ public class GameControl : MonoBehaviour
 
     public void RestartGame()
     {
+        ResetDiffValues();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void Leave()
+    private void ResetDiffValues()
     {
-        // do nothing for now
+        diff.enemySpeed = initialDiffValues.enemySpeed;
+        diff.enemyUnarmedSpeed = initialDiffValues.enemyUnarmedSpeed;
+        diff.isAggro = initialDiffValues.isAggro;
+    }
+
+    public void AreaCleared()
+    {
+
+        areasCleared++;
+
+        if (diff.enemySpeed < diff.maxEnemySpeed)
+        {
+            IncreaseEnemySpeed(diff.difficulty, areasCleared);
+        }
+
+        if (areasCleared % 2 != 0)
+        {
+            if (areasCleared < 4 && diff.difficulty == Difficulty.easy)
+            {
+                EnemyPerLevel++;
+            }
+            return;
+        }
+
+        // increase diff
+        if (EnemyPerLevel < maxEnemies)
+        {
+            EnemyPerLevel = IncreaseEnemySpawn(EnemyPerLevel, diff.difficulty, areasCleared);
+        }
+
     }
     
+    private int IncreaseEnemySpawn(int currEnemySpawn, Difficulty currDiff, int clearedAreas)
+    {
+        int newEnemySpawn = currEnemySpawn;
+
+        switch (currDiff)
+        {
+            case Difficulty.easy:
+                newEnemySpawn++;
+                break;
+            case Difficulty.normal:
+                if (clearedAreas / 2 > 3)
+                {
+                    newEnemySpawn += 3;
+                }
+                else
+                {
+                    newEnemySpawn += 2;
+                }
+                break;
+            case Difficulty.hard:
+                if (clearedAreas / 2 > 2)
+                {
+                    newEnemySpawn += 3;
+                }
+                else
+                {
+                    newEnemySpawn += 2;
+                }
+                break;
+        }
+        return newEnemySpawn;
+    }
+
+    private void IncreaseEnemySpeed(Difficulty currDiff, int clearedAreas)
+    {
+        float multiplier = diff.enemySpeedMultipliers;
+        diff.enemySpeed *= multiplier;
+        diff.enemyUnarmedSpeed *= multiplier;
+        
+        if (currDiff == Difficulty.easy && clearedAreas > 4)
+        {
+            diff.isAggro = true;
+        }
+    }
 }

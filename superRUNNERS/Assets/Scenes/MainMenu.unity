@@ -409,13 +409,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 389291134}
-        m_TargetAssemblyTypeName: DifficultySelector, Assembly-CSharp
+        m_TargetAssemblyTypeName: DifficultySelector, Scripts
         m_MethodName: SelectDifficulty
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 4d65c4fb1b0d60a469d7a66e449d7778,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7547,13 +7547,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 389291134}
-        m_TargetAssemblyTypeName: DifficultySelector, Assembly-CSharp
+        m_TargetAssemblyTypeName: DifficultySelector, Scripts
         m_MethodName: SelectDifficulty
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b8be66ed7436fc64386ad2bcbf954674,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13732,13 +13732,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 389291134}
-        m_TargetAssemblyTypeName: DifficultySelector, Assembly-CSharp
+        m_TargetAssemblyTypeName: DifficultySelector, Scripts
         m_MethodName: SelectDifficulty
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: caff009bc393b2f4c876d8e71879c41e,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: DifficultySettings, Scripts
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

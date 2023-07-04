@@ -188,7 +188,7 @@ public class SettingsMenu : MonoBehaviour
         SetMusicVolume(music);
         musicSlider.value = music;
         // sfx
-        float sfx = PlayerPrefs.GetFloat(musicVolumeKey, defaultVol);
+        float sfx = PlayerPrefs.GetFloat(sfxVolumeKey, defaultVol);
         SetSfxVolume(sfx);
         sfxSlider.value = sfx;
 

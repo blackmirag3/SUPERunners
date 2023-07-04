@@ -109,6 +109,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
         isStaggered = false;
+        
+        Debug.Log($"Speed: {enemy.speed}");
     }
 
     private void Update()
@@ -266,6 +268,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private void EnableEnemyUnarmed()
     {
         enemy.speed = unarmedSpeed;
+        Debug.Log($"enemy melee speed: {unarmedSpeed}");
         enemy.stoppingDistance = unarmedStoppingDistance;
     }
 }
