@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   testAllModes:
     name: Test in ${{ matrix.testMode }}
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -21,7 +21,7 @@ jobs:
               UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           with:
-              projectPath: SUPERunners\superRUNNERS
+              projectPath: superRUNNERS
               githubToken: ${{ secrets.GITHUB_TOKEN }} 
         - uses: game-ci/unity-test-runner@v2
           env:
@@ -33,7 +33,7 @@ jobs:
           if: always()
           with:
             name: Test results
-            path: artifacts
+            path: .github\artifacts
         - uses: actions/upload-artifact@v2
           if: always()
           with:
@@ -41,7 +41,7 @@ jobs:
               path: ${{ steps.myTestStep.outputs.coveragePath }}
         - uses: actions/cache@v2
           with:
-              path: path/to/your/project/Library
+              path: .github\cache
               key: Library-MyProjectName-TargetPlatform
               restore-keys: |
                 Library-MyProjectName-
