@@ -143,7 +143,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetVideoQuality(int qualityIndex)
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
+        QualitySettings.SetQualityLevel(qualityIndex, false);
         graphicsIndex = qualityIndex;
 
         settingsHaveChanged = true;

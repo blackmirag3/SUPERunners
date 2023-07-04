@@ -15,7 +15,11 @@ public class KillCounter : MonoBehaviour
     public TextMeshProUGUI killsDisplay;
     public GameObject victoryScreen;
 
-    public GameEvent gameStopped;
+    [SerializeField]
+    private GameEvent gameStopped;
+    [SerializeField]
+    private GameEvent plsEnableWallhacks;
+    private bool wallhacksEnabled;
 
     public bool LevelWon { get; private set; }
 
@@ -23,6 +27,7 @@ public class KillCounter : MonoBehaviour
     {
         enemiesKilled = 0;
         LevelWon = false;
+        wallhacksEnabled = false;
     }
 
     private void UpdateText()
@@ -62,6 +67,12 @@ public class KillCounter : MonoBehaviour
         {
             LevelWon = true;
             gameStopped.CallEvent(this, null);
+            return;
+        }
+        if (leftToKill < 4 && !wallhacksEnabled)
+        {
+            wallhacksEnabled = true;
+            plsEnableWallhacks.CallEvent(this, null);
         }
     }
 
@@ -70,7 +81,7 @@ public class KillCounter : MonoBehaviour
         if (data is int)
         {
             int enemyCount = (int)data;
-            Debug.Log("Kill count resetting");
+            wallhacksEnabled = false;
             LevelWon = false;
             needToKill = enemyCount;
             leftToKill = enemyCount;
