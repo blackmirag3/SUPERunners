@@ -39,10 +39,3 @@ jobs:
           with:
               name: Coverage results
               path: ${{ steps.myTestStep.outputs.coveragePath }}
-        - uses: actions/cache@v2
-          with:
-              path: .github\cache
-              key: Library-MyProjectName-TargetPlatform
-              restore-keys: |
-                Library-MyProjectName-
-                Library-
