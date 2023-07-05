@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 448895028}
   - component: {fileID: 448895029}
+  - component: {fileID: 6083248549143313780}
+  - component: {fileID: 2736355652391392154}
   m_Layer: 30
   m_Name: EventListeners
   m_TagString: Untagged
@@ -63,6 +65,62 @@ MonoBehaviour:
       - m_Target: {fileID: 1015420656378467978}
         m_TargetAssemblyTypeName: PlayerHand, Assembly-CSharp
         m_MethodName: PauseCalled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6083248549143313780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448895027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 02200b94636330c47938747cce47bbdc, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3726381203992480165}
+        m_TargetAssemblyTypeName: PlayerCam, Assembly-CSharp
+        m_MethodName: CameraFovChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2736355652391392154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448895027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b5445884c0587ee46955c13e489a6de5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3726381203992480165}
+        m_TargetAssemblyTypeName: PlayerCam, Scripts
+        m_MethodName: SensitivityChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1322,8 +1380,7 @@ MonoBehaviour:
   wallRunning: {fileID: 3726381204713736554}
   playerMovement: {fileID: 3726381204713736556}
   playerSound: {fileID: 3726381203370361788}
-  sensX: 1.2
-  sensY: 1.2
+  sens: 1.2
   mouseY: 0
   mouseX: 0
   orientation: {fileID: 3726381204975709991}

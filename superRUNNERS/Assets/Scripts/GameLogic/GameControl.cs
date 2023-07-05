@@ -26,7 +26,15 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private PauseMenu pauseMenu;
     [SerializeField]
-    private TextMeshProUGUI finalScore;
+    private TextMeshProUGUI finalKillScore;
+    [SerializeField]
+    private TextMeshProUGUI finalRoomScore;
+    [SerializeField]
+    private TextMeshProUGUI kHighScore;
+    [SerializeField]
+    private TextMeshProUGUI rHighScore;
+    [SerializeField]
+    private TextMeshProUGUI newAlert;
 
     public GameEvent buildNewArena;
     public GameEvent onPause;
@@ -34,6 +42,12 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private DifficultySettings diff;
     private DifficultySettings initialDiffValues;
+
+    // score stuff
+    private int killHighScore, roomHighScore;
+    private readonly string easyFilename = "score00.dat";
+    private readonly string normalFilename = "score01.dat";
+    private readonly string hardFilename = "score02.dat";
 
     private void Awake()
     {
@@ -45,6 +59,9 @@ public class GameControl : MonoBehaviour
 
         startEnemyCount = diff.startEnemySpawn;
         maxEnemies = diff.maxEnemySpawn;
+
+        newAlert.enabled = false;
+        ObtainHighscores(diff.difficulty);
     }
 
     private void Start()
@@ -95,8 +112,36 @@ public class GameControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         hud.SetActive(false);
-        finalScore.SetText(kill.enemiesKilled.ToString());
+        DisplayAndCheckScores();
+
         gameOverScreen.SetActive(true);
+    }
+
+    private void DisplayAndCheckScores()
+    {
+        int killedEnemies = kill.enemiesKilled;
+        finalKillScore.SetText(killedEnemies.ToString());
+        finalRoomScore.SetText(areasCleared.ToString());
+
+        bool highscoreUpdated = false;
+        if (killedEnemies > killHighScore)
+        {
+            killHighScore = killedEnemies;
+            highscoreUpdated = true;
+        }
+        if (areasCleared > roomHighScore)
+        {
+            roomHighScore = areasCleared;
+            highscoreUpdated = true;
+        }
+        kHighScore.SetText(killHighScore.ToString());
+        rHighScore.SetText(roomHighScore.ToString());
+
+        if (highscoreUpdated)
+        {
+            newAlert.enabled = true;
+            SaveNewHighscores(diff.difficulty);
+        }
     }
 
     public void RestartGame()
@@ -182,6 +227,65 @@ public class GameControl : MonoBehaviour
         if (currDiff == Difficulty.easy && clearedAreas > 4)
         {
             diff.isAggro = true;
+        }
+    }
+
+    private void ObtainHighscores(Difficulty difficulty)
+    {
+        string fileName = null;
+        switch (difficulty)
+        {
+            case Difficulty.easy:
+                fileName = easyFilename;
+                break;
+            case Difficulty.normal:
+                fileName = normalFilename;
+                break;
+            case Difficulty.hard:
+                fileName = hardFilename;
+                break;
+        }
+        
+        if (FileManager.LoadFromFile(fileName, out var json))
+        {
+            Score score = new Score();
+            score.LoadJson(json);
+
+            killHighScore = score.KillScore;
+            roomHighScore = score.RoomScore;
+
+            Debug.Log("Load successful");
+        }
+        else
+        {
+            killHighScore = 0;
+            roomHighScore = 0;
+        }
+    }
+
+    private void SaveNewHighscores(Difficulty difficulty)
+    {
+        string fileName = null;
+        switch (difficulty)
+        {
+            case Difficulty.easy:
+                fileName = easyFilename;
+                break;
+            case Difficulty.normal:
+                fileName = normalFilename;
+                break;
+            case Difficulty.hard:
+                fileName = hardFilename;
+                break;
+        }
+
+        Score newScore = new Score();
+        newScore.KillScore = killHighScore;
+        newScore.RoomScore = roomHighScore;
+
+        if (FileManager.WriteToFile(fileName, newScore.ToJson()))
+        {
+            Debug.Log("Save successful");
         }
     }
 }

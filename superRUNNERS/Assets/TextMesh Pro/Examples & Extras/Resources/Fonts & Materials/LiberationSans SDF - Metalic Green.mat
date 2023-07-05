@@ -61,9 +61,9 @@ Material:
     - _FaceDilate: 0.15
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
-    - _GlowInner: 0.136
-    - _GlowOffset: 0.427
-    - _GlowOuter: 0.062
+    - _GlowInner: 0.666
+    - _GlowOffset: 0.237
+    - _GlowOuter: 0.375
     - _GlowPower: 0.941
     - _GradientScale: 10
     - _LightAngle: 3.1416
@@ -102,11 +102,11 @@ Material:
     - _ClipRect: {r: -10000, g: -10000, b: 10000, a: 10000}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 0, g: 0.75735635, b: 0, a: 1}
-    - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
+    - _GlowColor: {r: 1, g: 0.95538855, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 100000, a: 100000}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 0.08018869, b: 0.7428395, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecularColor: {r: 0.7689687, g: 1, b: 0.75000346, a: 1}
+    - _SpecularColor: {r: 1, g: 0.93979657, b: 0, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []

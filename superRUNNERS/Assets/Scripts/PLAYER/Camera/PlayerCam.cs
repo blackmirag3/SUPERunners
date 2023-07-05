@@ -10,7 +10,8 @@ public class PlayerCam : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerSound playerSound;
 
-    public float sensX, sensY, mouseY, mouseX;
+    [SerializeField] private float sens; 
+    public float mouseY, mouseX;
 
     public Transform orientation;
     [HideInInspector] public float xRotation;
@@ -39,18 +40,19 @@ public class PlayerCam : MonoBehaviour
 
     private void InitialiseSettings()
     {
-        //sprintFOV = settings.sprintFov;
-        sensX = settings.sensX;
-        sensY = settings.sensY;
         isBobEnabled = settings.isBobEnabled;
         bobAmplitude = settings.bobAmplitude;
         bobFrequency = settings.bobFrequency;
         stabAmount = settings.stabAmount;
     }
 
-    private void Start()
+    private void Awake()
     {
         InitialiseSettings();
+    }
+
+    private void Start()
+    {
         isPaused = false;
         startPos = transform.localPosition;
         Cursor.lockState = CursorLockMode.Locked;
@@ -72,8 +74,8 @@ public class PlayerCam : MonoBehaviour
     {
         if (!isPaused)
         {
-            mouseX = Input.GetAxisRaw("Mouse X") * sensX;
-            mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
+            mouseX = Input.GetAxisRaw("Mouse X") * sens;
+            mouseY = Input.GetAxisRaw("Mouse Y") * sens;
 
             yRotation += mouseX;
             xRotation -= mouseY;
@@ -140,9 +142,18 @@ public class PlayerCam : MonoBehaviour
     {
         if (data is float)
         {
-            Debug.Log(data);
             baseFOV = (float)data;
             targetFOV = baseFOV;
+            return;
+        }
+        Debug.LogWarning($"Unwanted event call from {sender}");
+    }
+
+    public void SensitivityChanged(Component sender, object data)
+    {
+        if (data is float)
+        {
+            sens = (float)data;
             return;
         }
         Debug.LogWarning($"Unwanted event call from {sender}");

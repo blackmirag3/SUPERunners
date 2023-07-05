@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6361a976a366e94f903e8210de36f9e, type: 3}
-  m_Name: PlayerCamSettings
+  m_Script: {fileID: 11500000, guid: c863ab8e44ae28d4385ffdfe3638c4d6, type: 3}
+  m_Name: OnSensitivityChange
   m_EditorClassIdentifier: 
-  sensX: 1.2
-  sensY: 1.2
-  isBobEnabled: 1
-  bobAmplitude: 0.0016
-  bobFrequency: 16
-  stabAmount: 0
