@@ -7,8 +7,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private DifficultySettings diff;
 
     [SerializeField] private float playerHealth;
+    [SerializeField] private float invulnerableDuration;
+    private bool isInvulnerable;
 
-    public GameEvent playerDeath;
+    [SerializeField] private AudioSource playerHurtSound;
+
+    [SerializeField] private GameEvent playerDeath;
 
     private void Awake()
     {
@@ -22,12 +26,29 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void Damage(float damage)
     {
-        playerHealth -= damage;
-        Debug.Log($"Health left: {playerHealth}");
-        if (playerHealth <= 0)
+        if (!isInvulnerable)
         {
-            // stop game
-            playerDeath.CallEvent(this, null);
+            isInvulnerable = true;
+            playerHealth -= damage;
+            if (playerHurtSound != null)
+            {
+                playerHurtSound.Play();
+            }
+            StartCoroutine(DeactivateInvulnerability(invulnerableDuration));
+
+            Debug.Log($"Health left: {playerHealth}");
+            if (playerHealth <= 0)
+            {
+                // stop game
+                playerDeath.CallEvent(this, null);
+            }
         }
+        else Debug.Log("player has stopwatch active");
+    }
+
+    private IEnumerator DeactivateInvulnerability(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isInvulnerable = false;
     }
 }

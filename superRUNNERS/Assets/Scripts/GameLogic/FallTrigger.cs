@@ -18,4 +18,16 @@ public class FallTrigger : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(playerTag))
+        {
+            IDamageable player = other.GetComponent<IDamageable>();
+            if (player != null)
+            {
+                player.Damage(damageToKill);
+            }
+        }
+    }
 }

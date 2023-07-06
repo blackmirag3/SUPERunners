@@ -10,6 +10,7 @@ TagManager:
   - Damageable
   - EnemyHand
   - Hand
+  - PlayerTriggers
   layers:
   - Default
   - TransparentFX
