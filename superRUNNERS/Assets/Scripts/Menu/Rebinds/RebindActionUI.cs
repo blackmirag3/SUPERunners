@@ -227,7 +227,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         }
 
         /// <summary>
-        /// Initiate an interactive rebind that lets the player actuate a control to choose a new binding
+        /// Initiate an interactive rebind that lets the Player actuate a control to choose a new binding
         /// for the action.
         /// </summary>
         public void StartInteractiveRebind()

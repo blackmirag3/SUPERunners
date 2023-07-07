@@ -32,6 +32,6 @@ public class MoveSettings : ScriptableObject
     public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Misc")]
-    public float playerHeight;
+    public float PlayerHeight;
 
 }

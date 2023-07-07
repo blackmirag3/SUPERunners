@@ -5,7 +5,7 @@ using UnityEngine;
 public class TutorialSegmentControl : MonoBehaviour
 {
     public Collider col;
-    [SerializeField] private string playerTag;
+    [SerializeField] private string PlayerTag;
     [SerializeField] private GameObject nextSegment;
     [SerializeField] private GameObject currentSegment;
     //[SerializeField] private bool isLastRoom; //additional check on top of collider
@@ -26,7 +26,7 @@ public class TutorialSegmentControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag(PlayerTag))
         {
             col.enabled = false;
             if (door != null) door.Open();

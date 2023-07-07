@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyBehaviour : MonoBehaviour, IDamageable
 {
     private NavMeshAgent enemy;
-    public Transform player;
+    public Transform Player;
     public Animator anim;
     public EnemyGun enemyGun;
     public GunDrop gunDrop;
@@ -158,13 +158,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void EnemyChase()
     {
-        enemy.SetDestination(player.position); //chase player
+        enemy.SetDestination(Player.position); //chase Player
         hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
 
         if (hasReachedPlayer)
         {
-            Vector3 dir = player.position - transform.position;
+            Vector3 dir = Player.position - transform.position;
             Quaternion enemyFaceRotation = Quaternion.LookRotation(dir);
             float yRotation = enemyFaceRotation.eulerAngles.y;
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
@@ -173,8 +173,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private bool CheckLOS()
     {
-        Vector3 playerDir = (player.position - transform.position).normalized;
-        if (Physics.SphereCast(transform.position, 0.1f, playerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
+        Vector3 PlayerDir = (Player.position - transform.position).normalized;
+        if (Physics.SphereCast(transform.position, 0.1f, PlayerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
         {
             return hit.collider.GetComponent<IDamageable>() != null;
         }
@@ -234,7 +234,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private bool CheckAggro()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, Player.position);
         return ((distance <= aggroDistance) && CheckLOS());
     }
 

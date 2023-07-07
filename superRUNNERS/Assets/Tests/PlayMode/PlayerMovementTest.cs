@@ -14,7 +14,7 @@ public class PlayerMovementTest
     {
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
-        var player = new GameObject().AddComponent<PlayerMovement>();
+        var Player = new GameObject().AddComponent<PlayerMovement>();
         yield return null;
     }
     */

@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyHandTrigger : MonoBehaviour
 {
     [SerializeField]
-    private string playerTag = "Player";
-    [SerializeField]
-    private float damage;
+    private string PlayerTag = "Player";
+    [SerializeField] private Transform enemy;
+    [SerializeField] private float damage;
 
     private void Awake()
     {
@@ -17,15 +17,20 @@ public class EnemyHandTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         
-        if (col.CompareTag(playerTag))
+        if (col.CompareTag(PlayerTag))
         {
             Debug.Log($"Hand collided ({col})");
-            IDamageable player = col.gameObject.GetComponent<IDamageable>();
-            if (player != null)
+            IDamageable Player = col.gameObject.GetComponent<IDamageable>();
+            DamageIndicatorManager damageIndicatorManager = col.GetComponentInParent<DamageIndicatorManager>();
+            if (Player != null)
             {
-                player.Damage(damage);
-                Debug.Log("Enemy has punched player");
+                Player.Damage(damage);
+                Debug.Log("Enemy has punched Player");
                 GetComponent<Collider>().enabled = false;
+            }
+            if (damageIndicatorManager != null)
+            {
+                damageIndicatorManager.SpawnIndicator(enemy.position);
             }
         }
     }

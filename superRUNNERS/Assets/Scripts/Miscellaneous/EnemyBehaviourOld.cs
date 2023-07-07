@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyBehaviourOld : MonoBehaviour
 {
     private NavMeshAgent enemy;
-    public Transform player;
+    public Transform Player;
     public Animator anim;   
     bool isIdle;
     bool hasReachedPlayer;
@@ -21,7 +21,7 @@ public class EnemyBehaviourOld : MonoBehaviour
     //TODO check dead function
     //bool checkDead?
 
-    //TODO helper functions for check idle, has reached player etc
+    //TODO helper functions for check idle, has reached Player etc
 
     void Start()
     {
@@ -72,13 +72,13 @@ public class EnemyBehaviourOld : MonoBehaviour
 
             else
             {
-                enemy.SetDestination(player.position); //chase player
+                enemy.SetDestination(Player.position); //chase Player
                 hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
                 anim.SetBool("hasReachedPlayer", hasReachedPlayer);
-//Debug.Log("enemy has reached player:" + hasReachedPlayer);
+//Debug.Log("enemy has reached Player:" + hasReachedPlayer);
             }
         }
         Debug.Log("enemy is idle:" + isIdle);
-        Debug.Log("enemy has reached player:" + hasReachedPlayer);
+        Debug.Log("enemy has reached Player:" + hasReachedPlayer);
     }
 }

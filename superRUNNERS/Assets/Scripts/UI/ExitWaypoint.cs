@@ -9,7 +9,7 @@ public class ExitWaypoint : MonoBehaviour
     [SerializeField]
     private Vector3 exit, offset;
     [SerializeField]
-    private Transform player;
+    private Transform Player;
     [SerializeField] private GameObject waypoint;
     [SerializeField] private Image waypointSprite;
     private TextMeshProUGUI distanceText;
@@ -62,7 +62,7 @@ public class ExitWaypoint : MonoBehaviour
                 pos.x = minX;
             }
         }
-        int distance = (int)Vector3.Distance(exit, player.position);
+        int distance = (int)Vector3.Distance(exit, Player.position);
         waypoint.transform.position = pos;
         distanceText.SetText($"{distance}m");
     }

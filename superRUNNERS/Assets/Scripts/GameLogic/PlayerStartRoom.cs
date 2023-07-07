@@ -6,7 +6,7 @@ public class PlayerStartRoom : MonoBehaviour
 {
     public Collider col;
     [SerializeField]
-    private string playerTag;
+    private string PlayerTag;
 
     public GameEvent nextLevel;
 
@@ -32,7 +32,7 @@ public class PlayerStartRoom : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag(PlayerTag))
         {
             nextLevel.CallEvent(this, null);
             col.enabled = false;

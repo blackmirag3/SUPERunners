@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public bool enableSpawn = true;
     public GameControl game;
 
-    public Transform player;
+    public Transform Player;
     public GameObject enemy;
     private float currDistFromPlayer;
     private bool canSpawn = true;
@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                currDistFromPlayer = Vector3.Distance(player.position, transform.position);
+                currDistFromPlayer = Vector3.Distance(Player.position, transform.position);
                 if (currDistFromPlayer > spawnDist)
                 {
                     StartCoroutine(SpawnEnemy(spawnDelay, enemy, enemyPerSpawn));

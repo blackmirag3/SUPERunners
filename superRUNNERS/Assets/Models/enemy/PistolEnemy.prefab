@@ -633,7 +633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ece337df4182c40a9950abdbe77c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTag: Player
+  PlayerTag: Player
+  enemy: {fileID: 3856570245020946934}
   damage: 1
 --- !u!1 &538148354339862150
 GameObject:
@@ -997,7 +998,7 @@ MonoBehaviour:
     type: 3}
   shootingSound: {fileID: 3641742435352165558}
   bulletPos: {fileID: 6531323304183064632}
-  playerPos: {fileID: 0}
+  PlayerPos: {fileID: 0}
   maxShotDelay: 0
   minShotDelay: 0
   maxBurstSize: 0
@@ -2428,7 +2429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8592496417f531a44ae9865bb68191d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  Player: {fileID: 0}
   anim: {fileID: 3856570245020946933}
   enemyGun: {fileID: 4884056361479880605}
   gunDrop: {fileID: 3607369322219835589}
@@ -3414,7 +3415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ece337df4182c40a9950abdbe77c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTag: Player
+  PlayerTag: Player
+  enemy: {fileID: 3856570245020946934}
   damage: 1
 --- !u!1 &6531323304183064635
 GameObject:

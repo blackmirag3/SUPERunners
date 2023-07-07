@@ -2473,7 +2473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 8560716753151884049}
-  playerTag: Player
+  PlayerTag: Player
   nextLevel: {fileID: 11400000, guid: 908bd5ebddfeae340a573e44633b2d34, type: 2}
   entryDoor: {fileID: 312718388450864222}
   exitDoor: {fileID: 3916144402838202298}
