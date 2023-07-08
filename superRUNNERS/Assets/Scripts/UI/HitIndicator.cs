@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class DamageIndicator : MonoBehaviour {
-    public float indicatorTime;
+public class HitIndicator : MonoBehaviour {
+    //public float indicatorTime;
     private float timer;
     private CanvasGroup canvasGroup = null;
     public CanvasGroup CanvasGroup     
@@ -39,23 +39,10 @@ public class DamageIndicator : MonoBehaviour {
         }
     }
 
-    public Vector3 damageSource;
-    [SerializeField] private GameObject playerCam;
-
-    Vector3 direction = Vector3.zero;
-    Quaternion rotation = Quaternion.identity; 
-
     private void Start()
     {
-        if (playerCam == null) playerCam = GameObject.Find("PlayerCam");
-
-        timer = indicatorTime;
+        timer = 1;
         StartTimer();
-    }
-
-    private void Update()
-    {
-        RotateToTheTarget();
     }
 
     private void StartTimer()
@@ -63,17 +50,6 @@ public class DamageIndicator : MonoBehaviour {
         StartCoroutine(Countdown());
     }
 
-    private void RotateToTheTarget()
-    {
-        direction = playerCam.transform.position - damageSource;
-        rotation = Quaternion.LookRotation(direction);
-        rotation.z = -rotation.y;
-        rotation.x = 0;
-        rotation.y = 0;
-
-        Vector3 northDirection = new Vector3(0, 0, playerCam.transform.eulerAngles.y);
-        Rect.localRotation = rotation * Quaternion.Euler(northDirection);
-    }
     private IEnumerator Countdown()
     {
         /*
@@ -86,11 +62,11 @@ public class DamageIndicator : MonoBehaviour {
         while (timer > 0)
         {
             timer--;
-            yield return new WaitForSecondsRealtime(1);
+            yield return new WaitForSecondsRealtime(0.3f);
         }
         while (CanvasGroup.alpha > 0.0f)
         {
-            CanvasGroup.alpha -= 2 * Time.unscaledDeltaTime;
+            CanvasGroup.alpha -= 5 * Time.unscaledDeltaTime;
             yield return null;
         }
         Destroy(gameObject);

@@ -10348,6 +10348,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3856570245020946931, guid: d4d30d5ac96d7b44890966f8bb47c165,
         type: 3}
+      propertyPath: onHit
+      value: 
+      objectReference: {fileID: 11400000, guid: 610293c6e5f295148a347273ed1fd609,
+        type: 2}
+    - target: {fileID: 3856570245020946931, guid: d4d30d5ac96d7b44890966f8bb47c165,
+        type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1135964206}
@@ -12773,6 +12779,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928548882}
   m_CullTransparentMesh: 1
+--- !u!1 &941978961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941978962}
+  - component: {fileID: 941978964}
+  - component: {fileID: 941978963}
+  m_Layer: 5
+  m_Name: HitIndicatorHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &941978962
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941978961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 259845644}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -700, y: -266}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &941978963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941978961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788d295aa02320429c1e1a6b558aad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 610293c6e5f295148a347273ed1fd609, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 941978964}
+        m_TargetAssemblyTypeName: HitIndicatorManager, Scripts
+        m_MethodName: SpawnIndicator
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &941978964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941978961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47989674efd70a947b61ed3d5e523c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitIndicator: {fileID: 7519300795665863451, guid: d5c608db4f3458d4a84dade343c755ff,
+    type: 3}
+  screen: {fileID: 941978962}
+  indicatorTime: 0.5
 --- !u!1 &957593838
 GameObject:
   m_ObjectHideFlags: 0
@@ -15090,6 +15178,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3954193828582992927, guid: ca1a337a4e0046649b32b34a47ec18eb,
         type: 3}
+      propertyPath: onHit
+      value: 
+      objectReference: {fileID: 11400000, guid: 610293c6e5f295148a347273ed1fd609,
+        type: 2}
+    - target: {fileID: 3954193828582992927, guid: ca1a337a4e0046649b32b34a47ec18eb,
+        type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1135964206}
@@ -15203,6 +15297,12 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 1927178296}
+    - target: {fileID: 3856570245020946931, guid: 5c44e8b50c48e64479ff2823d1823e09,
+        type: 3}
+      propertyPath: onHit
+      value: 
+      objectReference: {fileID: 11400000, guid: 610293c6e5f295148a347273ed1fd609,
+        type: 2}
     - target: {fileID: 3856570245020946931, guid: 5c44e8b50c48e64479ff2823d1823e09,
         type: 3}
       propertyPath: Player
@@ -55045,7 +55145,6 @@ MonoBehaviour:
   damageRb: {fileID: 8667532869322828154}
   throwForwardForce: 40
   throwUpForce: 4.5
-  equipped: 0
 --- !u!65 &1974765057331884164
 BoxCollider:
   m_ObjectHideFlags: 0

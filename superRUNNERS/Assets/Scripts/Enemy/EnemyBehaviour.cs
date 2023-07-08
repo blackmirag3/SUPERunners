@@ -57,6 +57,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float punchColTime, punchResetTime;
 
     [SerializeField] private DifficultySettings diff;
+    [SerializeField] private GameEvent onHit;
 
     private void Awake()
     {
@@ -90,11 +91,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             leftHand.enabled = false;
             onEnemyDeath.CallEvent(this, null);
             Destroy(gameObject, despawnTime);
+            onHit.CallEvent(this, null);
         }
         else if (!isDead)
         {
             EnableEnemyUnarmed();
             currentAttackTimer = 0;
+            onHit.CallEvent(this, null);
         }
     }
 

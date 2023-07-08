@@ -18,8 +18,8 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public float throwForwardForce, throwUpForce;
 
-    public bool equipped;
     internal float despawnTime = 2f;
+    public bool isEquipped {get; set;}
     public bool isGun { get; set; }
 
     //for unity test
@@ -37,13 +37,13 @@ public class GunPickup : MonoBehaviour, IHoldable
         gunBreak.enabled = false;
         isGun = true;
 
-        if (equipped)
+        if (isEquipped)
         {
             gun.enabled = true;
             rb.isKinematic = true;
             col.isTrigger = true;
         }
-        else if (!equipped)
+        else if (!isEquipped)
         {
             gun.enabled = false;
             rb.isKinematic = false;
@@ -53,7 +53,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public void Pickup(Transform hand)
     {
-        equipped = true;
+        isEquipped = true;
 
         // Disable forces acting on gun and BoxCollider a trigger
         rb.isKinematic = true;
@@ -71,7 +71,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public void Throw(Vector3 point)
     {
-        equipped = false;
+        isEquipped = false;
 
         transform.localPosition = Vector3.zero;
         transform.SetParent(null);

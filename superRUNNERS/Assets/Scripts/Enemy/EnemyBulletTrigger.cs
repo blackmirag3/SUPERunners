@@ -10,11 +10,11 @@ public class EnemyBulletTrigger : MonoBehaviour
     [SerializeField]
     private float damage;
     private Vector3 initialPos;
-
     private void Start()
     {
         initialPos = GetComponentInParent<Transform>().position;
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(PlayerTag))
@@ -25,7 +25,6 @@ public class EnemyBulletTrigger : MonoBehaviour
             {
                 Player.Damage(damage);
             }
-
             if (damageIndicatorManager != null)
             {
                 damageIndicatorManager.SpawnIndicator(initialPos);

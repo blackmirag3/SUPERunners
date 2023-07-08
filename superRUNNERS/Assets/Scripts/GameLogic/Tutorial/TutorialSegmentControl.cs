@@ -7,7 +7,7 @@ public class TutorialSegmentControl : MonoBehaviour
     public Collider col;
     [SerializeField] private string PlayerTag;
     [SerializeField] private GameObject nextSegment;
-    [SerializeField] private GameObject currentSegment;
+    private GameObject currentSegment;
     //[SerializeField] private bool isLastRoom; //additional check on top of collider
     public DoorControl door;
 
@@ -17,6 +17,7 @@ public class TutorialSegmentControl : MonoBehaviour
     {
         col = GetComponent<Collider>();
         col.isTrigger = true;
+        currentSegment = transform.parent.gameObject;
     }
 
     public void EnableSegmentTrigger(Component sender, object data)
