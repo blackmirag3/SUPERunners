@@ -12860,7 +12860,6 @@ MonoBehaviour:
   hitIndicator: {fileID: 7519300795665863451, guid: d5c608db4f3458d4a84dade343c755ff,
     type: 3}
   screen: {fileID: 941978962}
-  indicatorTime: 0.5
 --- !u!1 &957593838
 GameObject:
   m_ObjectHideFlags: 0
@@ -25759,7 +25758,7 @@ PrefabInstance:
     - target: {fileID: 8287051751720658250, guid: 84f03d95c84b5b643a2fa9a73aa169f9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8287051751720658250, guid: 84f03d95c84b5b643a2fa9a73aa169f9,
         type: 3}
@@ -55123,7 +55122,7 @@ Transform:
   - {fileID: 3874218914872751680}
   - {fileID: 1235686314588820217}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1974765057331884162
 MonoBehaviour:

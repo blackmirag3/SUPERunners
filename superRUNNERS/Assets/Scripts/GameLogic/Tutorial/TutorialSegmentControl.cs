@@ -4,33 +4,42 @@ using UnityEngine;
 
 public class TutorialSegmentControl : MonoBehaviour
 {
-    public Collider col;
     [SerializeField] private string PlayerTag;
+    
     [SerializeField] private GameObject nextSegment;
+    [SerializeField] private GameEvent updateExit;
     private GameObject currentSegment;
     //[SerializeField] private bool isLastRoom; //additional check on top of collider
-    public DoorControl door;
+    public DoorControl exitDoor;
+    private ObjectiveManager objectives;
+    private Collider exit;
 
     //public GameObject exitIndicator;
 
     private void Start()
     {
-        col = GetComponent<Collider>();
-        col.isTrigger = true;
-        currentSegment = transform.parent.gameObject;
+        objectives = GetComponent<ObjectiveManager>();
+        exit = GetComponent<Collider>();
+        exit.isTrigger = true;
+        currentSegment = transform.gameObject;
+        updateExit.CallEvent(this, nextSegment.transform.position);
     }
 
     public void EnableSegmentTrigger(Component sender, object data)
     {
-        col.enabled = true;
+        exit.enabled = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        if (objectives != null)
+        {
+            if (!objectives.isComplete) return;
+        }
         if (other.CompareTag(PlayerTag))
         {
-            col.enabled = false;
-            if (door != null) door.Open();
+            exit.enabled = false;
+            if (exitDoor != null) exitDoor.Open();
             if (nextSegment != null) nextSegment.SetActive(true);
             currentSegment.SetActive(false);
             //TODO next room indicator?

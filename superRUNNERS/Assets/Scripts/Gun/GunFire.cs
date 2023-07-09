@@ -77,7 +77,8 @@ public class GunFire : MonoBehaviour
         shooting = false;
         hasFired = false;
         playerCam = GameObject.Find(camName).GetComponent<Camera>();
-        ammoDisplay = GameObject.Find(guiTextname).GetComponent<TextMeshProUGUI>();
+        GameObject ammoDisplayHolder = GameObject.Find(guiTextname);
+        if (ammoDisplayHolder != null) ammoDisplay = ammoDisplayHolder.GetComponent<TextMeshProUGUI>();
     }
 
     private void FireDown(InputAction.CallbackContext ctx)
