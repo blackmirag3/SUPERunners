@@ -2241,6 +2241,7 @@ MonoBehaviour:
   punchColTime: 0.4
   punchResetTime: 0.2
   diff: {fileID: 11400000, guid: 8a16fdc92d0c085418351a64547fd101, type: 2}
+  onHit: {fileID: 11400000, guid: 610293c6e5f295148a347273ed1fd609, type: 2}
 --- !u!195 &3856570245020946932
 NavMeshAgent:
   m_ObjectHideFlags: 0

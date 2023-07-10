@@ -16,6 +16,11 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     private GameObject[] enemyType;
 
+    [SerializeField] private GameObject pistolEnemy;
+    [SerializeField] private GameObject meleeEnemy;
+    [SerializeField] private GameObject rifleEnemy;
+    [SerializeField] private GameObject shotgunEnemy;
+
     private void Start()
     {
         gridSize = wave.gridSize;

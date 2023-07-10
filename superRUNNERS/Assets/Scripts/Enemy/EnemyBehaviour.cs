@@ -103,8 +103,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        CheckedArmed();
-        
         enemy.stoppingDistance = stoppingDistance;
         gunDrop.enabled = false;
         isDead = false;
@@ -112,8 +110,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
         isStaggered = false;
-        
-        Debug.Log($"Speed: {enemy.speed}");
+
+        CheckedArmed();
     }
 
     private void Update()
@@ -259,19 +257,27 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         // Difficulty adjustments
         isAggro = diff.isAggro;
         enemySpeed = diff.enemySpeed;
-        unarmedSpeed = diff.enemySpeed;
+        unarmedSpeed = diff.enemyUnarmedSpeed;
     }
 
     private void CheckedArmed()
     {
-        isArmed = (enemyGun == null) ? false : true;
+        if (enemyGun == null)
+        {
+            isArmed = false;
+            EnableEnemyUnarmed();
+        }
+        else
+        {
+            isArmed = true;
+        }
+        
         anim.SetBool("isArmed", isArmed);
     }
 
     private void EnableEnemyUnarmed()
     {
         enemy.speed = unarmedSpeed;
-        Debug.Log($"enemy melee speed: {unarmedSpeed}");
         enemy.stoppingDistance = unarmedStoppingDistance;
     }
 }
