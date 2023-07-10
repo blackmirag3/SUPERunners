@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     internal GameObject diffSelector;
     [SerializeField]
     internal GameObject keybindMenu;
+    [SerializeField]
+    internal GameObject gamemodeMenu;
 
     private bool rebinding;
 
@@ -46,6 +48,7 @@ public class MainMenu : MonoBehaviour
         play,
         settings,
         keybinds,
+        gameSelect,
     }
 
     internal CurrentMenu menuState;
@@ -64,8 +67,12 @@ public class MainMenu : MonoBehaviour
         {
             case CurrentMenu.main:
                 break;
-            case CurrentMenu.play:
+            case CurrentMenu.gameSelect:
                 menuState = CurrentMenu.main;
+                OpenMenu(menuState);
+                break;
+            case CurrentMenu.play:
+                menuState = CurrentMenu.gameSelect;
                 OpenMenu(menuState);
                 break;
             case CurrentMenu.settings:
@@ -87,6 +94,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Arena");
     }
 
+    public void StartTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void QuitGame()
     {
         PlayerPrefs.Save();
@@ -102,6 +114,12 @@ public class MainMenu : MonoBehaviour
     public void OpenMainMenu()
     {
         menuState = CurrentMenu.main;
+        OpenMenu(menuState);
+    }
+
+    public void SelectGamemode()
+    {
+        menuState = CurrentMenu.gameSelect;
         OpenMenu(menuState);
     }
 
@@ -141,11 +159,11 @@ public class MainMenu : MonoBehaviour
         {
             case CurrentMenu.main:
                 currentMenu.SetActive(true);
-                diffSelector.SetActive(false);
+                gamemodeMenu.SetActive(false);
                 settingsMenu.SetActive(false);
                 break;
             case CurrentMenu.play:
-                currentMenu.SetActive(false);
+                gamemodeMenu.SetActive(false);
                 diffSelector.SetActive(true);
                 break;
             case CurrentMenu.settings:
@@ -156,6 +174,11 @@ public class MainMenu : MonoBehaviour
             case CurrentMenu.keybinds:
                 settingsMenu.SetActive(false);
                 keybindMenu.SetActive(true);
+                break;
+            case CurrentMenu.gameSelect:
+                currentMenu.SetActive(false);
+                diffSelector.SetActive(false);
+                gamemodeMenu.SetActive(true);
                 break;
         }
     }

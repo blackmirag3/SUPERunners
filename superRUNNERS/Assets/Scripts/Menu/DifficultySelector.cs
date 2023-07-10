@@ -14,9 +14,9 @@ public class DifficultySelector : MonoBehaviour
         {
             instance = this;
         }
-        else if (instance != null)
+        else if (instance != null && instance != this)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         DontDestroyOnLoad(this);
