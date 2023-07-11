@@ -135,6 +135,14 @@ public class PlayerHand : MonoBehaviour
                 itemIsGun = grab.isGun;
                 Debug.Log(itemIsGun);
             }
+            else
+            {
+                ICollectible collectible = hit.collider.GetComponent<ICollectible>();
+                if (collectible != null)
+                {
+                    collectible.OnPickup();
+                }
+            }
         }
     }
 

@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class ScreenFadeFromBlack : MonoBehaviour {
-    public int fadeDelay;
+public class FadeFromBlack : MonoBehaviour {
+    private int fadeDelay;
     private int timer;
-    private bool isDelay;
     private CanvasGroup canvasGroup = null;
     public CanvasGroup CanvasGroup     
     {
@@ -44,7 +43,6 @@ public class ScreenFadeFromBlack : MonoBehaviour {
     {
         CanvasGroup.alpha = 1f;
         timer = fadeDelay;
-        if (timer > 0) isDelay = true;
         StartTimer();
     }
     private void StartTimer()
@@ -53,14 +51,14 @@ public class ScreenFadeFromBlack : MonoBehaviour {
     }
     private IEnumerator Countdown()
     {
-        if (isDelay)
+        //blackscreen
+        while (timer > 0)
         {
-            while (timer > 0)
-            {
-                timer--;
-                yield return new WaitForSecondsRealtime(1);
-            }
+            timer--;
+            yield return new WaitForSecondsRealtime(1);
         }
+
+        //screen fades
         while (CanvasGroup.alpha > 0.0f)
         {
             CanvasGroup.alpha -= Time.unscaledDeltaTime;

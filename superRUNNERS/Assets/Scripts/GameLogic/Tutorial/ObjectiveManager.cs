@@ -9,8 +9,13 @@ public class ObjectiveManager : MonoBehaviour
     {
         for (int i = 0; i < objectives.Length; i++)
         {
-            if (objectives[i] != null && !objectives[i].isComplete) return false;
+            if (objectives[i] != null && !objectives[i].isComplete)
+            {
+                //Debug.Log("Objectives NOT complete");
+                return false;
+            }
         }
+        //Debug.Log("Objectives complete");
         return true;
     }
 }

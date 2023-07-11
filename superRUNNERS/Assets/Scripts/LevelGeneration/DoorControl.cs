@@ -13,9 +13,11 @@ public class DoorControl : MonoBehaviour
     private Vector3 rightClosePos, leftClosePos, rightOpenPos, leftOpenPos;
 
     private bool isOpen;
+    [SerializeField] private AudioSource doorSound;
 
     private void Start()
     {
+        doorSound = GetComponent<AudioSource>();
         rightClosePos = rightDoor.localPosition;
         leftClosePos = leftDoor.localPosition;
 
@@ -44,6 +46,7 @@ public class DoorControl : MonoBehaviour
         {
             isOpen = true;
             StartCoroutine(OpenDoors());
+            if (doorSound != null) doorSound.Play();
         }
         else
         {

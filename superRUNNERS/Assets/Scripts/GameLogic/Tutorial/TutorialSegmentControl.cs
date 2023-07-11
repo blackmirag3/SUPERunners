@@ -11,6 +11,7 @@ public class TutorialSegmentControl : MonoBehaviour
     private GameObject currentSegment;
     //[SerializeField] private bool isLastRoom; //additional check on top of collider
     public DoorControl exitDoor;
+    public Transform objectivePosition;
     private ObjectiveManager objectives;
     private Collider exit;
 
@@ -22,7 +23,8 @@ public class TutorialSegmentControl : MonoBehaviour
         exit = GetComponent<Collider>();
         exit.isTrigger = true;
         currentSegment = transform.gameObject;
-        updateExit.CallEvent(this, nextSegment.transform.position);
+        if (objectivePosition != null) updateExit.CallEvent(this, objectivePosition.position);
+        else updateExit.CallEvent(this, nextSegment.transform.position);
     }
 
     public void EnableSegmentTrigger(Component sender, object data)
@@ -34,7 +36,10 @@ public class TutorialSegmentControl : MonoBehaviour
     {
         if (objectives != null)
         {
-            if (!objectives.isComplete) return;
+            if (!objectives.isComplete)
+            {
+                return;
+            }
         }
         if (other.CompareTag(PlayerTag))
         {

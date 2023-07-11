@@ -30,8 +30,7 @@ public class SegmentObjectives : ObjectiveManager
     }
     IEnumerator CheckProgress()
     {
-        yield return new WaitForSeconds(2);
         isComplete = UpdateProgress(objectives);
-        yield return null;
+        yield return new WaitForSeconds(1);
     }
 }
