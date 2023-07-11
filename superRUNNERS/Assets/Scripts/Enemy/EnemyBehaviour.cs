@@ -80,7 +80,6 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         isStaggered = true;
         if (meleeing != null)
         {
-            Debug.Log("Stop melee");
             rightHand.enabled = false;
             leftHand.enabled = false;
             StopCoroutine(meleeing);

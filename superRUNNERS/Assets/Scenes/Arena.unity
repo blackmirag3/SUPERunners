@@ -23115,22 +23115,6 @@ PrefabInstance:
       propertyPath: m_text
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1145968989, guid: c19e392c09abb2441905f9d3677c0c45, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1145968989, guid: c19e392c09abb2441905f9d3677c0c45, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1145968989, guid: c19e392c09abb2441905f9d3677c0c45, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -95
-      objectReference: {fileID: 0}
-    - target: {fileID: 1145968990, guid: c19e392c09abb2441905f9d3677c0c45, type: 3}
-      propertyPath: m_text
-      value: head to the next level
-      objectReference: {fileID: 0}
     - target: {fileID: 1811194770, guid: c19e392c09abb2441905f9d3677c0c45, type: 3}
       propertyPath: m_Name
       value: KillObjective (might remove)

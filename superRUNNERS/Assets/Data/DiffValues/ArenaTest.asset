@@ -17,8 +17,8 @@ MonoBehaviour:
   playerHealth: 99
   startEnemySpawn: 6
   maxEnemySpawn: 21
-  enemySpeed: 23.538218
-  enemyUnarmedSpeed: 29.815075
+  enemySpeed: 9.9825
+  enemyUnarmedSpeed: 12.6445
   maxEnemySpeed: 23
   isAggro: 1
   enemyBulletVelocity: 29.5
