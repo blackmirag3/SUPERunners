@@ -96,6 +96,7 @@ public class GunPickup : MonoBehaviour, IHoldable
         gunBreak.enabled = isGunBreakEnabled;
        
         Destroy(gameObject, despawnTime);
+        this.enabled = false;
     }
 
     public void SetItemInHand(Transform hand)

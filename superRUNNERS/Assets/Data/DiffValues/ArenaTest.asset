@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   enemySpeedMultipliers: 1.1
-  playerHealth: 3
+  playerHealth: 99
   startEnemySpawn: 6
   maxEnemySpawn: 21
-  enemySpeed: 9.075
-  enemyUnarmedSpeed: 11.495
+  enemySpeed: 9.9825
+  enemyUnarmedSpeed: 12.6445
   maxEnemySpeed: 23
   isAggro: 1
   enemyBulletVelocity: 29.5
