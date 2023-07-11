@@ -59,6 +59,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     [SerializeField] private DifficultySettings diff;
     [SerializeField] private GameEvent onHit;
 
+    private Coroutine meleeing = null;
+
     private void Awake()
     {
         if (DifficultySelector.instance != null)
@@ -76,6 +78,15 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemyHitSound.Play();
         enemy.isStopped = true;
         isStaggered = true;
+        if (meleeing != null)
+        {
+            Debug.Log("Stop melee");
+            rightHand.enabled = false;
+            leftHand.enabled = false;
+            StopCoroutine(meleeing);
+            meleeing = null;
+        }
+        
         enemyHealth -= damage;
         if (isArmed)
         {
@@ -216,7 +227,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             anim.SetInteger("UnarmedIndex", Random.Range(0, 4));
             recentMelee = true;
 
-            StartCoroutine(PunchRoutine());
+            meleeing = StartCoroutine(PunchRoutine());
         }
     }
 
