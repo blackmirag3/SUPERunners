@@ -611,7 +611,6 @@ MonoBehaviour:
   damageRb: {fileID: 1818923575}
   throwForwardForce: 40
   throwUpForce: 4.5
-  equipped: 0
 --- !u!114 &7146796322865417165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +668,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &472004444502321190

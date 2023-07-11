@@ -14,12 +14,24 @@ public class EnemySpawn : MonoBehaviour
     public LayerMask ground;
 
     [SerializeField]
-    private GameObject[] enemyType;
+    private List<GameObject> enemySpawnPool = new List<GameObject>();
 
     [SerializeField] private GameObject pistolEnemy;
     [SerializeField] private GameObject meleeEnemy;
     [SerializeField] private GameObject rifleEnemy;
     [SerializeField] private GameObject shotgunEnemy;
+
+    private byte phase;
+
+    private void Awake()
+    {
+        enemySpawnPool.Clear();
+
+        enemySpawnPool.Add(meleeEnemy);
+        enemySpawnPool.Add(pistolEnemy);
+
+        phase = 0;
+    }
 
     private void Start()
     {
@@ -48,9 +60,9 @@ public class EnemySpawn : MonoBehaviour
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, y + 1f, ground))
             {
-                int selectEnemy = Random.Range(0, enemyType.Length);
+                int selectEnemy = Random.Range(0, enemySpawnPool.Count);
 
-                GameObject newEnemy = Instantiate(enemyType[selectEnemy], hit.point, Quaternion.identity, transform);
+                GameObject newEnemy = Instantiate(enemySpawnPool[selectEnemy], hit.point, Quaternion.identity, transform);
                 newEnemy.SetActive(true);
                 enemiesSpawned++;
                 timeOut = 0;
@@ -72,5 +84,32 @@ public class EnemySpawn : MonoBehaviour
 
         endX = startX + cellSize * gridSize;
         endZ = startZ + cellSize * gridSize;
+    }
+
+    public void UpdateSpawnPool(Component sender, object data)
+    {
+        phase++;
+
+        if (phase > 5)
+        {
+            return;
+        }
+
+        switch (phase)
+        {
+            case 1:
+                enemySpawnPool.Add(rifleEnemy);
+                break;
+            case 2:
+                enemySpawnPool.Add(pistolEnemy);
+                enemySpawnPool.Add(rifleEnemy);
+                break;
+            case 3:
+                enemySpawnPool.Add(shotgunEnemy);
+                break;
+            case 4:
+                enemySpawnPool.Add(shotgunEnemy);
+                break;
+        }
     }
 }

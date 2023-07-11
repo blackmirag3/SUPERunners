@@ -36,8 +36,14 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI newAlert;
 
-    public GameEvent buildNewArena;
-    public GameEvent onPause;
+    [SerializeField]
+    private GameEvent buildNewArena;
+    [SerializeField]
+    private GameEvent onPause;
+    [SerializeField]
+    private GameEvent updateEnemySpawnPool;
+
+    private byte poolPhase;
 
     [SerializeField]
     private DifficultySettings diff;
@@ -70,7 +76,8 @@ public class GameControl : MonoBehaviour
 
         StartGame();
         levelWon = false;
-        areasCleared = 0;   
+        areasCleared = 0;
+        poolPhase = 0;
     }
 
     private void Update()
@@ -168,6 +175,11 @@ public class GameControl : MonoBehaviour
             IncreaseEnemySpeed(diff.difficulty, areasCleared);
         }
 
+        if (poolPhase < 4)
+        {
+            UpdateSpawnPool(diff.difficulty, areasCleared);
+        }
+
         if (areasCleared % 2 != 0)
         {
             if (areasCleared < 4 && diff.difficulty == Difficulty.easy)
@@ -228,6 +240,35 @@ public class GameControl : MonoBehaviour
         {
             diff.isAggro = true;
         }
+    }
+
+    private void UpdateSpawnPool(Difficulty currDiff, int clearedAreas)
+    {
+        switch (currDiff)
+        {
+            case Difficulty.easy:
+                if (clearedAreas == 3 || clearedAreas == 5 || clearedAreas == 7 || clearedAreas == 9)
+                {
+                    updateEnemySpawnPool.CallEvent(this, null);
+                    poolPhase++;
+                }
+                break;
+            case Difficulty.normal:
+                if (clearedAreas == 1 || clearedAreas == 3 || clearedAreas == 4 || clearedAreas == 6)
+                {
+                    updateEnemySpawnPool.CallEvent(this, null);
+                    poolPhase++;
+                }
+                break;
+            case Difficulty.hard:
+                if (clearedAreas == 1 || clearedAreas == 2 || clearedAreas == 3 || clearedAreas == 4)
+                {
+                    updateEnemySpawnPool.CallEvent(this, null);
+                    poolPhase++;
+                }
+                break;
+        }
+        Debug.Log($"Enemy pool updated {poolPhase} times");
     }
 
     private void ObtainHighscores(Difficulty difficulty)

@@ -18,6 +18,6 @@ MonoBehaviour:
   maxDist: 30
   spread: 1
   bulletsPerShot: 4
-  magSize: 32
+  magSize: 28
   fireRate: 0.5
   isAuto: 0
