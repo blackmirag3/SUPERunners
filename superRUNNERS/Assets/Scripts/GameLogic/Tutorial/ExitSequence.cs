@@ -17,6 +17,12 @@ public class ExitSequence : MonoBehaviour
     private int timer;
     //public GameEvent enableWaypoint;
     private bool isFinished;
+    private float initialDeltaTime = 0.2f;
+
+    private void Awake()
+    {
+        initialDeltaTime = Time.fixedDeltaTime;
+    }
 
     private void Start()
     {
@@ -28,7 +34,14 @@ public class ExitSequence : MonoBehaviour
 
     private void Update()
     {
-        if (isFinished && Input.anyKey) SceneManager.LoadScene(0);
+        if (isFinished && Input.anyKey)
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = initialDeltaTime;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void OnTriggerStay(Collider other)
