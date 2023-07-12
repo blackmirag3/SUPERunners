@@ -10,19 +10,26 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - test-project
+          - superRUNNERS
         testMode:
           - playmode
           - editmode
     steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
       - uses: game-ci/unity-test-runner@v2
         env:
             UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
             UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
             UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
-            projectPath: SUPERunners\superRUNNERS
+            projectPath: ${{ matrix.projectPath }}
+            testMode: ${{ matrix.testMode }}
+            artifactsPath: ${{ matrix.testMode }}-artifacts
             githubToken: ${{ secrets.GITHUB_TOKEN }}
+            checkName: ${{ matrix.testMode }} Test Results
+            coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
       - uses: game-ci/unity-test-runner@v2
         with:
             githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -34,5 +41,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-            name: Coverage results
+            name: Coverage results for ${{ matrix.testMode }}
             path: ${{ steps.myTestStep.outputs.coveragePath }}
