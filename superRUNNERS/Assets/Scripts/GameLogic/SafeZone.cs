@@ -6,11 +6,11 @@ public class SafeZone : MonoBehaviour
 {
     public GameControl game;
 
-    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private string PlayerTag = "Player";
 
     private void OnTriggerExit(Collider other)
     {
-        if (!game.GameInProgress && other.gameObject.CompareTag(playerTag))
+        if (!game.GameInProgress && other.gameObject.CompareTag(PlayerTag))
         {
             game.StartGame();
             enabled = false;

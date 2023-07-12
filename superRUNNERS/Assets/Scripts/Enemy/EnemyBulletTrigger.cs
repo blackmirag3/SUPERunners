@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class EnemyBulletTrigger : MonoBehaviour
 {
+    [SerializeField] private EnemyBullet bullet;
     [SerializeField]
-    private string playerTag = "Player";
+    private string PlayerTag = "Player";
     [SerializeField]
     private float damage;
-
+    private Vector3 initialPos;
+    private void Start()
+    {
+        initialPos = GetComponentInParent<Transform>().position;
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag(PlayerTag))
         {
-            IDamageable player = other.GetComponent<IDamageable>();
-            if (player != null)
+            IDamageable Player = other.GetComponent<IDamageable>();
+            DamageIndicatorManager damageIndicatorManager = other.GetComponentInParent<DamageIndicatorManager>();
+            if (Player != null)
             {
-                player.Damage(damage);
+                Player.Damage(damage);
+            }
+            if (damageIndicatorManager != null)
+            {
+                damageIndicatorManager.SpawnIndicator(initialPos);
             }
             Destroy(transform.parent.gameObject);
             //Debug.Log("Player hit detected");

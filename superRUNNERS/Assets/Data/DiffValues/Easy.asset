@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Easy
   m_EditorClassIdentifier: 
   difficulty: 0
+  enemySpeedMultipliers: 1.08
   playerHealth: 5
   startEnemySpawn: 5
+  maxEnemySpawn: 18
   enemySpeed: 6.5
   enemyUnarmedSpeed: 8.5
+  maxEnemySpeed: 20
   isAggro: 0
   enemyBulletVelocity: 27.5

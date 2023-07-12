@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private readonly string[] tagArr = { "Gun" , "Enemy"};
+    private readonly string[] tagArr = { "Gun" , "Enemy" , "PlayerTriggers" };
 
-    [SerializeField]
-    private float despawnTime;
+    [SerializeField] private float despawnTime;
 
     private void Start()
     {
@@ -23,5 +22,6 @@ public class EnemyBullet : MonoBehaviour
             // Debug.Log("Bullet Death");
         }
     }
+
 
 }

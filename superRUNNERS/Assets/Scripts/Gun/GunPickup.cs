@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Runtime.CompilerServices; 
+[assembly: InternalsVisibleTo( "PlayMode" )]
+[assembly: InternalsVisibleTo( "EditMode" )]
+
 public class GunPickup : MonoBehaviour, IHoldable
 {
 
@@ -14,10 +18,13 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public float throwForwardForce, throwUpForce;
 
-    public bool equipped;
-    private float despawnTime = 2f;
-
+    internal float despawnTime = 2f;
+    public bool isEquipped {get; set;}
     public bool isGun { get; set; }
+
+    //for unity test
+    internal bool isGunEnabled;
+    internal bool isGunBreakEnabled;
 
     void Start()
     {
@@ -30,13 +37,13 @@ public class GunPickup : MonoBehaviour, IHoldable
         gunBreak.enabled = false;
         isGun = true;
 
-        if (equipped)
+        if (isEquipped)
         {
             gun.enabled = true;
             rb.isKinematic = true;
             col.isTrigger = true;
         }
-        else if (!equipped)
+        else if (!isEquipped)
         {
             gun.enabled = false;
             rb.isKinematic = false;
@@ -46,7 +53,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public void Pickup(Transform hand)
     {
-        equipped = true;
+        isEquipped = true;
 
         // Disable forces acting on gun and BoxCollider a trigger
         rb.isKinematic = true;
@@ -64,7 +71,7 @@ public class GunPickup : MonoBehaviour, IHoldable
 
     public void Throw(Vector3 point)
     {
-        equipped = false;
+        isEquipped = false;
 
         transform.localPosition = Vector3.zero;
         transform.SetParent(null);
@@ -83,10 +90,13 @@ public class GunPickup : MonoBehaviour, IHoldable
         float random = Random.Range(-1f, 1f);
         damageRb.AddTorque(new Vector3(random, random, random));
 
-        gun.enabled = false;
-        gunBreak.enabled = true;
+        isGunEnabled = false;
+        isGunBreakEnabled = true;
+        gun.enabled = isGunEnabled;
+        gunBreak.enabled = isGunBreakEnabled;
        
         Destroy(gameObject, despawnTime);
+        this.enabled = false;
     }
 
     public void SetItemInHand(Transform hand)

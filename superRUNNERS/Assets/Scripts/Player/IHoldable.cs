@@ -11,4 +11,6 @@ public interface IHoldable
     bool isGun { get; set; }
 
     void SetItemInHand(Transform hand);
+
+    bool isEquipped {get; set;}
 }

@@ -10,6 +10,7 @@ TagManager:
   - Damageable
   - EnemyHand
   - Hand
+  - PlayerTriggers
   layers:
   - Default
   - TransparentFX
@@ -18,6 +19,7 @@ TagManager:
   - Water
   - UI
   - Wall
+  - Vault
   - 
   - 
   - 
@@ -33,8 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Silhouette
   - 
   - 
   - ItemThrown

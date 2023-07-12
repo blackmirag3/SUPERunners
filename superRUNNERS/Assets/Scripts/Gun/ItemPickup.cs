@@ -12,6 +12,7 @@ public class ItemPickup : MonoBehaviour, IHoldable
     public GameObject itemThrown;
 
     public bool isGun { get; set; }
+    public bool isEquipped {get; set;}
 
     private void Start()
     {
@@ -30,10 +31,12 @@ public class ItemPickup : MonoBehaviour, IHoldable
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         transform.localScale = Vector3.one;
+        isEquipped = true;
     }
 
     public void Throw(Vector3 point)
     {
+        isEquipped = false;
         GameObject newItem = Instantiate(itemThrown, transform.position, Random.rotation);
         Rigidbody thrownItemRb = newItem.GetComponent<Rigidbody>();
 

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5ea228cd9060f4ca7068985eaaedda, type: 3}
+  m_Name: ArenaTest
+  m_EditorClassIdentifier: 
+  difficulty: 1
+  enemySpeedMultipliers: 1.1
+  playerHealth: 99
+  startEnemySpawn: 6
+  maxEnemySpawn: 21
+  enemySpeed: 9.9825
+  enemyUnarmedSpeed: 12.6445
+  maxEnemySpeed: 23
+  isAggro: 1
+  enemyBulletVelocity: 29.5

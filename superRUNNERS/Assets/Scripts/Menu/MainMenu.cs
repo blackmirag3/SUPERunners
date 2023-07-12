@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices; 
+[assembly: InternalsVisibleTo( "PlayMode" )]
+[assembly: InternalsVisibleTo( "EditMode" )]
+[assembly: InternalsVisibleTo( "TestInfrastructure" )]
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject currentMenu;
+    internal GameObject currentMenu;
     [SerializeField]
-    private GameObject settingsMenu;
+    internal GameObject settingsMenu;
     [SerializeField]
-    private GameObject diffSelector;
+    internal GameObject diffSelector;
     [SerializeField]
-    private GameObject keybindMenu;
+    internal GameObject keybindMenu;
+    [SerializeField]
+    internal GameObject gamemodeMenu;
 
     private bool rebinding;
 
@@ -22,16 +28,30 @@ public class MainMenu : MonoBehaviour
     {
         rebinding = false;
         menuState = CurrentMenu.main;
-    }
+        /*
+        if (currentMenu == null)
+        currentMenu =  GameObject.Find("Main Menu");
 
-    private enum CurrentMenu
+        if (settingsMenu == null)
+        settingsMenu = GameObject.Find("Settings Menu");
+
+        if (diffSelector == null)
+        diffSelector = GameObject.Find("Difficulty Selector");
+
+        if (keybindMenu == null)
+        keybindMenu = GameObject.Find("Keybind Menu");
+        */
+    }
+    internal enum CurrentMenu
     {
         main,
         play,
         settings,
         keybinds,
+        gameSelect,
     }
-    private CurrentMenu menuState;
+
+    internal CurrentMenu menuState;
 
     private void Update()
     {
@@ -41,14 +61,18 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void OnEscapePress()
+    internal void OnEscapePress()
     {
         switch (menuState)
         {
             case CurrentMenu.main:
                 break;
-            case CurrentMenu.play:
+            case CurrentMenu.gameSelect:
                 menuState = CurrentMenu.main;
+                OpenMenu(menuState);
+                break;
+            case CurrentMenu.play:
+                menuState = CurrentMenu.gameSelect;
                 OpenMenu(menuState);
                 break;
             case CurrentMenu.settings:
@@ -70,6 +94,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Arena");
     }
 
+    public void StartTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void QuitGame()
     {
         PlayerPrefs.Save();
@@ -85,6 +114,12 @@ public class MainMenu : MonoBehaviour
     public void OpenMainMenu()
     {
         menuState = CurrentMenu.main;
+        OpenMenu(menuState);
+    }
+
+    public void SelectGamemode()
+    {
+        menuState = CurrentMenu.gameSelect;
         OpenMenu(menuState);
     }
 
@@ -124,11 +159,11 @@ public class MainMenu : MonoBehaviour
         {
             case CurrentMenu.main:
                 currentMenu.SetActive(true);
-                diffSelector.SetActive(false);
+                gamemodeMenu.SetActive(false);
                 settingsMenu.SetActive(false);
                 break;
             case CurrentMenu.play:
-                currentMenu.SetActive(false);
+                gamemodeMenu.SetActive(false);
                 diffSelector.SetActive(true);
                 break;
             case CurrentMenu.settings:
@@ -139,6 +174,11 @@ public class MainMenu : MonoBehaviour
             case CurrentMenu.keybinds:
                 settingsMenu.SetActive(false);
                 keybindMenu.SetActive(true);
+                break;
+            case CurrentMenu.gameSelect:
+                currentMenu.SetActive(false);
+                diffSelector.SetActive(false);
+                gamemodeMenu.SetActive(true);
                 break;
         }
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe6063acc17d1246abe53d21aa29473, type: 3}
   m_Name: Weapon Movement Settings
   m_EditorClassIdentifier: 
-  isSwayEnabled: 1
+  isSwayEnabled: 0
   swaySmoothing: 10
   tiltMultiplier: 5
   rotMultiplier: 6

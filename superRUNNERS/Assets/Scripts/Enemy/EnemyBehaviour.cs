@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyBehaviour : MonoBehaviour, IDamageable
 {
     private NavMeshAgent enemy;
-    public Transform player;
+    public Transform Player;
     public Animator anim;
     public EnemyGun enemyGun;
     public GunDrop gunDrop;
@@ -57,6 +57,9 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
     private float punchColTime, punchResetTime;
 
     [SerializeField] private DifficultySettings diff;
+    [SerializeField] private GameEvent onHit;
+
+    private Coroutine meleeing = null;
 
     private void Awake()
     {
@@ -75,6 +78,14 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         enemyHitSound.Play();
         enemy.isStopped = true;
         isStaggered = true;
+        if (meleeing != null)
+        {
+            rightHand.enabled = false;
+            leftHand.enabled = false;
+            StopCoroutine(meleeing);
+            meleeing = null;
+        }
+        
         enemyHealth -= damage;
         if (isArmed)
         {
@@ -90,18 +101,18 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             leftHand.enabled = false;
             onEnemyDeath.CallEvent(this, null);
             Destroy(gameObject, despawnTime);
+            onHit.CallEvent(this, null);
         }
         else if (!isDead)
         {
             EnableEnemyUnarmed();
             currentAttackTimer = 0;
+            onHit.CallEvent(this, null);
         }
     }
 
     private void Start()
     {
-        CheckedArmed();
-        
         enemy.stoppingDistance = stoppingDistance;
         gunDrop.enabled = false;
         isDead = false;
@@ -109,6 +120,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         anim.SetBool("isAggro", isAggro);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
         isStaggered = false;
+
+        CheckedArmed();
     }
 
     private void Update()
@@ -156,13 +169,13 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private void EnemyChase()
     {
-        enemy.SetDestination(player.position); //chase player
+        enemy.SetDestination(Player.position); //chase Player
         hasReachedPlayer = (enemy.remainingDistance <= enemy.stoppingDistance);
         anim.SetBool("hasReachedPlayer", hasReachedPlayer);
 
         if (hasReachedPlayer)
         {
-            Vector3 dir = player.position - transform.position;
+            Vector3 dir = Player.position - transform.position;
             Quaternion enemyFaceRotation = Quaternion.LookRotation(dir);
             float yRotation = enemyFaceRotation.eulerAngles.y;
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
@@ -171,8 +184,8 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private bool CheckLOS()
     {
-        Vector3 playerDir = (player.position - transform.position).normalized;
-        if (Physics.SphereCast(transform.position, 0.1f, playerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
+        Vector3 PlayerDir = (Player.position - transform.position).normalized;
+        if (Physics.SphereCast(transform.position, 0.1f, PlayerDir, out RaycastHit hit, lineOfSightDist, layerMasks, QueryTriggerInteraction.Ignore))
         {
             return hit.collider.GetComponent<IDamageable>() != null;
         }
@@ -213,7 +226,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
             anim.SetInteger("UnarmedIndex", Random.Range(0, 4));
             recentMelee = true;
 
-            StartCoroutine(PunchRoutine());
+            meleeing = StartCoroutine(PunchRoutine());
         }
     }
 
@@ -232,7 +245,7 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
 
     private bool CheckAggro()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, Player.position);
         return ((distance <= aggroDistance) && CheckLOS());
     }
 
@@ -254,12 +267,21 @@ public class EnemyBehaviour : MonoBehaviour, IDamageable
         // Difficulty adjustments
         isAggro = diff.isAggro;
         enemySpeed = diff.enemySpeed;
-        unarmedSpeed = diff.enemySpeed;
+        unarmedSpeed = diff.enemyUnarmedSpeed;
     }
 
     private void CheckedArmed()
     {
-        isArmed = (enemyGun == null) ? false : true;
+        if (enemyGun == null)
+        {
+            isArmed = false;
+            EnableEnemyUnarmed();
+        }
+        else
+        {
+            isArmed = true;
+        }
+        
         anim.SetBool("isArmed", isArmed);
     }
 

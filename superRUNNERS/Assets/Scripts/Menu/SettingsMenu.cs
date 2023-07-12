@@ -8,6 +8,9 @@ using TMPro;
 public class SettingsMenu : MonoBehaviour
 {
     [Header("Video")]
+    [SerializeField] private Slider sensSlider;
+    [SerializeField] private TextMeshProUGUI sensValue;
+    [SerializeField] private TMP_InputField sensInput;
     [SerializeField] private Slider fovSlider;
     [SerializeField] private TextMeshProUGUI fovValue;
     [SerializeField] private TMP_InputField fovInput;
@@ -35,10 +38,13 @@ public class SettingsMenu : MonoBehaviour
     private const string fullscreenKey = "fullscreen";
     private const string graphicsKey = "graphics";
     private const string fovKey = "fov";
+    private const string sensKey = "sensitivity";
 
     [Header("Values")]
     [SerializeField]
     private float defaultVol;
+    [SerializeField]
+    private float defaultSens;
     [SerializeField]
     private int defaultFov;
     [SerializeField]
@@ -51,7 +57,9 @@ public class SettingsMenu : MonoBehaviour
     private bool settingsHaveChanged;
 
     private float fovDisplayVal;
+    private float currMouseSensitivity;
     [SerializeField] private GameEvent onFovChange;
+    [SerializeField] private GameEvent onSensitivityChange;
 
     private void OnEnable()
     {
@@ -73,6 +81,9 @@ public class SettingsMenu : MonoBehaviour
         graphicsIndex = defaultGraphics;
         fovInput.characterLimit = 3;
         fovInput.characterValidation = TMP_InputField.CharacterValidation.Integer;
+
+        sensInput.characterLimit = 4;
+        sensInput.characterValidation = TMP_InputField.CharacterValidation.Decimal;
     }
 
     private void GetResolutions()
@@ -143,7 +154,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetVideoQuality(int qualityIndex)
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
+        QualitySettings.SetQualityLevel(qualityIndex, false);
         graphicsIndex = qualityIndex;
 
         settingsHaveChanged = true;
@@ -176,6 +187,20 @@ public class SettingsMenu : MonoBehaviour
         settingsHaveChanged = true;
     }
 
+    public void SetSensitivity(float value)
+    {
+        currMouseSensitivity = value;
+        string displayText = currMouseSensitivity.ToString();
+        if (displayText.Length > 4)
+        {
+            displayText = displayText.Substring(0, 4);
+        }
+        sensInput.text = displayText;
+        onSensitivityChange.CallEvent(this, value);
+
+        settingsHaveChanged = true;
+    }
+
     private void LoadSettings()
     {
         // audio
@@ -188,10 +213,11 @@ public class SettingsMenu : MonoBehaviour
         SetMusicVolume(music);
         musicSlider.value = music;
         // sfx
-        float sfx = PlayerPrefs.GetFloat(musicVolumeKey, defaultVol);
+        float sfx = PlayerPrefs.GetFloat(sfxVolumeKey, defaultVol);
         SetSfxVolume(sfx);
         sfxSlider.value = sfx;
 
+        // video
         // res
         int resIndex = PlayerPrefs.GetInt(resKey, defaultRes);
         SetResolution(resIndex);
@@ -207,10 +233,16 @@ public class SettingsMenu : MonoBehaviour
         SetFullscreen(isFull);
         fullscreenToggle.isOn = isFull;
 
+        // camera
         // fov
         float fov = PlayerPrefs.GetFloat(fovKey, defaultFov);
         SetFov(fov);
         fovSlider.value = fov;
+
+        // sens
+        float sens = PlayerPrefs.GetFloat(sensKey, defaultSens);
+        SetSensitivity(sens);
+        sensSlider.value = sens;
 
         Debug.Log("Settings loaded");
     }
@@ -231,6 +263,8 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt(fullscreenKey, fullscreen ? 1 : 0);
             // fov
             PlayerPrefs.SetFloat(fovKey, fovDisplayVal);
+            // sens
+            PlayerPrefs.SetFloat(sensKey, currMouseSensitivity);
 
             PlayerPrefs.Save();
         }
@@ -255,6 +289,28 @@ public class SettingsMenu : MonoBehaviour
         else
         {
             fovInput.text = fovDisplayVal.ToString();
+        }
+    }
+
+    public void SetSensitivityOnText(string input)
+    {
+        float sensValue = 0.1f;
+        if (float.TryParse(input, out sensValue))
+        {
+            if (sensValue < sensSlider.minValue)
+            {
+                sensValue = sensSlider.minValue;
+            }
+            else if (sensValue > sensSlider.maxValue)
+            {
+                sensValue = sensSlider.maxValue;
+            }
+            SetSensitivity(sensValue);
+            sensSlider.value = sensValue;
+        }
+        else
+        {
+            sensInput.text = currMouseSensitivity.ToString();
         }
     }
 
