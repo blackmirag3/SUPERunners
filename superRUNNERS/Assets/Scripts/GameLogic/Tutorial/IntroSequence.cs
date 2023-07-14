@@ -14,14 +14,32 @@ public class IntroSequence : MonoBehaviour
     public int delayAfterText;
     private int timer;
     //public GameEvent enableWaypoint;
+    private Coroutine sequence = null;
+
+    [SerializeField] private AudioSource startAudio;
 
     private void Start()
     {
         if (startScreen != null) screenCanvas = startScreen.GetComponent<CanvasGroup>();
         if (input != null) input.SetActive(false);
         if (HUD != null) HUD.alpha = 0f;
-        StartCoroutine(Sequence());
+        sequence = StartCoroutine(Sequence());
     }
+
+    private void Update()
+    {
+        if (sequence != null && Input.anyKeyDown)
+        {
+            StopCoroutine(sequence);
+            firstSequence.SetActive(true);
+            input.SetActive(true);
+            startScreen.SetActive(false);
+            HUD.alpha = 1f;
+            startAudio.Stop();
+            sequence = null;
+        }
+    }
+
     private IEnumerator Sequence()
     {
         timer = delayBeforeText;
@@ -48,5 +66,6 @@ public class IntroSequence : MonoBehaviour
         }
         input.SetActive(true);
         startScreen.SetActive(false);
+        Debug.Log("Routine completed");
     }
 }

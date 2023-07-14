@@ -28,6 +28,7 @@ public class TimeControl : MonoBehaviour
     private void Awake()
     {
         moveInput = InputManager.instance.PlayerInput.actions["Move"];
+        initialFixedDeltaTime = Time.fixedDeltaTime;
     }
 
     private void Start()
@@ -37,8 +38,8 @@ public class TimeControl : MonoBehaviour
         audioEchoFilter = playerCam.GetComponent<AudioEchoFilter>();
 
         normalTimeRatio = Time.timeScale;
-        initialFixedDeltaTime = Time.fixedDeltaTime;
-
+        //initialFixedDeltaTime = Time.fixedDeltaTime;
+        
         isShifting = false;
         NormalTime();
     }
@@ -73,8 +74,6 @@ public class TimeControl : MonoBehaviour
 
     private void WarpTime()
     {
-        //Time.timeScale = timeShiftRatio;
-        Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = true;
         audioEchoFilter.enabled = true;
         if (audioMixer == null)
@@ -86,8 +85,6 @@ public class TimeControl : MonoBehaviour
 
     private void NormalTime()
     {
-        //Time.timeScale = normalTimeRatio;
-        Time.fixedDeltaTime = initialFixedDeltaTime * Time.timeScale;
         audioLowPassFilter.enabled = false;
         audioEchoFilter.enabled = false;
         if (audioMixer == null)
@@ -124,5 +121,14 @@ public class TimeControl : MonoBehaviour
         isPlayerAction = true;
         yield return new WaitForSecondsRealtime(time);
         isPlayerAction = false;
+    }
+
+    private void OnDisable()
+    {
+        if (audioMixer == null)
+        {
+            return;
+        }
+        audioMixer.SetFloat("MasterPitch", normalTimeRatio);
     }
 }
