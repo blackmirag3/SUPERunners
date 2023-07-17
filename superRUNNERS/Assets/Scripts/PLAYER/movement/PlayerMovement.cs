@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private MovementLogic player;
     [SerializeField] private MoveSettings settings;
 
     [SerializeField]
@@ -86,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        player = new MovementLogic(slideSlopeIncrease, slideSpeedDecrease, walkSpeed, sprintSpeed, crouchSpeed, wallRunSpeed);
         InitializeSettings();
 
         rb = GetComponent<Rigidbody>();
@@ -105,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         walkSpeed = settings.walkSpeed;
         sprintSpeed = settings.sprintSpeed;
         groundDrag = settings.groundDrag;
-        //TODO add grounddrag to settings scriptable object
+
         // Jump
         jumpForce = settings.jumpMulti;
         jumpCD = settings.jumpCD;
@@ -139,26 +141,16 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         // Decrease move speed if sliding
-        if (isSliding)
-        {
-            if (onSlope && rb.velocity.y < 0)
-            {
-                moveSpeed += slideSlopeIncrease;
-            }
-            else
-            {
-                moveSpeed -= slideSpeedDecrease;
-            }
-        }
+        moveSpeed += player.CalculateSlideBoost(isSliding, onSlope, rb.velocity.y);
     }
 
     private void CallJump(InputAction.CallbackContext ctx)
     {
-        if (!isPaused && canJump && isGrounded)
+        if (!isPaused && player.CheckJump(canJump, isGrounded))
         {
             onPlayerAction.CallEvent(this, jumpActionDur);
             canJump = false;
-            Jump();
+            Jump(); 
 
             Invoke(nameof(ResetJump), jumpCD);
         }
@@ -187,38 +179,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedControl()
     {
-        if (!isCrouching)
-        {
-            if (isGrounded && isSprinting)
-            {
-                moveSpeed = sprintSpeed;
-            }
-            else if (isGrounded)
-            {
-                moveSpeed = walkSpeed;
-            }
-            else if (isWallRunning)
-            {
-                moveSpeed = wallRunSpeed;
-            }
-        }
-        else if (isSliding)
-        {
-
-            if (currVelocity.magnitude <= crouchSpeed)
-                isSliding = false;
-        }
-        else if (isGrounded && isCrouching)
-        {
-            moveSpeed = crouchSpeed;
-        }
-
+        isSliding = player.CheckSlide(isSliding, currVelocity.magnitude, crouchSpeed);
+        moveSpeed = player.CalculateSpeed(isGrounded, isSprinting, isWallRunning, isCrouching, isSliding, moveSpeed);
     }
+
 
     private void MovePlayer()
     {
         // movement direction   
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = player.CalculateLinearDirection(orientation, verticalInput, horizontalInput);
         if (onSlope)
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -236,7 +205,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedLimit()
     {
-
         // Velocity limit
         if (currVelocity.magnitude > moveSpeed)
         {
@@ -265,11 +233,11 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
         isCrouching = true;
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        if (isGrounded && currVelocity.magnitude > crouchSpeed) //(currVelocity.magnitude - 0.5f) > walkSpeed)
+
+        if (player.EnableSlide(isGrounded, currVelocity.magnitude))
         {
             isSliding = true;
             moveSpeed += slideSpeedIncrease;

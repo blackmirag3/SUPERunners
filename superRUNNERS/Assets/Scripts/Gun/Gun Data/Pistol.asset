@@ -19,5 +19,5 @@ MonoBehaviour:
   spread: 0
   bulletsPerShot: 1
   magSize: 8
-  fireRate: 0.15
+  fireRate: 0.1
   isAuto: 0

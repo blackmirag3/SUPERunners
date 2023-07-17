@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
-
+using System.Runtime.CompilerServices; 
+[assembly: InternalsVisibleTo( "PlayMode" )]
+[assembly: InternalsVisibleTo( "EditMode" )]
+[assembly: InternalsVisibleTo( "TestInfrastructure" )]
 public class SettingsMenu : MonoBehaviour
 {
     [Header("Video")]
@@ -51,13 +54,13 @@ public class SettingsMenu : MonoBehaviour
     private int defaultGraphics;
     private int defaultRes;
 
-    private int graphicsIndex;
-    private int resolutionIndex;
-    private bool fullscreen;
-    private bool settingsHaveChanged;
+    internal int graphicsIndex;
+    internal int resolutionIndex;
+    internal bool fullscreen;
+    internal bool settingsHaveChanged;
 
-    private float fovDisplayVal;
-    private float currMouseSensitivity;
+    internal float fovDisplayVal;
+    internal float currMouseSensitivity;
     [SerializeField] private GameEvent onFovChange;
     [SerializeField] private GameEvent onSensitivityChange;
 

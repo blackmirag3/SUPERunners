@@ -35,7 +35,22 @@ public class MainMenuTest
     }
 
     [Test]
-    public void OnEscInPlayOpenMain()
+    public void OnEscInChooseGamemodeOpenMain()
+    {
+        menu = CreateMenu();
+        builder.OpenGamemode();
+        builder.Build();
+        mainMenu.menuState = MainMenu.CurrentMenu.gameSelect;
+
+        mainMenu.OnEscapePress();
+        Assert.IsTrue(mainMenu.currentMenu.activeSelf == true);
+        Assert.IsTrue(mainMenu.settingsMenu.activeSelf == false);
+        Assert.IsTrue(mainMenu.diffSelector.activeSelf == false);
+        Assert.IsTrue(mainMenu.keybindMenu.activeSelf == false);
+    }
+
+    [Test]
+    public void OnEscInDiffSelectOpenChooseGamemode()
     {
         menu = CreateMenu();
         builder.OpenDifficulty();
@@ -43,9 +58,9 @@ public class MainMenuTest
         mainMenu.menuState = MainMenu.CurrentMenu.play;
 
         mainMenu.OnEscapePress();
-        Assert.IsTrue(mainMenu.currentMenu.activeSelf == true);
+        Assert.IsTrue(mainMenu.currentMenu.activeSelf == false);
         Assert.IsTrue(mainMenu.settingsMenu.activeSelf == false);
-        Assert.IsTrue(mainMenu.diffSelector.activeSelf == false);
+        Assert.IsTrue(mainMenu.gamemodeMenu.activeSelf == true);
         Assert.IsTrue(mainMenu.keybindMenu.activeSelf == false);
     }
 
