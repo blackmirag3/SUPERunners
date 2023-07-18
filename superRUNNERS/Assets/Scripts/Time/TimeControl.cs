@@ -80,7 +80,7 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", slowedTimeRatio);
+        audioMixer.SetFloat("Pitch", slowedTimeRatio);
     }
 
     private void NormalTime()
@@ -91,7 +91,7 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", normalTimeRatio);
+        audioMixer.SetFloat("Pitch", normalTimeRatio);
     }
 
     public void PauseCalled(Component sender, object data)
@@ -129,6 +129,6 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", normalTimeRatio);
+        audioMixer.SetFloat("Pitch", normalTimeRatio);
     }
 }
