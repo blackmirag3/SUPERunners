@@ -8,6 +8,8 @@ public class MenuBuilder: MonoBehaviour
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject difficulty;
     [SerializeField] private GameObject pause;
+
+    [SerializeField] private GameObject gamemode;
     private bool isMainMenu;
     private bool isPauseMenu;
     private bool isMainOpen;
@@ -15,6 +17,7 @@ public class MenuBuilder: MonoBehaviour
     private bool isKeyBindingsOpen;
     private bool isDifficultyOpen;
     private bool isPauseOpen;
+    private bool isGamemodeOpen;
 
     public void AsMain()
     {
@@ -50,6 +53,11 @@ public class MenuBuilder: MonoBehaviour
         isDifficultyOpen = true;
     }
 
+    public void OpenGamemode()
+    {
+        isGamemodeOpen = true;
+    }
+
     public void Build()
     {
         if (isMainMenu)
@@ -58,6 +66,7 @@ public class MenuBuilder: MonoBehaviour
         settings.SetActive(isSettingsOpen);
         difficulty.SetActive(isDifficultyOpen);
         keybind.SetActive(isKeyBindingsOpen);
+        gamemode.SetActive(isGamemodeOpen);
         }
         else if (isPauseMenu)
         {

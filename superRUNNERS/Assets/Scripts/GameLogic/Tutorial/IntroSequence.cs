@@ -31,11 +31,11 @@ public class IntroSequence : MonoBehaviour
         if (sequence != null && Input.anyKeyDown)
         {
             StopCoroutine(sequence);
-            firstSequence.SetActive(true);
+            if (firstSequence != null) firstSequence.SetActive(true);
             input.SetActive(true);
             startScreen.SetActive(false);
             HUD.alpha = 1f;
-            startAudio.Stop();
+            if (startAudio != null) startAudio.Stop();
             sequence = null;
         }
     }
@@ -57,7 +57,7 @@ public class IntroSequence : MonoBehaviour
             yield return new WaitForSecondsRealtime(1);
         }
 
-        firstSequence.SetActive(true);
+        if (firstSequence != null) firstSequence.SetActive(true);
         while (HUD.alpha < 1f || screenCanvas.alpha > 0f)
         {
             screenCanvas.alpha -= Time.unscaledDeltaTime;

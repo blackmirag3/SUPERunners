@@ -10,6 +10,10 @@ public class TimeControl : MonoBehaviour
     public Rigidbody playerBody;
     public GameObject playerCam;
     public AudioMixer audioMixer;
+    [SerializeField]
+    private AudioSource warpSound;
+    private bool isPlaying;
+    private bool isTempAction;
 
     public bool isShifting;
     public float slowedTimeRatio = 0.5f;
@@ -80,7 +84,12 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", slowedTimeRatio);
+        audioMixer.SetFloat("Pitch", slowedTimeRatio);
+        if (!isPlaying)
+        {
+            warpSound.Play();
+            isPlaying = true;
+        }
     }
 
     private void NormalTime()
@@ -91,7 +100,12 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", normalTimeRatio);
+        audioMixer.SetFloat("Pitch", normalTimeRatio);
+        if (isPlaying && !isTempAction)
+        {
+            warpSound.Stop();
+            isPlaying = false;
+        }
     }
 
     public void PauseCalled(Component sender, object data)
@@ -119,8 +133,10 @@ public class TimeControl : MonoBehaviour
     {
         //Debug.Log("Time temporarily resumed");
         isPlayerAction = true;
+        isTempAction = true;
         yield return new WaitForSecondsRealtime(time);
         isPlayerAction = false;
+        isTempAction = false;
     }
 
     private void OnDisable()
@@ -129,6 +145,6 @@ public class TimeControl : MonoBehaviour
         {
             return;
         }
-        audioMixer.SetFloat("MasterPitch", normalTimeRatio);
+        audioMixer.SetFloat("Pitch", normalTimeRatio);
     }
 }
