@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 4354852e531a10745ad11fa19d9b2380
-  - enabled: 1
+  - enabled: 0
     path: Assets/Tests/Test Infrastructure/Test Map/Level0.unity
     guid: f36f280e02a587844acdbe63bdd49ea2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Splashscreen/Splashscreen.unity
     guid: 6115b6a91b166cd4ab1c1403122b9de8
   m_configObjects:
