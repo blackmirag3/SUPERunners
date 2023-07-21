@@ -22908,8 +22908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   y: 10
-  minItems: 10
-  maxItems: 32
+  minItems: 20
+  maxItems: 48
   wave: {fileID: 1771791330}
   ground:
     serializedVersion: 2
@@ -22917,6 +22917,7 @@ MonoBehaviour:
   items:
   - {fileID: 8287051751720658247, guid: 84f03d95c84b5b643a2fa9a73aa169f9, type: 3}
   - {fileID: 8988794223808730913, guid: 150b36e20f5f9934cab2a39f7abdde08, type: 3}
+  - {fileID: 3048912847372492351, guid: 7173a9e77f235284cadc5523ed4ed917, type: 3}
 --- !u!1 &1773247325
 GameObject:
   m_ObjectHideFlags: 0
