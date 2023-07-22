@@ -20,4 +20,4 @@ MonoBehaviour:
   tiltX: 0
   tiltY: 0
   tiltZ: 1
-  isBobEnabled: 0
+  isBobEnabled: 1

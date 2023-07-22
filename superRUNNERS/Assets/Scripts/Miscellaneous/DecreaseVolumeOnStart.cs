@@ -5,7 +5,7 @@ using UnityEngine;
 public class DecreaseVolumeOnStart : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource audio;
+    private AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +13,6 @@ public class DecreaseVolumeOnStart : MonoBehaviour
     
     void Update()
     {
-        audio.volume -= Time.deltaTime;
+        sound.volume -= Time.deltaTime;
     }
 }
