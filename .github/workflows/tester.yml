@@ -30,6 +30,3 @@ jobs:
             githubToken: ${{ secrets.GITHUB_TOKEN }}
             checkName: ${{ matrix.testMode }} Test Results
             coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
-      - uses: game-ci/unity-test-runner@v2
-        with:
-            githubToken: ${{ secrets.GITHUB_TOKEN }}
