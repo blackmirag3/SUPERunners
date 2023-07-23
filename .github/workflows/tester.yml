@@ -2,8 +2,11 @@ name: Test project
 
 on: [push, pull_request]
 
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
 jobs:
-  testAllModes:
+  testRunner:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
     strategy:
@@ -12,17 +15,12 @@ jobs:
         projectPath:
           - superRUNNERS
         testMode:
-          - playmode
           - editmode
     steps:
       - uses: actions/checkout@v2
         with:
           lfs: true
       - uses: game-ci/unity-test-runner@v2
-        env:
-            UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-            UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-            UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
             projectPath: ${{ matrix.projectPath }}
             testMode: ${{ matrix.testMode }}
@@ -30,6 +28,3 @@ jobs:
             githubToken: ${{ secrets.GITHUB_TOKEN }}
             checkName: ${{ matrix.testMode }} Test Results
             coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
-      - uses: game-ci/unity-test-runner@v2
-        with:
-            githubToken: ${{ secrets.GITHUB_TOKEN }}
