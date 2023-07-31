@@ -98,7 +98,11 @@ public class GameControl : MonoBehaviour
     {
         GameInProgress = false;
         winScreen.SetActive(true);
-        
+        TextMeshProUGUI clearText = winScreen.GetComponentInChildren<TextMeshProUGUI>();
+        if (clearText != null)
+        {
+            clearText.SetText($"Room {areasCleared} Cleared");
+        }
     }
 
     public void RebuildArena(Component sender, object data)

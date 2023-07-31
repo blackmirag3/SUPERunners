@@ -43,7 +43,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
                 playerDeath.CallEvent(this, null);
             }
         }
-        else Debug.Log("player has stopwatch active");
     }
 
     private IEnumerator DeactivateInvulnerability(float duration)

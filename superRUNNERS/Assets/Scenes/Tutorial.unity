@@ -38305,7 +38305,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh404002
+  m_Name: pb_Mesh73712
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -48896,7 +48896,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MOUSE 2 to pick up time warp machine
+  m_text: 'MOUSE 2 to pick up time warp machine
+
+    on the dead pilot''s hand'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -58228,7 +58230,7 @@ PrefabInstance:
     - target: {fileID: 5057285975090869535, guid: 1766403c25e8bf045a6b4013dc374765,
         type: 3}
       propertyPath: m_Center.y
-      value: -25.549694
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5057285975090869535, guid: 1766403c25e8bf045a6b4013dc374765,
         type: 3}
@@ -76092,12 +76094,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950592071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4804d964ed9f70743abb6b2dff3e9886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 642421047}
+  sound: {fileID: 0}
 --- !u!82 &1950592078
 AudioSource:
   m_ObjectHideFlags: 0

@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch(InputAction.CallbackContext ctx)
     {
-        if (isPaused)
+        if (isPaused || isWallRunning)
         {
             return;
         }

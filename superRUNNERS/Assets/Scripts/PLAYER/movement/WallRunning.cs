@@ -154,8 +154,8 @@ public class WallRunning : MonoBehaviour
 
     private void CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -orientation.right, out wallLeftHit, wallDist, wallMask);
-        wallRight = Physics.Raycast(transform.position, orientation.right, out wallRightHit, wallDist, wallMask);
+        wallLeft = Physics.Raycast(playerCam.transform.position, -orientation.right, out wallLeftHit, wallDist, wallMask);
+        wallRight = Physics.Raycast(playerCam.transform.position, orientation.right, out wallRightHit, wallDist, wallMask);
     }
 
     private void EnableWallRun()
@@ -168,7 +168,6 @@ public class WallRunning : MonoBehaviour
         wallRunning = true;
         rb.useGravity = false;
 
-        //playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
         if (wallLeft)
         {
             Tilt = Mathf.Lerp(Tilt, -camTilt, camTiltTime * Time.deltaTime);
@@ -190,7 +189,6 @@ public class WallRunning : MonoBehaviour
             rb.useGravity = true;
         }
 
-        //playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, baseFov, wallRunfovTime * Time.deltaTime);
         Tilt = Mathf.Lerp(Tilt, 0, camTiltTime * Time.deltaTime);
         SetRightHand();
     }
