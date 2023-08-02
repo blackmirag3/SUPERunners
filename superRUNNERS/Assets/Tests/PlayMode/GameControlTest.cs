@@ -29,6 +29,7 @@ public class GameControlTest
         yield return null;
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
+        Debug.Log(sceneName);
         Assert.AreEqual("Arena", sceneName);
         yield return null;
     }
@@ -42,6 +43,11 @@ public class GameControlTest
         string sceneName = currentScene.name;
         Assert.AreEqual("MainMenu", sceneName);
         yield return null;
+        if (DifficultySelector.instance != null)
+        {
+            GameObject.Destroy(DifficultySelector.instance.gameObject);
+        }   
+        
     }
 
     [UnityTearDown]

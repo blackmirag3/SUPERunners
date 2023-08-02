@@ -32,7 +32,7 @@ public static class FileManager
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to read from {fullPath} with exception {e}");
+            Debug.Log($"Failed to read from {fullPath} with exception {e}, likely no score saved yet");
             result = "";
             return false;
         }

@@ -15,6 +15,7 @@ jobs:
         projectPath:
           - superRUNNERS
         testMode:
+          - playmode
           - editmode
     steps:
       - uses: actions/checkout@v2
