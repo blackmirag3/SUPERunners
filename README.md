@@ -1,4 +1,5 @@
 # SUPERunners
+Made for NUS Orbital 2023.
 
 ![unnamed-2](https://github.com/blackmirag3/SUPERunners/assets/78994143/7b4768a1-9f6b-4df6-aa2d-0de7146748f1)
 
